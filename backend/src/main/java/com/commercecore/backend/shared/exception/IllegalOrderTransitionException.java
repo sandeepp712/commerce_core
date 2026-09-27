@@ -1,4 +1,6 @@
-package com.commercecore.backend.order.domain;
+package com.commercecore.backend.shared.exception;
+
+import com.commercecore.backend.order.domain.OrderState;
 
 public class IllegalOrderTransitionException extends RuntimeException {
 

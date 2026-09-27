@@ -1,0 +1,1 @@
+Alter TABLE cart ADD COLUMN checkout_at TIMESTAMPTZ NULL;

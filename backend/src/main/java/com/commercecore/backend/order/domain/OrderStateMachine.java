@@ -1,5 +1,7 @@
 package com.commercecore.backend.order.domain;
 
+import com.commercecore.backend.shared.exception.IllegalOrderTransitionException;
+
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.EnumSet;
