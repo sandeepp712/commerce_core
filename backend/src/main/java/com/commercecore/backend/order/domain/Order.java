@@ -1,7 +1,6 @@
 package com.commercecore.backend.order.domain;
 
 import jakarta.persistence.*;
-import lombok.Builder;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
@@ -39,7 +38,7 @@ public class Order {
     @Column(name = "total", nullable = false)
     private BigDecimal total;
 
-    @Column(name = "currency",nullable = false)
+    @Column(name = "currency",nullable = false,columnDefinition = "char(3)")
     private String currency;
 
     @JdbcTypeCode(SqlTypes.JSON)

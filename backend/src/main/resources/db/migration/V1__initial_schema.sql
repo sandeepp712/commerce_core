@@ -29,7 +29,7 @@ CREATE TABLE products (
     name        TEXT NOT NULL,
     description TEXT,
     price       NUMERIC(12,2) NOT NULL ,
-    currency    VARCHAR(3) NOT NULL DEFAULT 'INR',
+    currency    CHAR(3) NOT NULL DEFAULT 'INR',
     active      BOOLEAN NOT NULL DEFAULT true,
     created_at  TIMESTAMPTZ NOT NULL DEFAULT now(),
     updated_at  TIMESTAMPTZ NOT NULL DEFAULT now(),
@@ -86,7 +86,7 @@ CREATE TABLE orders (
     shipping            NUMERIC(12,2) NOT NULL DEFAULT 0,
     tax                 NUMERIC(12,2) NOT NULL DEFAULT 0,
     total               NUMERIC(12,2) NOT NULL,
-    currency            VARCHAR(3) NOT NULL DEFAULT 'INR',
+    currency            CHAR(3) NOT NULL DEFAULT 'INR',
     shipping_address    JSONB NOT NULL,
     idempotency_key     TEXT NOT NULL,
     expires_at          TIMESTAMPTZ,          -- TTL for AWAITING_PAYMENT_CONFIRMATION
@@ -202,7 +202,7 @@ CREATE TABLE payments (
     provider_event_id  TEXT,                    -- nullable; UNIQUE allows many NULLs
     attempt_no         INTEGER NOT NULL DEFAULT 1,
     amount             NUMERIC(12,2) NOT NULL,
-    currency           VARCHAR(3) NOT NULL DEFAULT 'INR',
+    currency           CHAR(3) NOT NULL DEFAULT 'INR',
     status             TEXT NOT NULL,
     raw_payload        JSONB,
     created_at         TIMESTAMPTZ NOT NULL DEFAULT now(),
