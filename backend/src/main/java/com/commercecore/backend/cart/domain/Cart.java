@@ -38,13 +38,12 @@ public class Cart {
 
     protected Cart(){}
 
-    public Cart(UUID cartId, UUID userId, CartStatus cartStatus, Instant createdAt, Instant checkoutAt, List<CartItem> cartItems) {
+    public Cart(UUID cartId, UUID userId, CartStatus cartStatus,Instant updatedAt,List<CartItem> cartItems) {
         this.cartId = cartId;
         this.userId = userId;
         this.cartStatus = cartStatus;
-        this.createdAt = createdAt;
-        this.checkoutAt = checkoutAt;
-        this.cartItems = cartItems != null ? cartItems : new ArrayList<>();
+        this.updatedAt = updatedAt;
+        this.cartItems = cartItems;
     }
 
 

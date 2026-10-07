@@ -77,6 +77,67 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(error, HttpStatus.UNPROCESSABLE_CONTENT);
     }
 
+
+    @ExceptionHandler(InvalidCredentialsException.class)
+    public ResponseEntity<ErrorResponse> handleInvalidCredentialsException(InvalidCredentialsException ex, HttpServletRequest request) {
+        ErrorResponse error = new ErrorResponse(
+                "UNAUTHORIZED",
+                ex.getMessage(),
+                HttpStatus.UNAUTHORIZED.value(),
+                request.getRequestURI(),
+                Instant.now()
+        );
+        return new ResponseEntity<>(error, HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(EmailAlreadyExistsException.class)
+    public ResponseEntity<ErrorResponse> handleEmailAlreadyExistsException(EmailAlreadyExistsException ex, HttpServletRequest request) {
+        ErrorResponse error = new ErrorResponse(
+                "CONFLICT",
+                ex.getMessage(),
+                HttpStatus.CONFLICT.value(),
+                request.getRequestURI(),
+                Instant.now()
+        );
+        return new ResponseEntity<>(error, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(AccountLockedException.class)
+    public ResponseEntity<ErrorResponse> handleAccountLockedException(AccountLockedException ex, HttpServletRequest request) {
+        ErrorResponse error = new ErrorResponse(
+                "LOCKED",
+                ex.getMessage(),
+                HttpStatus.LOCKED.value(),
+                request.getRequestURI(),
+                Instant.now()
+        );
+        return new ResponseEntity<>(error, HttpStatus.LOCKED);
+    }
+
+    @ExceptionHandler(InvalidRefreshTokenException.class)
+    public ResponseEntity<ErrorResponse> handleInvalidRefreshTokenException(InvalidRefreshTokenException ex, HttpServletRequest request) {
+        ErrorResponse error = new ErrorResponse(
+                "UNAUTHORIZED",
+                ex.getMessage(),
+                HttpStatus.UNAUTHORIZED.value(),
+                request.getRequestURI(),
+                Instant.now()
+        );
+        return new ResponseEntity<>(error, HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(RefreshTokenReusedException.class)
+    public ResponseEntity<ErrorResponse> handleRefreshTokenReusedException(RefreshTokenReusedException ex, HttpServletRequest request) {
+        ErrorResponse error = new ErrorResponse(
+                "UNAUTHORIZED",
+                ex.getMessage(),
+                HttpStatus.UNAUTHORIZED.value(),
+                request.getRequestURI(),
+                Instant.now()
+        );
+        return new ResponseEntity<>(error, HttpStatus.UNAUTHORIZED);
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleGenericException(Exception ex, HttpServletRequest request) {
         LOG.error("Unhandled exception occurred at {}: ", request.getRequestURI(), ex);

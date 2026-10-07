@@ -6,6 +6,7 @@ import com.commercecore.backend.checkout.service.CheckoutService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -23,8 +24,8 @@ public class CheckoutController {
 
     @PostMapping
     public ResponseEntity<CheckoutResponse> processCheckout(
+            @AuthenticationPrincipal UUID userId,
             @RequestHeader(value = "IdempotencyKey",required = true) String idempotencyKey,
-            @RequestHeader(value = "X-User-Id") UUID userId,
             @Valid @RequestBody CheckoutRequest request) {
 
         CheckoutResponse response = checkoutService.processCheckout(userId,idempotencyKey ,request);

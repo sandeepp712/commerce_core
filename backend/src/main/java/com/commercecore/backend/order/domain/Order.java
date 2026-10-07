@@ -69,13 +69,12 @@ public class Order {
     }
 
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.LAZY)
     private List<OrderItem> orderItems = new ArrayList<>();
 
     protected Order() {}
 
     private Order(Builder builder) {
-        this.orderId = builder.orderId;
         this.userId = builder.userId;
         this.state = builder.state;
         this.subtotal = builder.subtotal;
@@ -123,13 +122,16 @@ public class Order {
         this.orderItems.add(item);
     }
 
+    public void removeItem(UUID productId) {
+        this.orderItems.removeIf(orderItem -> orderItem.getProductId().equals(productId));
+    }
+
 
     public static Builder builder() {
         return new Builder();
     }
 
     public static class Builder {
-        private UUID orderId;
         private UUID userId;
         private OrderState state;
         private BigDecimal subtotal;
@@ -144,15 +146,14 @@ public class Order {
         private Instant expiresAt;
         private List<OrderItem> orderItems = new ArrayList<>();
 
-        public Builder orderId(UUID orderId) {this.orderId = orderId;return this;}
         public Builder userId(UUID userId) {this.userId = userId;return this;}
         public Builder state(OrderState state) {this.state = state;return this;}
         public Builder subtotal(BigDecimal subtotal) {this.subtotal = subtotal;return this;}
         public Builder shipping(BigDecimal shipping) {this.shipping = shipping;return this;}
-        public  Builder tax(BigDecimal tax) {this.tax = tax;return this;}
+        public Builder tax(BigDecimal tax) {this.tax = tax;return this;}
         public Builder total(BigDecimal total) {this.total = total;return this;}
         public Builder currency(String currency) {this.currency = currency;return this;}
-        public Builder  shippingAddress(String shippingAddress) {this.shippingAddress = shippingAddress;return this;}
+        public Builder shippingAddress(String shippingAddress) {this.shippingAddress = shippingAddress;return this;}
         public Builder idempotencyKey(String idempotencyKey) {this.idempotencyKey = idempotencyKey;return this;}
         public Builder expiresAt(Instant expiresAt) {this.expiresAt = expiresAt;return this;}
 
@@ -163,7 +164,6 @@ public class Order {
             return this;
         }
         public Order build() {
-            if(orderId == null) throw new IllegalStateException("OrderId cannot be null");
             return new Order(this);
         }
     }

@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.UUID;
 
 
@@ -39,29 +41,29 @@ public class InventoryRepositoryJdbc implements InventoryRepository {
 
     // 2. Confirm -> Held -> Confirmed, on_hond-=qty, reserved -=qty
     // Payment successful, change status to confirmed and reduced the stock
-    @Override
-    public int confirmReservation(UUID reservationId) {
-        String sql = """
-            WITH updated_reservation AS (
-                UPDATE inventory_reservations
-                SET status = :targetStatus,
-                    confirmed_at=NOW()
-                WHERE id = :reservationId
-                  AND status = :expectedStatus
-                RETURNING product_id, qty
-            )
-            UPDATE inventory i
-            SET on_hand = i.on_hand - ur.qty,
-                reserved = i.reserved - ur.qty
-            FROM updated_reservation ur
-            WHERE i.product_id = ur.product_id
-            """;
-
-        return jdbc.update(sql, new MapSqlParameterSource()
-                .addValue("reservationId", reservationId)
-                .addValue("expectedStatus",ReservationStatus.HELD.name())
-                .addValue("targetStatus", ReservationStatus.CONFIRMED.name()));
-    }
+//    @Override
+//    public int confirmReservation(UUID reservationId) {
+//        String sql = """
+//            WITH updated_reservation AS (
+//                UPDATE inventory_reservations
+//                SET status = :targetStatus,
+//                    confirmed_at=NOW()
+//                WHERE id = :reservationId
+//                  AND status = :expectedStatus
+//                RETURNING product_id, qty
+//            )
+//            UPDATE inventory i
+//            SET on_hand = i.on_hand - ur.qty,
+//                reserved = i.reserved - ur.qty
+//            FROM updated_reservation ur
+//            WHERE i.product_id = ur.product_id
+//            """;
+//
+//        return jdbc.update(sql, new MapSqlParameterSource()
+//                .addValue("reservationId", reservationId)
+//                .addValue("expectedStatus",ReservationStatus.HELD.name())
+//                .addValue("targetStatus", ReservationStatus.CONFIRMED.name()));
+//    }
 
 
     // 3. Release -> Held -> Released, reserved -=qty
@@ -103,6 +105,7 @@ public class InventoryRepositoryJdbc implements InventoryRepository {
             """;
 
         UUID id = UUID.randomUUID();
+        OffsetDateTime expiresAtOdt = OffsetDateTime.ofInstant(expiresAt, ZoneOffset.UTC);
         jdbc.update(INSERT_RESERVATION_SQL,
                 new MapSqlParameterSource()
                         .addValue("id", id)
@@ -110,7 +113,27 @@ public class InventoryRepositoryJdbc implements InventoryRepository {
                         .addValue("productId", productId)
                         .addValue("qty", qty)
                         .addValue("status",ReservationStatus.HELD.name())
-                        .addValue("expiresAt", expiresAt));
+                        .addValue("expiresAt", expiresAtOdt));
         return id;
+    }
+
+
+    @Override
+    public int confirmAllReservationsForOrder(UUID orderId) {
+        String sql = """
+        WITH confirmed AS (
+            UPDATE inventory_reservations
+            SET status = 'CONFIRMED', confirmed_at = NOW()
+            WHERE order_id = :orderId AND status = 'HELD'
+            RETURNING product_id, qty
+        )
+        UPDATE inventory i
+        SET on_hand = i.on_hand - c.qty,
+            reserved = i.reserved - c.qty,
+            updated_at = NOW()
+        FROM confirmed c
+        WHERE i.product_id = c.product_id
+        """;
+        return jdbc.update(sql, new MapSqlParameterSource("orderId", orderId));
     }
 }
