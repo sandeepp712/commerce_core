@@ -114,7 +114,6 @@ public class CheckoutService {
         String shippingAddressJson = String.format("{\"addressId\":\"%s\"}", req.shippingAddressId());
 
         Order order = Order.builder()
-                .orderId(UUID.randomUUID())
                 .userId(userId)
                 .state(OrderState.AWAITING_PAYMENT_CONFIRMATION)
                 .subtotal(subtotal)
@@ -134,7 +133,7 @@ public class CheckoutService {
 
 
         try {
-            orderRepository.save(order);
+            orderRepository.saveAndFlush(order);
         }catch (DataIntegrityViolationException e) {
             Order existingOrder = orderRepository.findByIdempotencyKey(idempotencyKey)
                     .orElseThrow(()-> new IllegalStateException("Idempotency constraint violated but key not found"));

@@ -2,6 +2,8 @@ package com.commercecore.backend.auth.service;
 
 import com.commercecore.backend.auth.repo.RefreshTokenRepository;
 import com.commercecore.backend.auth.domain.RefreshToken;
+import com.commercecore.backend.shared.exception.InvalidRefreshTokenException;
+import com.commercecore.backend.shared.exception.RefreshTokenReusedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -43,7 +45,8 @@ public class RefreshTokenService {
     public Rotation rotate(String rawToken,String ip){
         String hash = RefreshTokens.hash(rawToken);
         RefreshToken current = refreshTokenRepository.findByTokenHash(hash)
-                .orElseThrow(()-> new RuntimeException("RefreshToken not found"));
+                .orElseThrow(()-> { throw new InvalidRefreshTokenException("Invalid refresh token");
+                });
 
         Instant now = Instant.now();
 
@@ -52,11 +55,11 @@ public class RefreshTokenService {
             LOGGER.warn("Refresh token reuse detected for user{}, famiky{}",
                     current.getUserId(),current.getFamilyId());
             refreshTokenRepository.revokeFamily(current.getFamilyId(),now);
-            throw new RuntimeException("Refresh token revoke detected for user"+current.getUserId());
+            throw new RefreshTokenReusedException("Refresh token reuse detected for user"+current.getUserId());
         }
 
         if(!current.isActive(now)){
-            throw new RuntimeException("Refresh token is inactive for user"+current.getUserId());
+            throw new RefreshTokenReusedException("Refresh token reuse detected for user"+current.getUserId());
         }
 
         String newRawToken = RefreshTokens.newRawToken();

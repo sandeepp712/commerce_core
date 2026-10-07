@@ -42,7 +42,7 @@ public class Product {
     protected Product() {
     }
 
-    public Product(UUID productId, String sku, String name, String description, BigDecimal price, String currency, Boolean active) {
+    public Product(String sku, String name, String description, BigDecimal price, String currency, Boolean active) {
         this.productId = productId;
         this.sku = sku;
         this.name = name;

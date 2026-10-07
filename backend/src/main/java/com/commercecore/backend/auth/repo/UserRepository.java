@@ -19,7 +19,11 @@ public interface UserRepository extends JpaRepository<User, UUID> {
     // In UserRepository
     @Modifying(clearAutomatically = true)
     @Query("UPDATE User u SET u.failedLoginAttempts = u.failedLoginAttempts + 1, " +
-            "u.lockedUntil = CASE WHEN (u.failedLoginAttempts + 1) >= 5 THEN :lockTime ELSE u.lockedUntil END " +
-            "WHERE u.email = :email")
+            "u.lockedUntil = CASE " +
+            " WHEN (u.failedLoginAttempts + 1) >= 5 AND u.lockedUntil IS NULL " +
+            " THEN :lockTime " +
+            " ELSE u.lockedUntil " +
+            " END " +
+            " WHERE u.email = :email")
     int incrementFailedAttempts(@Param("email") String email, @Param("lockTime") Instant lockTime);
 }

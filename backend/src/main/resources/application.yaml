@@ -19,4 +19,13 @@ spring:
   jwt:
     secret: ${JWT_SECRET}
 
+  stripe:
+    webhook:
+        signing-secret: ${STRIPE_WEBHOOK_SECRET}
+
+  task:
+    scheduling:
+      pool:
+        size: 2
+
 

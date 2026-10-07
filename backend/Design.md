@@ -51,3 +51,20 @@ JPA cannot easily express atomic, multi-table conditional updates, that why wher
 
 Cart have a low contention and a high read-to-write ratio.
 It saves you from writing tedious SQL for simple CRUD operations.
+
+
+
+
+### Mixing JPA and JDBC
+I using the the order to save in order using jpa but the hibernate execute the query sitting in cache memory it wait and do in sql batch and executed at flush time.
+and the jdbc execute the query immediate 
+
+So when I checking the testcase for checkoutTest I using jpa to save order in order table
+and in inventory_reservation I using jdbc to immediatly store it which cause the error.
+
+solution 
+I fix the checkout using saveandflush in jpa which execute the sql query immediately.
+
+When raw JDBC code references a row that was created by JPA in the same transaction, you MUST flush the JPA entity first.
+
+<!-- -->

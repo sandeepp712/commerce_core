@@ -44,7 +44,7 @@ public class AuthService {
     public RegisterResponse register(String email, String username, String password) {
         // 1. Check if email already exists
         if (userRepository.existsByEmail(email)) {
-            throw new EmailAlreadyExistsException("Email already registered");
+            throw new EmailAlreadyExistsException("An account with that email already exists");
         }
 
         // 2. Hash the password (NEVER store plain text)
@@ -99,7 +99,7 @@ public class AuthService {
     }
 
     @Transactional
-    public void logout(String accessToken) {
-        refreshTokenService.revoke(accessToken);
+    public void logout(String refreshToken) {
+        refreshTokenService.revoke(refreshToken);
     }
 }
