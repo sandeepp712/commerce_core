@@ -19,12 +19,12 @@ public interface CartRepository extends JpaRepository<Cart, UUID> {
     Optional<Cart> findByCartIdAndUserId(UUID cartId, UUID userId);
 
     // Find an active cart by ID and status
-    Optional<Cart> findByCartIdAndCartStatus(UUID cartId, CartStatus cartStatus);
+    Optional<Cart> findByCartIdAndStatus(UUID cartId, CartStatus status);
 
     Optional<Cart> findActiveByUserId(UUID userId);
 
     @Modifying(clearAutomatically = true)
-    @Query("UPDATE Cart c SET c.cartStatus = :status, c.checkoutAt= :checkoutAt, c.updatedAt = :updatedAt where c.cartId= :cartId")
+    @Query("UPDATE Cart c SET c.status = :status, c.checkoutAt= :checkoutAt, c.updatedAt = :updatedAt where c.cartId= :cartId")
     int updateCartStatus(
             @Param("cartId") UUID cartId,
             @Param("status") CartStatus status,

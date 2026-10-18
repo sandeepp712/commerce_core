@@ -1,14 +1,53 @@
 services:
   postgres-ecommerce-db:
-    image: 'postgres:16'
-    container_name: commerce_db
+    image: 'postgres:16-alpine'
+    container_name: ecommerce_db
     ports:
     - "5435:5432"
     environment:
       POSTGRES_DB: ecommerce
       POSTGRES_USER: ecommerce
       POSTGRES_PASSWORD: ecommerce
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL","pg_isready -U ecommerce"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   redis:
-    image: redis:7
+    image: redis:7-alpine
     ports:
     - "6379:6379"
+    command: redis-server --appendonly yes
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD","redis-cli","ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+
+  rabbitmq:
+    image: rabbitmq:3.13-management-alpine
+    container_name: ecommerce-rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: ecommerce
+      RABBITMQ_DEFAULT_PASS: ecommerce
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+    healthcheck:
+      test: ["CMD","rabbitmq-diagnostics","-q","ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres-data:
+  redis-data:
+  rabbitmq-data:

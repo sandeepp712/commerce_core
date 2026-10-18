@@ -16,6 +16,7 @@ import com.commercecore.backend.shared.exception.EmptyCartException;
 import com.commercecore.backend.shared.exception.IdempotencyConflictException;
 import com.commercecore.backend.shared.exception.InsufficientStockException;
 import com.commercecore.backend.shared.exception.ProductUnavailableException;
+import com.commercecore.backend.shared.metrics.CheckoutMetrics;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,6 +35,7 @@ import java.util.stream.Collectors;
 @Service
 public class CheckoutService {
     private static final Duration RESERVATION_TTL = Duration.ofMinutes(15);
+    private final CheckoutMetrics checkoutMetrics;
 
     public final InventoryRepository inventoryRepository;
     public final CartRepository cartRepository;
@@ -41,11 +43,12 @@ public class CheckoutService {
     public final ProductRepository productRepository;
 
 
-    public CheckoutService(InventoryRepository inventoryRepository, CartRepository cartRepository, OrderRepository orderRepository, ProductRepository productRepository) {
+    public CheckoutService(InventoryRepository inventoryRepository, CartRepository cartRepository, OrderRepository orderRepository, ProductRepository productRepository, CheckoutMetrics checkoutMetrics) {
         this.inventoryRepository = inventoryRepository;
         this.cartRepository = cartRepository;
         this.orderRepository = orderRepository;
         this.productRepository = productRepository;
+        this.checkoutMetrics = checkoutMetrics;
 
     }
 
@@ -61,6 +64,7 @@ public class CheckoutService {
     @Transactional(rollbackFor = Exception.class)
     public CheckoutResponse processCheckout(UUID userId,String idempotencyKey ,CheckoutRequest req) {
 
+        long startTime = System.currentTimeMillis();
         // check idempotencykey was already user?
         var existing = orderRepository.findByIdempotencyKey(idempotencyKey);
         if (existing.isPresent()) {
@@ -134,6 +138,7 @@ public class CheckoutService {
 
         try {
             orderRepository.saveAndFlush(order);
+            checkoutMetrics.recordSuccess(System.currentTimeMillis() - startTime);
         }catch (DataIntegrityViolationException e) {
             Order existingOrder = orderRepository.findByIdempotencyKey(idempotencyKey)
                     .orElseThrow(()-> new IllegalStateException("Idempotency constraint violated but key not found"));
@@ -141,6 +146,7 @@ public class CheckoutService {
             if(!sameRequestHash(existingOrder,req,userId)){
                 throw new IdempotencyConflictException("IdempotencyKey already exists");
             }
+            checkoutMetrics.recordDuplicateWebhook();
             return toResponse(existingOrder);
         }
 

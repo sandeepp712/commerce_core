@@ -81,25 +81,21 @@ public class PaymentWebhookService {
                                        UUID orderId, BigDecimal amount,
                                        String currency, String rawPayload) {
 
-        // ─── STEP 1: IDEMPOTENCY CHECK ─────────────────────────────────────
-        // Attempt to insert a payment record with the event ID.
-        // If this event was already processed, the UNIQUE constraint
-        // on provider_event_id will throw DataIntegrityViolationException.
-        Payment payment = new Payment(
+        // Idempotency check
+        // handle 99.9% of duplicate cleanly
+        int inserted = paymentRepository.insertIgnoreDuplicate(
+                UUID.randomUUID(),
                 orderId,
                 "STRIPE",
                 paymentIntentId,
                 eventId,
                 amount,
                 currency,
-                PaymentStatus.CAPTURED,
+                PaymentStatus.CAPTURED.name(),
                 rawPayload
         );
 
-        try {
-            paymentRepository.save(payment);
-        } catch (DataIntegrityViolationException e) {
-            // This event was already processed. Idempotent success.
+        if(inserted != 1) {
             LOG.info("Duplicate webhook event ignored: {}", eventId);
             return;
         }
@@ -108,6 +104,7 @@ public class PaymentWebhookService {
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new IllegalStateException(
                         "Order not found for payment webhook: " + orderId));
+
 
         // ─── STEP 3: STATE TRANSITION ──────────────────────────────────────
         try {
@@ -128,22 +125,18 @@ public class PaymentWebhookService {
                             "Order {}. Initiating refund.",
                     order.getState(), orderId);
 
-            PendingRefund refund = new PendingRefund(
-                    orderId,
-                    payment.getId(),
-                    paymentIntentId,
-                    amount,
-                    currency
-            );
-            pendingRefundRepository.save(refund);
+            // Fetch the payment we just inserted to get its ID
+            Payment payment = paymentRepository.findByProviderEventId(eventId)
+                    .orElseThrow(() -> new IllegalStateException("Payment not found after insert"));
+
+            pendingRefundRepository.save(new PendingRefund(
+                    orderId, payment.getId(), paymentIntentId, amount, currency));
 
             // Mark payment as refunded (intent) since we know we'll refund
 //            payment.markRefunded();
             orderEventRepository.save(new OrderEvent(
-                    orderId,
-                    "PaymentRefundQueuedAfterExpiry",
-                    order.getState().name(),
-                    null,
+                    orderId, "PaymentRefundQueuedAfterExpiry",
+                    order.getState().name(), null,
                     String.format("{\"eventId\":\"%s\",\"reason\":\"order_expired_before_payment_confirmed\"}", eventId)
             ));
 

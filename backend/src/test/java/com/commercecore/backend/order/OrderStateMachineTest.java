@@ -1,6 +1,7 @@
 package com.commercecore.backend.order;
 
 import com.commercecore.backend.shared.exception.EmptyCartException;
+import com.commercecore.backend.shared.exception.IllegalOrderTransitionException;
 import org.junit.jupiter.api.Test;
 
 import java.util.EnumSet;
@@ -26,8 +27,8 @@ class OrderStateMachineTest {
                             "Expected LEGAL: " + from + " -> " + to);
                     legal++;
                 } else {
-                    EmptyCartException.IllegalOrderTransitionException ex = assertThrows(
-                            EmptyCartException.IllegalOrderTransitionException.class,
+                    IllegalOrderTransitionException ex = assertThrows(
+                            IllegalOrderTransitionException.class,
                             () -> OrderStateMachine.assertTransition(from, to),
                             "Expected ILLEGAL: " + from + " -> " + to);
                     assertEquals(from, ex.getFrom(), "from in exception");

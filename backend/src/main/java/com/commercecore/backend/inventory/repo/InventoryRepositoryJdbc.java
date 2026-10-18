@@ -136,4 +136,44 @@ public class InventoryRepositoryJdbc implements InventoryRepository {
         """;
         return jdbc.update(sql, new MapSqlParameterSource("orderId", orderId));
     }
+
+
+
+    @Override
+    public int releaseAllReservationsForOrder(UUID orderId) {
+        String sql = """
+                WITH released AS (
+                UPDATE inventory_reservations
+                SET status = 'RELEASED', released_at = NOW()
+                WHERE order_id = :orderId AND status = 'HELD'
+                RETURNING product_id, qty
+                )
+                UPDATE inventory i
+                SET reserved = i.reserved - r.qty,
+                updated_at = NOW()
+                FROM released r
+                WHERE i.product_id = r.product_id
+                """;
+        return jdbc.update(sql, new MapSqlParameterSource("orderId", orderId));
+    }
+
+    @Override
+    public void createInitialInventory(UUID productId, int onHand) {
+        String sql = """
+                INSERT INTO inventory (product_id, on_hand, reserved, version, updated_at)
+                VALUES (:productId,:onHand,0,0,NOW())
+                ON CONFLICT (product_id) DO NOTHING
+                """;
+        jdbc.update(sql, new MapSqlParameterSource()
+                .addValue("productId", productId)
+                .addValue("onHand", onHand));
+    }
+
+    @Override
+    public Integer getAvailableStock(UUID productId) {
+        String sql = "SELECT (on_hand - reserved) FROM inventory WHERE product_id = :productId";
+        Integer result = jdbc.queryForObject(sql, new MapSqlParameterSource("productId", productId), Integer.class);
+
+        return result!=null?result:0;
+    }
 }
