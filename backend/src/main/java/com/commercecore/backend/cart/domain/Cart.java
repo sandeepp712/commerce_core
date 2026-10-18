@@ -4,10 +4,7 @@ import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Entity
 @Table(name = "cart")
@@ -22,7 +19,7 @@ public class Cart {
 
     @Enumerated(EnumType.STRING)
     @Column(name="status", nullable = false)
-    private CartStatus cartStatus = CartStatus.ACTIVE;
+    private CartStatus status = CartStatus.ACTIVE;
 
     @Column(name = "created_at",nullable = false, updatable = false)
     private Instant createdAt = Instant.now();
@@ -38,10 +35,10 @@ public class Cart {
 
     protected Cart(){}
 
-    public Cart(UUID cartId, UUID userId, CartStatus cartStatus,Instant updatedAt,List<CartItem> cartItems) {
+    public Cart(UUID cartId, UUID userId, CartStatus status,Instant updatedAt,List<CartItem> cartItems) {
         this.cartId = cartId;
         this.userId = userId;
-        this.cartStatus = cartStatus;
+        this.status = status;
         this.updatedAt = updatedAt;
         this.cartItems = cartItems;
     }
@@ -49,13 +46,13 @@ public class Cart {
 
     public UUID getCartId() { return cartId; }
     public UUID getUserId() { return userId; }
-    public CartStatus getCartStatus() { return cartStatus; }
+    public CartStatus getStatus() { return status; }
     public Instant getCreatedAt() { return createdAt; }
     public Instant getCheckoutAt() { return checkoutAt; }
     public List<CartItem> getCartItems() { return Collections.unmodifiableList(cartItems); }
 
 
-    public void addItems(UUID productId, int quantity, BigDecimal unitPrice){
+    public void addItem(UUID productId, int quantity, BigDecimal unitPrice){
         if(quantity <= 0){
             throw new IllegalArgumentException("Quantity must be greater than zero.");
         }
@@ -71,22 +68,38 @@ public class Cart {
                         () -> {
                             CartItem newItem = new CartItem(productId, quantity, unitPrice);
                             newItem.setCart(this);
-                            this.cartItems.add(newItem);
+                            cartItems.add(newItem);
                         }
                 );
         this.updatedAt = Instant.now();
     }
 
     public void markAsCheckedOut() {
-        if(this.cartStatus == CartStatus.CHECKED_OUT) {
+        if(this.status == CartStatus.CHECKED_OUT) {
             throw new IllegalStateException("Cart is already checked-out");
         }
-        this.cartStatus = CartStatus.CHECKED_OUT;
+        this.status = CartStatus.CHECKED_OUT;
         this.checkoutAt = Instant.now();
         this.updatedAt = Instant.now();
     }
 
     public boolean isEmpty() {
         return this.cartItems == null || this.cartItems.isEmpty();
+    }
+
+    public static Cart createNew(UUID userId){
+        Cart cart = new Cart();
+        cart.userId = userId;
+        cart.status = CartStatus.ACTIVE;
+        cart.cartItems = new ArrayList<>();
+        return cart;
+    }
+
+    public void removeItem(UUID productId){
+        cartItems.removeIf(item -> item.getProductId().equals(productId));
+    }
+
+    public void clearItems(){
+        cartItems.clear();
     }
 }

@@ -51,9 +51,18 @@ public class CartItem {
     public void setCart(Cart cart) {this.cart = cart;}
 
 
-    public void incrementQuantity(int amount){
-        if(amount <= 0) throw new IllegalArgumentException("Amount must be positive");
-        this.quantity += amount;
+    public void incrementQuantity(int quantity){
+        if(quantity <= 0) throw new IllegalArgumentException("Amount must be positive");
+        this.quantity += quantity;
         this.updatedAt = Instant.now();
+    }
+
+    public BigDecimal getLineTotal(){
+        return unitPrice.multiply(new BigDecimal(quantity));
+    }
+
+    public void updateQuantity(int quantity,BigDecimal unitPrice){
+        this.quantity = quantity;
+        this.unitPrice = unitPrice;
     }
 }

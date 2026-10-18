@@ -4,6 +4,7 @@ import com.commercecore.backend.payment.service.PaymentWebhookService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tools.jackson.databind.JsonNode;
@@ -78,19 +79,23 @@ public class WebhookController {
                 case "payment_intent.payment_failed" -> handlePaymentFailed(event, eventId);
                 default -> LOG.debug("Ignoring unhandled event type: {}", eventType);
             }
+            return ResponseEntity.ok("OK");
 
-        } catch (Exception e) {
+        } catch (DataIntegrityViolationException e) {
             // Log the error but still return 200.
             // WHY: If we return 500, Stripe will retry the webhook.
             // If the error is a bug in our code (not a transient failure),
             // Stripe will retry infinitely, creating noise.
             // Better: return 200, log the error, investigate manually.
-            LOG.error("Error processing webhook: {}", e.getMessage(), e);
+            LOG.info("Duplicate webhook absorbed (race conditions): {}", e.getMessage());
+            return ResponseEntity.ok("OK");
+        }catch (IllegalStateException e){
+            LOG.error("Webhook processing error (permanent): {}", e.getMessage());
+            return ResponseEntity.ok("OK");
+        }catch (Exception e){
+            LOG.error("Unexpected webhook processing error :{}", e.getMessage());
+            return ResponseEntity.ok("OK");
         }
-
-        // Always return 200 for verified webhooks.
-        // Stripe interprets 2xx as "successfully received, stop retrying."
-        return ResponseEntity.ok("OK");
     }
 
     private void handlePaymentSucceeded(JsonNode event, String eventId) throws Exception {

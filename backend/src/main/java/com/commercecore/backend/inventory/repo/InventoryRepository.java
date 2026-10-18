@@ -18,4 +18,11 @@ public interface InventoryRepository{
 
     // Add to InventoryRepository interface:
     int confirmAllReservationsForOrder(UUID orderId);
+
+    // Release Inventory
+    int releaseAllReservationsForOrder(UUID orderId);
+
+    // New inventory add
+    void createInitialInventory(UUID productId, int onHand);
+    Integer getAvailableStock(UUID productId);
 }

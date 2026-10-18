@@ -68,3 +68,13 @@ I fix the checkout using saveandflush in jpa which execute the sql query immedia
 When raw JDBC code references a row that was created by JPA in the same transaction, you MUST flush the JPA entity first.
 
 <!-- -->
+
+### Your PostgreSQL row-lock queue handled 500 users in 1 second. What happens when Black Friday hits and 50,000 users try to buy a PS5 at the exact same second? The queue will take 100 seconds. Users will timeout. Your database CPU will spike to 100% just managing lock contention. How do you architect a flash-sale system that can handle 50,000 concurrent requests without bottlenecking on a single database row?"
+
+Layer 1 -> To tackle this problem I use the redis to handle in-memory atomic operation and reject unfill request instantly.
+Layer 2 -> Then the messsage queue handle by kafka/RabbitMq  to handle allowed request.
+They queue then for Db processing.
+Layer 3 -> Postresql consume the request in batches and create order and confirm reservation, decrement real stock.
+
+
+                                            
