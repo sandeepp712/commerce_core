@@ -1,0 +1,1 @@
+ALTER TABLE orders ADD COLUMN cart_id UUID REFERENCES cart(id);

@@ -17,6 +17,8 @@ import com.commercecore.backend.shared.exception.IdempotencyConflictException;
 import com.commercecore.backend.shared.exception.InsufficientStockException;
 import com.commercecore.backend.shared.exception.ProductUnavailableException;
 import com.commercecore.backend.shared.metrics.CheckoutMetrics;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,16 +26,14 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.Duration;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 
 @Service
 public class CheckoutService {
+    private static final Logger LOG = LoggerFactory.getLogger(CheckoutService.class);
     private static final Duration RESERVATION_TTL = Duration.ofMinutes(15);
     private final CheckoutMetrics checkoutMetrics;
 
@@ -66,7 +66,7 @@ public class CheckoutService {
 
         long startTime = System.currentTimeMillis();
         // check idempotencykey was already user?
-        var existing = orderRepository.findByIdempotencyKey(idempotencyKey);
+        Optional<Order> existing = orderRepository.findByIdempotencyKey(idempotencyKey);
         if (existing.isPresent()) {
             Order o = existing.get();
             if (!sameRequestHash(o, req, userId)) {
@@ -79,10 +79,19 @@ public class CheckoutService {
         Cart cart = cartRepository.findActiveByUserId(userId)
                 .orElseThrow(EmptyCartException::new);
 
-        if(cart.isEmpty()){
+        if(cart.getCartItems().isEmpty()){
             throw new EmptyCartException("Cart is empty for user " + userId);
         }
 
+        Optional<Order> pendingOrder = orderRepository.findByCartIdAndStateIn(
+                cart.getCartId(),
+                List.of(OrderState.AWAITING_PAYMENT_CONFIRMATION)
+        );
+
+        if(pendingOrder.isPresent()){
+            LOG.info("Pending order exists for cart {},returning existing order",cart.getCartId());
+            return toResponse(pendingOrder.get());
+        }
         // 1. Extract item from the cart
         List<UUID> productIds = cart.getCartItems().stream()
                 .map(CartItem::getProductId)
@@ -110,6 +119,7 @@ public class CheckoutService {
             subtotal = subtotal.add(orderItem.getLineTotal());
         }
 
+
         BigDecimal shippingCost = BigDecimal.ZERO;
         BigDecimal tax = subtotal.multiply(new BigDecimal("0.05"));
         BigDecimal total = subtotal.add(shippingCost).add(tax);
@@ -119,6 +129,7 @@ public class CheckoutService {
 
         Order order = Order.builder()
                 .userId(userId)
+                .cartId(cart.getCartId())
                 .state(OrderState.AWAITING_PAYMENT_CONFIRMATION)
                 .subtotal(subtotal)
                 .shipping(shippingCost)
@@ -138,7 +149,6 @@ public class CheckoutService {
 
         try {
             orderRepository.saveAndFlush(order);
-            checkoutMetrics.recordSuccess(System.currentTimeMillis() - startTime);
         }catch (DataIntegrityViolationException e) {
             Order existingOrder = orderRepository.findByIdempotencyKey(idempotencyKey)
                     .orElseThrow(()-> new IllegalStateException("Idempotency constraint violated but key not found"));
@@ -165,9 +175,7 @@ public class CheckoutService {
         }
 
 
-        cart.markAsCheckedOut();
-        cartRepository.save(cart);
-
+        checkoutMetrics.recordSuccess(System.currentTimeMillis() - startTime);
         return toResponse(order);
     }
 

@@ -2,6 +2,7 @@ package com.commercecore.backend.flashsale.service;
 
 import com.commercecore.backend.catalog.domain.Product;
 import com.commercecore.backend.catalog.repo.ProductRepository;
+import com.commercecore.backend.flashsale.api.dto.FlashSaleOrderEvent;
 import com.commercecore.backend.shared.exception.InsufficientStockException;
 import jakarta.persistence.EntityNotFoundException;
 import org.slf4j.Logger;
@@ -60,7 +61,7 @@ public class FlashSaleService {
         BigDecimal unitPrice = product.getPrice();
 
         // 3. Atomic reservation in Redis
-        long remaining = stockService.tryReserve(productId, quantity);
+        long remaining = flashSaleStockService.tryReserve(productId, quantity);
 
         if (remaining == -1) {
             throw new IllegalStateException("Product not found in Redis cache");

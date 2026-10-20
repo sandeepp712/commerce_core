@@ -17,7 +17,7 @@ import java.util.UUID;
 public class JwtService {
 
     private final SecretKey key;
-    private static final long ACCESS_TOKEN_EXPIRY_MS = 15 * 60 * 1000;  // 15 minutes
+    private static final long ACCESS_TOKEN_EXPIRY_MS = 60 * 60 * 1000;  // 15 minutes
 
     public JwtService(@Value("${JWT_SECRET:fallback_secret_key_for_development}") String secret) {
         this.key = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));

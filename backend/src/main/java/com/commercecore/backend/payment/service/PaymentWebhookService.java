@@ -1,5 +1,7 @@
 package com.commercecore.backend.payment.service;
 
+import com.commercecore.backend.cart.domain.CartStatus;
+import com.commercecore.backend.cart.repo.CartRepository;
 import com.commercecore.backend.inventory.repo.InventoryRepository;
 import com.commercecore.backend.order.domain.Order;
 import com.commercecore.backend.order.domain.OrderEvent;
@@ -44,19 +46,22 @@ public class PaymentWebhookService {
     private final InventoryRepository inventoryRepository;
     private final OrderEventRepository orderEventRepository;
     private final OutboxRepository outboxRepository;
+    private final CartRepository cartRepository;
 
     public PaymentWebhookService(OrderRepository orderRepository,
                                  PaymentRepository paymentRepository,
                                  PendingRefundRepository pendingRefundRepository,
                                  InventoryRepository inventoryRepository,
                                  OrderEventRepository orderEventRepository,
-                                 OutboxRepository outboxRepository) {
+                                 OutboxRepository outboxRepository,
+                                 CartRepository cartRepository) {
         this.orderRepository = orderRepository;
         this.paymentRepository = paymentRepository;
         this.pendingRefundRepository = pendingRefundRepository;
         this.inventoryRepository = inventoryRepository;
         this.orderEventRepository=orderEventRepository;
         this.outboxRepository=outboxRepository;
+        this.cartRepository=cartRepository;
     }
 
     /**
@@ -105,6 +110,18 @@ public class PaymentWebhookService {
                 .orElseThrow(() -> new IllegalStateException(
                         "Order not found for payment webhook: " + orderId));
 
+        // Find the cart associated with this order
+        cartRepository.findByUserId(order.getUserId())
+                .filter(cart -> cart.getStatus()  == CartStatus.ACTIVE)
+                .ifPresent(cart -> {
+                    // Option A: Clear items, keep cart
+                    cart.clearItems();
+                    cart.setStatus(CartStatus.CHECKED_OUT);
+                    cartRepository.save(cart);
+
+                    // Option B: Delete the cart entirely
+//                     cartRepository.delete(cart);
+                });
 
         // ─── STEP 3: STATE TRANSITION ──────────────────────────────────────
         try {

@@ -24,7 +24,7 @@ public class AuthService {
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthService.class);
     private static final int MAX_FAILED_ATTEMPTS = 5;
     private static final Duration LOCK_DURATION = Duration.ofMinutes(15);
-    private static final long ACCESS_TOKEN_TTL = 900;
+    private static final long ACCESS_TOKEN_TTL = 3600;
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;

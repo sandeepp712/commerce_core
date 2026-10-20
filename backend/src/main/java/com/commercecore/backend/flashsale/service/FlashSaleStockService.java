@@ -17,11 +17,12 @@ public class FlashSaleStockService {
     private static final Logger LOG = LoggerFactory.getLogger(FlashSaleStockService.class);
 
     @Value("${flash-sale.redis-key-prefix}")
+    private String stockKeyPrefix;
+
     private final StringRedisTemplate stringRedisTemplate;
     private final InventoryRepository inventoryRepository;
 
 
-    private String stockKeyPrefix;
 
     /**
      * Lua script for atomic stock reservation.
