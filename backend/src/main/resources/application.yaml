@@ -1,32 +1,57 @@
 spring:
   application:
-    name: backend
+    name: commerce-core
+
+  # Database
   datasource:
-    url: jdbc:postgresql://localhost:5435/ecommerce
-    username: ecommerce
-    password: ecommerce
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/ecommerce}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
     driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 5
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+      leak-detection-threshold: 60000
+
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: none
     open-in-view: false
     show-sql: false
+
   flyway:
     enabled: true
     locations: classpath:db/migration
-  data:
-    redis:
-      host: localhost
-      port: 6379
+    baseline-on-migrate: true
+
+  #Task Scheduling
   task:
     scheduling:
       pool:
         size: 2
+
+  #Redis Configuration
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password: ${REDIS_PASSWORD}
+      timeout: 5000
+      lettuce:
+        pool:
+          max-active: 16
+          max-idle: 8
+          min-idle: 2
+
+  # RabbitMQ
   rabbitmq:
     host: localhost
     port: 5672
-    username: ecommerce
-    password: ecommerce
+    username: ${RABBITMQ_USERNAME}
+    password: ${RABBITMQ_PASSWORD}
     listener:
       simple:
         acknowledge-mode: manual    # we manually ACK after successfull DB write
@@ -34,9 +59,9 @@ spring:
         retry:
           enabled: true
           max-retries: 3
-          initial-interval: 1000ms
+          initial-interval: 1000
           multiplier: 2.0
-          max-interval: 10000ms
+          max-interval: 10000
 
 jwt:
   secret: ${JWT_SECRET}
@@ -46,6 +71,21 @@ stripe:
   webhook:
       signing-secret: ${STRIPE_WEBHOOK_SECRET}
 
+flash-sale:
+  redis-key-prefix: ${FLASH_SALE_REDIS_PREFIX:stock:product:}
+  lock-key-prefix: ${FLASH_SALE_LOCK_PREFIX:lock:stock:}
+  queue-name: ${FLASH_SALE_QUEUE:flash-sale-orders}
+  exchange-name: ${FLASH_SALE_EXCHANGE:flash-sale-exchange}
+  routing-key: ${FLASH_SALE_ROUTING_KEY:order.confirmed}
+
+# ─── Server ─────────────────────────────────────────────────────────────
+server:
+  port: ${SERVER_PORT:8080}
+  shutdown: graceful
+  compression:
+    enabled: true
+    mime-types: application/json,application/xml,text/html,text/xml,text/plain
+    min-response-size: 1024
 
 logging:
   level:
@@ -53,26 +93,23 @@ logging:
     org.hibernate.SQL: WARN
     org.hibernate.type.descriptor.sql.BasicBinder: OFF
     com.commercecore.backend: INFO
+    org.springframework.security: WARN
+    org.springframework.amqp: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} %highlight(%-5level) [%thread] [%X{requestId:-NO-REQ}] %cyan(%logger{36}) - %msg%n"
 
-springdoc:
-  api-docs:
-    enabled: true
-    path: /v3/api-docs
-  swagger-ui:
-    enabled: true
-    path: /swagger-ui.html
-    operationsSorter: method
-    tagsSorter: alpha
-    tryItOutEnabled: true
 
+# ─── Actuator (RESTRICTED) ──────────────────────────────────────────────
 management:
   endpoints:
     web:
       exposure:
-        include: "*"
+        include: health,info,metrics,prometheus
+      base-path: /actuator
   endpoint:
     health:
-      show-details: always
+      show-details: when_authorized
+      roles: ACTUATOR_ADMIN
     metrics:
       enabled: true
     prometheus:
@@ -80,13 +117,16 @@ management:
   metrics:
     tags:
       application: commerce-core
+      environment: ${SPRING_PROFILES_ACTIVE:local}
     distribution:
       percentiles-histogram:
         http.server.requests: true
-
-flash-sale:
-  redis-key-prefix: "stock:product:"
-  lock-key-prefix: "lock:stock:"
-  queue-name: "flash-sale-orders"
-  exchange-name: "flash-sale-exchange"
-  routing-key: "order.confirmed"
+      percentiles:
+        http.server.requests: 0.5,0.95,0.99
+  health:
+    rabbit:
+      enabled: true
+    redis:
+      enabled: true
+    db:
+      enabled: true

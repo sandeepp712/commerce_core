@@ -1,5 +1,6 @@
 package com.commercecore.backend.cart.repo;
 
+import com.commercecore.backend.auth.domain.User;
 import com.commercecore.backend.cart.domain.Cart;
 import com.commercecore.backend.cart.domain.CartStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,6 +18,8 @@ public interface CartRepository extends JpaRepository<Cart, UUID> {
 
     // Find the active cart belonging to a specific user;
     Optional<Cart> findByCartIdAndUserId(UUID cartId, UUID userId);
+
+    Optional<Cart> findByUserId(UUID userId);
 
     // Find an active cart by ID and status
     Optional<Cart> findByCartIdAndStatus(UUID cartId, CartStatus status);

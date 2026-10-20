@@ -22,6 +22,9 @@ public class Order {
     @Column(name = "user_id", updatable = false, nullable = false)
     private UUID userId;
 
+    @Column(name = "cart_id")
+    private UUID cartId;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "state", nullable = false)
     private OrderState state;
@@ -76,6 +79,7 @@ public class Order {
 
     private Order(Builder builder) {
         this.userId = builder.userId;
+        this.cartId = builder.cartId;
         this.state = builder.state;
         this.subtotal = builder.subtotal;
         this.shipping = builder.shipping;
@@ -94,6 +98,7 @@ public class Order {
 
     public UUID getOrderId() {return orderId;}
     public UUID getUserId() {return userId;}
+    public UUID getCartId() {return cartId;}
     public OrderState getState() {return state;}
     public BigDecimal getSubtotal() {return subtotal;}
     public BigDecimal getShipping() {return shipping;}
@@ -133,6 +138,7 @@ public class Order {
 
     public static class Builder {
         private UUID userId;
+        private  UUID cartId;
         private OrderState state;
         private BigDecimal subtotal;
         private BigDecimal shipping;
@@ -147,6 +153,7 @@ public class Order {
         private List<OrderItem> orderItems = new ArrayList<>();
 
         public Builder userId(UUID userId) {this.userId = userId;return this;}
+        public Builder cartId(UUID cartId) {this.cartId = cartId;return this;}
         public Builder state(OrderState state) {this.state = state;return this;}
         public Builder subtotal(BigDecimal subtotal) {this.subtotal = subtotal;return this;}
         public Builder shipping(BigDecimal shipping) {this.shipping = shipping;return this;}

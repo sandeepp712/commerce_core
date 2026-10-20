@@ -1,6 +1,6 @@
 package com.commercecore.backend.flashsale.consumer;
 
-import com.commercecore.backend.flashsale.event.FlashSaleOrderEvent;
+import com.commercecore.backend.flashsale.api.dto.FlashSaleOrderEvent;
 import com.commercecore.backend.flashsale.service.FlashSaleStockService;
 import com.commercecore.backend.order.domain.Order;
 import com.commercecore.backend.order.domain.OrderItem;
@@ -8,6 +8,9 @@ import com.commercecore.backend.order.domain.OrderState;
 import com.commercecore.backend.order.repo.OrderRepository;
 import com.commercecore.backend.inventory.repo.InventoryRepository;
 import com.rabbitmq.client.Channel;
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.MeterRegistry;
+import io.micrometer.core.instrument.Timer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -29,13 +32,36 @@ public class FlashSaleOrderConsumer {
     private final OrderRepository orderRepository;
     private final InventoryRepository inventoryRepository;
     private final FlashSaleStockService stockService;
+    private final MeterRegistry meterRegistry;
+
+    // Metrics counters
+    private final Counter ordersProcessed;
+    private final Counter ordersFailed;
+    private final Timer processingDuration;
 
     public FlashSaleOrderConsumer(OrderRepository orderRepository,
                                   InventoryRepository inventoryRepository,
-                                  FlashSaleStockService stockService) {
+                                  FlashSaleStockService stockService,
+                                  MeterRegistry meterRegistry) {
         this.orderRepository = orderRepository;
         this.inventoryRepository = inventoryRepository;
         this.stockService = stockService;
+        this.meterRegistry = meterRegistry;
+
+
+        // Register metrics
+        this.ordersProcessed = Counter.builder("flashsale.consumer.processed.total")
+                .description("Flash sale orders successfully processed by consumer")
+                .register(meterRegistry);
+
+        this.ordersFailed = Counter.builder("flashsale.consumer.failed.total")
+                .description("Flash sale orders that failed processing")
+                .register(meterRegistry);
+
+        this.processingDuration = Timer.builder("flashsale.consumer.duration.seconds")
+                .description("Time to process a flash sale order")
+                .publishPercentiles(0.5, 0.95, 0.99)
+                .register(meterRegistry);
     }
 
     /**
@@ -52,11 +78,14 @@ public class FlashSaleOrderConsumer {
                                   Channel channel,
                                   @Header(AmqpHeaders.DELIVERY_TAG) long deliveryTag)
             throws IOException {
+
+        Timer.Sample sample = Timer.start(meterRegistry);
         try {
             processOrder(event);
 
             // ACK: Message processed successfully
             channel.basicAck(deliveryTag, false);
+            sample.stop(processingDuration);
             LOG.info("Flash sale order processed: userId={}, productId={}",
                     event.userId(), event.productId());
 
@@ -69,6 +98,10 @@ public class FlashSaleOrderConsumer {
 
             // Rollback Redis stock since order processing failed
             stockService.rollback(event.productId(), event.quantity());
+
+            // Track failure
+            ordersFailed.increment();
+            sample.stop(processingDuration);
         }
     }
 
@@ -83,7 +116,7 @@ public class FlashSaleOrderConsumer {
         }
 
         // 2. Create the order
-        BigDecimal total = event.unitPrice().multiply(BigDecimal.valueOf(event.quantity()));
+        BigDecimal total = event.unitprice().multiply(BigDecimal.valueOf(event.quantity()));
 
         Order order = Order.builder()
                 .userId(event.userId())
@@ -98,7 +131,7 @@ public class FlashSaleOrderConsumer {
                 .expiresAt(Instant.now().plusSeconds(900))  // 15 min to pay
                 .build();
 
-        OrderItem item = new OrderItem(event.productId(), event.quantity(), event.unitPrice());
+        OrderItem item = new OrderItem(event.productId(), event.quantity(), event.unitprice());
         order.addItem(item);
 
         // 3. Save order to PostgreSQL

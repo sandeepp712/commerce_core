@@ -51,6 +51,7 @@ public class Cart {
     public Instant getCheckoutAt() { return checkoutAt; }
     public List<CartItem> getCartItems() { return Collections.unmodifiableList(cartItems); }
 
+    public CartStatus setStatus(CartStatus status) { this.status = status; return this.status; }
 
     public void addItem(UUID productId, int quantity, BigDecimal unitPrice){
         if(quantity <= 0){

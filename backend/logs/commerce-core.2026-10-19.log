@@ -1,0 +1,668 @@
+2026-10-19 08:49:40.492 INFO  [background-preinit] [NO-REQ] o.h.validator.internal.util.Version - HV000001: Hibernate Validator 9.1.3.Final
+2026-10-19 08:49:40.536 INFO  [main] [NO-REQ] c.c.backend.BackendApplication - Starting BackendApplication using Java 25.0.4.1 with PID 2211 (/home/sandy/projects/commerce-core/backend/target/classes started by sandy in /home/sandy/projects/commerce-core/backend)
+2026-10-19 08:49:40.538 INFO  [main] [NO-REQ] c.c.backend.BackendApplication - No active profile set, falling back to 1 default profile: "default"
+2026-10-19 08:49:40.903 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-10-19 08:49:40.906 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-10-19 08:49:41.076 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 155 ms. Found 9 JPA repository interfaces.
+2026-10-19 08:49:41.137 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-10-19 08:49:41.139 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-10-19 08:49:41.176 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.commercecore.backend.auth.repo.RefreshTokenRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-10-19 08:49:41.177 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.commercecore.backend.auth.repo.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-10-19 08:49:41.177 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.commercecore.backend.cart.repo.CartRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-10-19 08:49:41.178 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.commercecore.backend.catalog.repo.ProductRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-10-19 08:49:41.178 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.commercecore.backend.order.repo.OrderEventRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-10-19 08:49:41.178 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.commercecore.backend.order.repo.OrderRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-10-19 08:49:41.178 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.commercecore.backend.payment.repo.PaymentRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-10-19 08:49:41.179 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.commercecore.backend.payment.repo.PendingRefundRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-10-19 08:49:41.180 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.commercecore.backend.shared.outbox.OutboxRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-10-19 08:49:41.180 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 21 ms. Found 0 Redis repository interfaces.
+2026-10-19 08:49:41.915 INFO  [main] [NO-REQ] o.s.boot.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-10-19 08:49:41.940 INFO  [main] [NO-REQ] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-10-19 08:49:42.007 INFO  [main] [NO-REQ] o.s.b.w.c.s.WebApplicationContextInitializer - Root WebApplicationContext: initialization completed in 1420 ms
+2026-10-19 08:49:42.466 INFO  [main] [NO-REQ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-10-19 08:49:42.599 INFO  [main] [NO-REQ] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@11069eac
+2026-10-19 08:49:42.600 INFO  [main] [NO-REQ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-10-19 08:49:42.620 INFO  [main] [NO-REQ] org.flywaydb.core.FlywayExecutor - Database: jdbc:postgresql://localhost:5435/ecommerce (PostgreSQL 16.15)
+2026-10-19 08:49:42.697 INFO  [main] [NO-REQ] o.f.core.internal.command.DbValidate - Successfully validated 4 migrations (execution time 00:00.028s)
+2026-10-19 08:49:42.735 INFO  [main] [NO-REQ] o.f.core.internal.command.DbMigrate - Current version of schema "public": 4
+2026-10-19 08:49:42.739 INFO  [main] [NO-REQ] o.f.core.internal.command.DbMigrate - Schema "public" is up to date. No migration necessary.
+2026-10-19 08:49:42.845 INFO  [main] [NO-REQ] org.hibernate.orm.jpa - HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-10-19 08:49:42.921 INFO  [main] [NO-REQ] org.hibernate.orm.core - HHH000001: Hibernate ORM core version 7.4.5.Final
+2026-10-19 08:49:43.332 INFO  [main] [NO-REQ] o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-10-19 08:49:43.401 INFO  [main] [NO-REQ] o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [jdbc:postgresql://localhost:5435/ecommerce]
+	Database driver: PostgreSQL JDBC Driver
+	Database dialect: PostgreSQLDialect
+	Database version: 16.15
+	Default catalog/schema: ecommerce/public
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-10-19 08:49:44.366 INFO  [main] [NO-REQ] org.hibernate.orm.core - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-10-19 08:49:44.432 INFO  [main] [NO-REQ] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-10-19 08:49:44.525 INFO  [main] [NO-REQ] o.s.d.j.r.q.QueryEnhancerFactories - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-10-19 08:49:46.064 WARN  [main] [NO-REQ] o.s.b.w.s.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'flashSaleController' defined in file [/home/sandy/projects/commerce-core/backend/target/classes/com/commercecore/backend/flashsale/api/FlashSaleController.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'flashSaleService' defined in file [/home/sandy/projects/commerce-core/backend/target/classes/com/commercecore/backend/flashsale/service/FlashSaleService.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'flashSaleStockService': Unsatisfied dependency expressed through field 'stringRedisTemplate': Failed to convert value of type 'java.lang.String' to required type 'org.springframework.data.redis.core.StringRedisTemplate'; Cannot convert value of type 'java.lang.String' to required type 'org.springframework.data.redis.core.StringRedisTemplate': no matching editors or conversion strategy found
+2026-10-19 08:49:46.076 INFO  [main] [NO-REQ] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-10-19 08:49:46.079 INFO  [main] [NO-REQ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2026-10-19 08:49:46.081 INFO  [main] [NO-REQ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2026-10-19 08:49:46.103 INFO  [main] [NO-REQ] o.s.b.a.l.ConditionEvaluationReportLogger - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-10-19 08:49:46.116 ERROR [main] [NO-REQ] o.s.boot.SpringApplication - Application run failed
+org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'flashSaleController' defined in file [/home/sandy/projects/commerce-core/backend/target/classes/com/commercecore/backend/flashsale/api/FlashSaleController.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'flashSaleService' defined in file [/home/sandy/projects/commerce-core/backend/target/classes/com/commercecore/backend/flashsale/service/FlashSaleService.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'flashSaleStockService': Unsatisfied dependency expressed through field 'stringRedisTemplate': Failed to convert value of type 'java.lang.String' to required type 'org.springframework.data.redis.core.StringRedisTemplate'; Cannot convert value of type 'java.lang.String' to required type 'org.springframework.data.redis.core.StringRedisTemplate': no matching editors or conversion strategy found
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:804)
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:240)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1380)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1219)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:565)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:525)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:371)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:331)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:196)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.instantiateSingleton(DefaultListableBeanFactory.java:1225)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingleton(DefaultListableBeanFactory.java:1191)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:1121)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:994)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:621)
+	at org.springframework.boot.web.server.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:143)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:756)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:445)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:321)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1365)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1354)
+	at com.commercecore.backend.BackendApplication.main(BackendApplication.java:10)
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'flashSaleService' defined in file [/home/sandy/projects/commerce-core/backend/target/classes/com/commercecore/backend/flashsale/service/FlashSaleService.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'flashSaleStockService': Unsatisfied dependency expressed through field 'stringRedisTemplate': Failed to convert value of type 'java.lang.String' to required type 'org.springframework.data.redis.core.StringRedisTemplate'; Cannot convert value of type 'java.lang.String' to required type 'org.springframework.data.redis.core.StringRedisTemplate': no matching editors or conversion strategy found
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:804)
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:240)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1380)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1219)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:565)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:525)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:371)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:331)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:201)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveBean(DefaultListableBeanFactory.java:1232)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1711)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1658)
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:912)
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:791)
+	... 21 common frames omitted
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'flashSaleStockService': Unsatisfied dependency expressed through field 'stringRedisTemplate': Failed to convert value of type 'java.lang.String' to required type 'org.springframework.data.redis.core.StringRedisTemplate'; Cannot convert value of type 'java.lang.String' to required type 'org.springframework.data.redis.core.StringRedisTemplate': no matching editors or conversion strategy found
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:767)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:748)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:146)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:493)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1444)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:602)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:525)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:371)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:331)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:201)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveBean(DefaultListableBeanFactory.java:1232)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1711)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1658)
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:912)
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:791)
+	... 35 common frames omitted
+Caused by: org.springframework.beans.ConversionNotSupportedException: Failed to convert value of type 'java.lang.String' to required type 'org.springframework.data.redis.core.StringRedisTemplate'; Cannot convert value of type 'java.lang.String' to required type 'org.springframework.data.redis.core.StringRedisTemplate': no matching editors or conversion strategy found
+	at org.springframework.beans.TypeConverterSupport.convertIfNecessary(TypeConverterSupport.java:79)
+	at org.springframework.beans.TypeConverterSupport.convertIfNecessary(TypeConverterSupport.java:67)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1686)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1658)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:764)
+	... 50 common frames omitted
+Caused by: java.lang.IllegalStateException: Cannot convert value of type 'java.lang.String' to required type 'org.springframework.data.redis.core.StringRedisTemplate': no matching editors or conversion strategy found
+	at org.springframework.beans.TypeConverterDelegate.convertIfNecessary(TypeConverterDelegate.java:270)
+	at org.springframework.beans.TypeConverterSupport.convertIfNecessary(TypeConverterSupport.java:75)
+	... 54 common frames omitted
+2026-10-19 09:57:52.507 INFO  [background-preinit] [NO-REQ] o.h.validator.internal.util.Version - HV000001: Hibernate Validator 9.1.3.Final
+2026-10-19 09:57:52.543 INFO  [main] [NO-REQ] c.c.backend.BackendApplication - Starting BackendApplication using Java 25.0.4.1 with PID 2930 (/home/sandy/projects/commerce-core/backend/target/classes started by sandy in /home/sandy/projects/commerce-core/backend)
+2026-10-19 09:57:52.544 INFO  [main] [NO-REQ] c.c.backend.BackendApplication - No active profile set, falling back to 1 default profile: "default"
+2026-10-19 09:57:53.576 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-10-19 09:57:53.578 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-10-19 09:57:53.695 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 110 ms. Found 9 JPA repository interfaces.
+2026-10-19 09:57:53.734 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-10-19 09:57:53.735 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-10-19 09:57:53.751 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.commercecore.backend.auth.repo.RefreshTokenRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-10-19 09:57:53.752 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.commercecore.backend.auth.repo.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-10-19 09:57:53.752 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.commercecore.backend.cart.repo.CartRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-10-19 09:57:53.752 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.commercecore.backend.catalog.repo.ProductRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-10-19 09:57:53.752 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.commercecore.backend.order.repo.OrderEventRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-10-19 09:57:53.753 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.commercecore.backend.order.repo.OrderRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-10-19 09:57:53.753 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.commercecore.backend.payment.repo.PaymentRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-10-19 09:57:53.753 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.commercecore.backend.payment.repo.PendingRefundRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-10-19 09:57:53.753 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.commercecore.backend.shared.outbox.OutboxRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-10-19 09:57:53.753 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 9 ms. Found 0 Redis repository interfaces.
+2026-10-19 09:57:54.499 INFO  [main] [NO-REQ] o.s.boot.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-10-19 09:57:54.514 INFO  [main] [NO-REQ] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-10-19 09:57:54.572 INFO  [main] [NO-REQ] o.s.b.w.c.s.WebApplicationContextInitializer - Root WebApplicationContext: initialization completed in 1982 ms
+2026-10-19 09:57:54.980 INFO  [main] [NO-REQ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-10-19 09:57:55.102 INFO  [main] [NO-REQ] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@3d9c8c3c
+2026-10-19 09:57:55.103 INFO  [main] [NO-REQ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-10-19 09:57:55.122 INFO  [main] [NO-REQ] org.flywaydb.core.FlywayExecutor - Database: jdbc:postgresql://localhost:5435/ecommerce (PostgreSQL 16.15)
+2026-10-19 09:57:55.190 INFO  [main] [NO-REQ] o.f.core.internal.command.DbValidate - Successfully validated 4 migrations (execution time 00:00.028s)
+2026-10-19 09:57:55.227 INFO  [main] [NO-REQ] o.f.core.internal.command.DbMigrate - Current version of schema "public": 4
+2026-10-19 09:57:55.230 INFO  [main] [NO-REQ] o.f.core.internal.command.DbMigrate - Schema "public" is up to date. No migration necessary.
+2026-10-19 09:57:55.309 INFO  [main] [NO-REQ] org.hibernate.orm.jpa - HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-10-19 09:57:55.349 INFO  [main] [NO-REQ] org.hibernate.orm.core - HHH000001: Hibernate ORM core version 7.4.5.Final
+2026-10-19 09:57:55.664 INFO  [main] [NO-REQ] o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-10-19 09:57:55.734 INFO  [main] [NO-REQ] o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [jdbc:postgresql://localhost:5435/ecommerce]
+	Database driver: PostgreSQL JDBC Driver
+	Database dialect: PostgreSQLDialect
+	Database version: 16.15
+	Default catalog/schema: ecommerce/public
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-10-19 09:57:56.721 INFO  [main] [NO-REQ] org.hibernate.orm.core - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-10-19 09:57:56.790 INFO  [main] [NO-REQ] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-10-19 09:57:56.871 INFO  [main] [NO-REQ] o.s.d.j.r.q.QueryEnhancerFactories - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-10-19 09:57:58.079 WARN  [main] [NO-REQ] o.s.b.w.s.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'flashSaleController' defined in file [/home/sandy/projects/commerce-core/backend/target/classes/com/commercecore/backend/flashsale/api/FlashSaleController.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'flashSaleService' defined in file [/home/sandy/projects/commerce-core/backend/target/classes/com/commercecore/backend/flashsale/service/FlashSaleService.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'flashSaleStockService': Unsatisfied dependency expressed through field 'stringRedisTemplate': Failed to convert value of type 'java.lang.String' to required type 'org.springframework.data.redis.core.StringRedisTemplate'; Cannot convert value of type 'java.lang.String' to required type 'org.springframework.data.redis.core.StringRedisTemplate': no matching editors or conversion strategy found
+2026-10-19 09:57:58.095 INFO  [main] [NO-REQ] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-10-19 09:57:58.097 INFO  [main] [NO-REQ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2026-10-19 09:57:58.100 INFO  [main] [NO-REQ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2026-10-19 09:57:58.123 INFO  [main] [NO-REQ] o.s.b.a.l.ConditionEvaluationReportLogger - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-10-19 09:57:58.135 ERROR [main] [NO-REQ] o.s.boot.SpringApplication - Application run failed
+org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'flashSaleController' defined in file [/home/sandy/projects/commerce-core/backend/target/classes/com/commercecore/backend/flashsale/api/FlashSaleController.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'flashSaleService' defined in file [/home/sandy/projects/commerce-core/backend/target/classes/com/commercecore/backend/flashsale/service/FlashSaleService.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'flashSaleStockService': Unsatisfied dependency expressed through field 'stringRedisTemplate': Failed to convert value of type 'java.lang.String' to required type 'org.springframework.data.redis.core.StringRedisTemplate'; Cannot convert value of type 'java.lang.String' to required type 'org.springframework.data.redis.core.StringRedisTemplate': no matching editors or conversion strategy found
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:804)
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:240)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1380)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1219)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:565)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:525)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:371)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:331)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:196)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.instantiateSingleton(DefaultListableBeanFactory.java:1225)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingleton(DefaultListableBeanFactory.java:1191)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:1121)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:994)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:621)
+	at org.springframework.boot.web.server.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:143)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:756)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:445)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:321)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1365)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1354)
+	at com.commercecore.backend.BackendApplication.main(BackendApplication.java:10)
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'flashSaleService' defined in file [/home/sandy/projects/commerce-core/backend/target/classes/com/commercecore/backend/flashsale/service/FlashSaleService.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'flashSaleStockService': Unsatisfied dependency expressed through field 'stringRedisTemplate': Failed to convert value of type 'java.lang.String' to required type 'org.springframework.data.redis.core.StringRedisTemplate'; Cannot convert value of type 'java.lang.String' to required type 'org.springframework.data.redis.core.StringRedisTemplate': no matching editors or conversion strategy found
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:804)
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:240)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1380)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1219)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:565)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:525)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:371)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:331)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:201)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveBean(DefaultListableBeanFactory.java:1232)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1711)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1658)
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:912)
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:791)
+	... 21 common frames omitted
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'flashSaleStockService': Unsatisfied dependency expressed through field 'stringRedisTemplate': Failed to convert value of type 'java.lang.String' to required type 'org.springframework.data.redis.core.StringRedisTemplate'; Cannot convert value of type 'java.lang.String' to required type 'org.springframework.data.redis.core.StringRedisTemplate': no matching editors or conversion strategy found
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:767)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:748)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:146)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:493)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1444)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:602)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:525)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:371)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:331)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:201)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveBean(DefaultListableBeanFactory.java:1232)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1711)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1658)
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:912)
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:791)
+	... 35 common frames omitted
+Caused by: org.springframework.beans.ConversionNotSupportedException: Failed to convert value of type 'java.lang.String' to required type 'org.springframework.data.redis.core.StringRedisTemplate'; Cannot convert value of type 'java.lang.String' to required type 'org.springframework.data.redis.core.StringRedisTemplate': no matching editors or conversion strategy found
+	at org.springframework.beans.TypeConverterSupport.convertIfNecessary(TypeConverterSupport.java:79)
+	at org.springframework.beans.TypeConverterSupport.convertIfNecessary(TypeConverterSupport.java:67)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1686)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1658)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:764)
+	... 50 common frames omitted
+Caused by: java.lang.IllegalStateException: Cannot convert value of type 'java.lang.String' to required type 'org.springframework.data.redis.core.StringRedisTemplate': no matching editors or conversion strategy found
+	at org.springframework.beans.TypeConverterDelegate.convertIfNecessary(TypeConverterDelegate.java:270)
+	at org.springframework.beans.TypeConverterSupport.convertIfNecessary(TypeConverterSupport.java:75)
+	... 54 common frames omitted
+2026-10-19 10:09:36.433 INFO  [background-preinit] [NO-REQ] o.h.validator.internal.util.Version - HV000001: Hibernate Validator 9.1.3.Final
+2026-10-19 10:09:36.466 INFO  [main] [NO-REQ] c.c.backend.BackendApplication - Starting BackendApplication using Java 25.0.4.1 with PID 3608 (/home/sandy/projects/commerce-core/backend/target/classes started by sandy in /home/sandy/projects/commerce-core/backend)
+2026-10-19 10:09:36.467 INFO  [main] [NO-REQ] c.c.backend.BackendApplication - No active profile set, falling back to 1 default profile: "default"
+2026-10-19 10:09:37.536 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-10-19 10:09:37.538 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-10-19 10:09:37.671 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 125 ms. Found 9 JPA repository interfaces.
+2026-10-19 10:09:37.722 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-10-19 10:09:37.723 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-10-19 10:09:37.741 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.commercecore.backend.auth.repo.RefreshTokenRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-10-19 10:09:37.742 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.commercecore.backend.auth.repo.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-10-19 10:09:37.743 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.commercecore.backend.cart.repo.CartRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-10-19 10:09:37.743 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.commercecore.backend.catalog.repo.ProductRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-10-19 10:09:37.743 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.commercecore.backend.order.repo.OrderEventRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-10-19 10:09:37.743 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.commercecore.backend.order.repo.OrderRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-10-19 10:09:37.744 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.commercecore.backend.payment.repo.PaymentRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-10-19 10:09:37.744 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.commercecore.backend.payment.repo.PendingRefundRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-10-19 10:09:37.745 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.commercecore.backend.shared.outbox.OutboxRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-10-19 10:09:37.745 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 12 ms. Found 0 Redis repository interfaces.
+2026-10-19 10:09:38.539 INFO  [main] [NO-REQ] o.s.boot.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-10-19 10:09:38.551 INFO  [main] [NO-REQ] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-10-19 10:09:38.603 INFO  [main] [NO-REQ] o.s.b.w.c.s.WebApplicationContextInitializer - Root WebApplicationContext: initialization completed in 2091 ms
+2026-10-19 10:09:39.038 INFO  [main] [NO-REQ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-10-19 10:09:39.186 INFO  [main] [NO-REQ] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@1edac3b4
+2026-10-19 10:09:39.187 INFO  [main] [NO-REQ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-10-19 10:09:39.213 INFO  [main] [NO-REQ] org.flywaydb.core.FlywayExecutor - Database: jdbc:postgresql://localhost:5435/ecommerce (PostgreSQL 16.15)
+2026-10-19 10:09:39.327 INFO  [main] [NO-REQ] o.f.core.internal.command.DbValidate - Successfully validated 4 migrations (execution time 00:00.046s)
+2026-10-19 10:09:39.347 INFO  [main] [NO-REQ] o.f.core.internal.command.DbMigrate - Current version of schema "public": 4
+2026-10-19 10:09:39.353 INFO  [main] [NO-REQ] o.f.core.internal.command.DbMigrate - Schema "public" is up to date. No migration necessary.
+2026-10-19 10:09:39.442 INFO  [main] [NO-REQ] org.hibernate.orm.jpa - HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-10-19 10:09:39.498 INFO  [main] [NO-REQ] org.hibernate.orm.core - HHH000001: Hibernate ORM core version 7.4.5.Final
+2026-10-19 10:09:39.918 INFO  [main] [NO-REQ] o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-10-19 10:09:40.023 INFO  [main] [NO-REQ] o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [jdbc:postgresql://localhost:5435/ecommerce]
+	Database driver: PostgreSQL JDBC Driver
+	Database dialect: PostgreSQLDialect
+	Database version: 16.15
+	Default catalog/schema: ecommerce/public
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-10-19 10:09:41.078 INFO  [main] [NO-REQ] org.hibernate.orm.core - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-10-19 10:09:41.199 INFO  [main] [NO-REQ] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-10-19 10:09:41.283 INFO  [main] [NO-REQ] o.s.d.j.r.q.QueryEnhancerFactories - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-10-19 10:09:43.248 WARN  [main] [NO-REQ] o.s.b.s.a.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 3c3ae42a-6b3c-4b39-a8db-44b7c75ea1c4
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-10-19 10:09:43.085 INFO  [main] [NO-REQ] o.s.b.a.e.web.EndpointLinksResolver - Exposing 14 endpoints beneath base path '/actuator'
+2026-10-19 10:09:43.196 INFO  [main] [NO-REQ] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-10-19 10:09:43.229 INFO  [main] [NO-REQ] o.s.boot.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2026-10-19 10:09:43.237 INFO  [main] [NO-REQ] o.s.a.r.c.CachingConnectionFactory - Attempting to connect to: [localhost:5672]
+2026-10-19 10:09:43.314 INFO  [main] [NO-REQ] o.s.a.r.c.CachingConnectionFactory - Created new connection: rabbitConnectionFactory#9162869:0/SimpleConnection@2f1ff021 [delegate=amqp://ecommerce@127.0.0.1:5672/, localPort=33806]
+2026-10-19 10:09:43.451 INFO  [main] [NO-REQ] c.c.backend.BackendApplication - Started BackendApplication in 7.548 seconds (process running for 9.178)
+2026-10-19 10:09:43.729 INFO  [http-nio-8080-exec-1] [NO-REQ] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-10-19 10:09:43.732 INFO  [http-nio-8080-exec-1] [NO-REQ] o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2026-10-19 10:09:50.500 INFO  [http-nio-8080-exec-1] [d4cdfc33-9084-46da-8bee-34c38a7b1a10] o.s.api.AbstractOpenApiResource - Init duration for springdoc-openapi is: 393 ms
+2026-10-19 10:14:08.793 INFO  [http-nio-8080-exec-5] [03bdcdaa-c2d8-4179-8c05-e1048676984b] c.c.b.f.s.FlashSaleStockService - Pre-warmed product 054cfeb6-cbd8-44d7-b2a4-027a3a83e535 with 100 units in Redis
+2026-10-19 10:14:51.748 INFO  [http-nio-8080-exec-8] [7f655a27-0872-4c00-b193-0ab43fb689b6] c.c.b.f.service.FlashSaleService - Flash sale reservation accepted: userId=bad84ca9-1891-4c8e-b75a-703a4eeb1418, productId=054cfeb6-cbd8-44d7-b2a4-027a3a83e535, remaining=97
+2026-10-19 10:14:51.834 INFO  [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] [NO-REQ] c.c.b.f.c.FlashSaleOrderConsumer - Order 555b4c06-d92d-4416-af69-922943cbcdda created for flash sale. Inventory reserved.
+2026-10-19 10:14:51.837 INFO  [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] [NO-REQ] c.c.b.f.c.FlashSaleOrderConsumer - Flash sale order processed: userId=bad84ca9-1891-4c8e-b75a-703a4eeb1418, productId=054cfeb6-cbd8-44d7-b2a4-027a3a83e535
+2026-10-19 10:29:57.795 INFO  [scheduling-1] [NO-REQ] c.c.b.o.s.OrderExpirationReaper - TTL Reaper: found 1 expired orders to process
+2026-10-19 10:29:57.833 INFO  [scheduling-1] [NO-REQ] c.c.b.o.s.OrderExpirationService - Order 555b4c06-d92d-4416-af69-922943cbcdda expired. Inventory released. Outbox written.
+2026-10-19 10:29:57.863 INFO  [scheduling-1] [NO-REQ] c.c.b.o.s.OrderExpirationReaper - TTL Reaper batch complete: 1 orders expired
+2026-10-19 10:29:58.282 INFO  [scheduling-2] [NO-REQ] c.c.b.shared.outbox.OutboxPoller - Polled 1 outbox events for publishing
+2026-10-19 10:36:06.605 WARN  [scheduling-1] [NO-REQ] org.hibernate.orm.jdbc.warn - HHH000247: ErrorCode: 0, SQLState: 01000
+2026-10-19 10:36:06.606 WARN  [scheduling-1] [NO-REQ] org.hibernate.orm.jdbc.warn - database "ecommerce" has no actual collation version, but a version was recorded
+2026-10-19 10:37:21.632 WARN  [scheduling-2] [NO-REQ] org.hibernate.orm.jdbc.warn - HHH000247: ErrorCode: 0, SQLState: 01000
+2026-10-19 10:37:21.633 WARN  [scheduling-2] [NO-REQ] org.hibernate.orm.jdbc.warn - database "ecommerce" has no actual collation version, but a version was recorded
+2026-10-19 10:38:43.006 WARN  [scheduling-2] [NO-REQ] org.hibernate.orm.jdbc.warn - HHH000247: ErrorCode: 0, SQLState: 01000
+2026-10-19 10:38:43.006 WARN  [scheduling-2] [NO-REQ] org.hibernate.orm.jdbc.warn - database "ecommerce" has no actual collation version, but a version was recorded
+2026-10-19 10:45:54.801 WARN  [scheduling-1] [NO-REQ] org.hibernate.orm.jdbc.warn - HHH000247: ErrorCode: 0, SQLState: 01000
+2026-10-19 10:45:54.802 WARN  [scheduling-1] [NO-REQ] org.hibernate.orm.jdbc.warn - database "ecommerce" has no actual collation version, but a version was recorded
+2026-10-19 10:59:42.605 WARN  [scheduling-2] [NO-REQ] org.hibernate.orm.jdbc.warn - HHH000247: ErrorCode: 0, SQLState: 01000
+2026-10-19 10:59:42.607 WARN  [scheduling-2] [NO-REQ] org.hibernate.orm.jdbc.warn - database "ecommerce" has no actual collation version, but a version was recorded
+2026-10-19 11:04:04.932 WARN  [scheduling-1] [NO-REQ] org.hibernate.orm.jdbc.warn - HHH000247: ErrorCode: 0, SQLState: 01000
+2026-10-19 11:04:04.933 WARN  [scheduling-1] [NO-REQ] org.hibernate.orm.jdbc.warn - database "ecommerce" has no actual collation version, but a version was recorded
+2026-10-19 11:04:33.045 WARN  [scheduling-2] [NO-REQ] org.hibernate.orm.jdbc.warn - HHH000247: ErrorCode: 0, SQLState: 01000
+2026-10-19 11:04:33.046 WARN  [scheduling-2] [NO-REQ] org.hibernate.orm.jdbc.warn - database "ecommerce" has no actual collation version, but a version was recorded
+2026-10-19 11:06:13.408 INFO  [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] [NO-REQ] o.s.a.r.l.SimpleMessageListenerContainer - Waiting for workers to finish.
+2026-10-19 11:06:14.368 INFO  [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] [NO-REQ] o.s.a.r.l.SimpleMessageListenerContainer - Successfully waited for workers to finish.
+2026-10-19 11:06:14.376 INFO  [SpringApplicationShutdownHook] [NO-REQ] o.s.boot.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2026-10-19 11:06:14.401 INFO  [tomcat-shutdown] [NO-REQ] o.s.boot.tomcat.GracefulShutdown - Graceful shutdown complete
+2026-10-19 11:06:14.474 INFO  [SpringApplicationShutdownHook] [NO-REQ] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-10-19 11:06:14.483 INFO  [SpringApplicationShutdownHook] [NO-REQ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2026-10-19 11:06:14.486 INFO  [SpringApplicationShutdownHook] [NO-REQ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2026-10-19 11:06:28.191 INFO  [background-preinit] [NO-REQ] o.h.validator.internal.util.Version - HV000001: Hibernate Validator 9.1.3.Final
+2026-10-19 11:06:28.241 INFO  [main] [NO-REQ] c.c.backend.BackendApplication - Starting BackendApplication using Java 25.0.4.1 with PID 6016 (/home/sandy/projects/commerce-core/backend/target/classes started by sandy in /home/sandy/projects/commerce-core/backend)
+2026-10-19 11:06:28.242 INFO  [main] [NO-REQ] c.c.backend.BackendApplication - No active profile set, falling back to 1 default profile: "default"
+2026-10-19 11:06:29.527 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-10-19 11:06:29.529 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-10-19 11:06:29.659 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 121 ms. Found 9 JPA repository interfaces.
+2026-10-19 11:06:29.707 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-10-19 11:06:29.708 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-10-19 11:06:29.730 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.commercecore.backend.auth.repo.RefreshTokenRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-10-19 11:06:29.730 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.commercecore.backend.auth.repo.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-10-19 11:06:29.731 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.commercecore.backend.cart.repo.CartRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-10-19 11:06:29.731 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.commercecore.backend.catalog.repo.ProductRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-10-19 11:06:29.731 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.commercecore.backend.order.repo.OrderEventRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-10-19 11:06:29.731 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.commercecore.backend.order.repo.OrderRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-10-19 11:06:29.732 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.commercecore.backend.payment.repo.PaymentRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-10-19 11:06:29.732 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.commercecore.backend.payment.repo.PendingRefundRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-10-19 11:06:29.732 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.commercecore.backend.shared.outbox.OutboxRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-10-19 11:06:29.732 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 10 ms. Found 0 Redis repository interfaces.
+2026-10-19 11:06:30.546 INFO  [main] [NO-REQ] o.s.boot.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-10-19 11:06:30.562 INFO  [main] [NO-REQ] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-10-19 11:06:30.614 INFO  [main] [NO-REQ] o.s.b.w.c.s.WebApplicationContextInitializer - Root WebApplicationContext: initialization completed in 2318 ms
+2026-10-19 11:06:31.137 INFO  [main] [NO-REQ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-10-19 11:06:31.293 INFO  [main] [NO-REQ] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@1edac3b4
+2026-10-19 11:06:31.296 INFO  [main] [NO-REQ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-10-19 11:06:31.331 INFO  [main] [NO-REQ] org.flywaydb.core.FlywayExecutor - Database: jdbc:postgresql://localhost:5435/ecommerce (PostgreSQL 16.15)
+2026-10-19 11:06:31.442 INFO  [main] [NO-REQ] o.f.core.internal.command.DbValidate - Successfully validated 4 migrations (execution time 00:00.027s)
+2026-10-19 11:06:31.460 INFO  [main] [NO-REQ] o.f.core.internal.command.DbMigrate - Current version of schema "public": 4
+2026-10-19 11:06:31.464 INFO  [main] [NO-REQ] o.f.core.internal.command.DbMigrate - Schema "public" is up to date. No migration necessary.
+2026-10-19 11:06:31.559 INFO  [main] [NO-REQ] org.hibernate.orm.jpa - HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-10-19 11:06:31.622 INFO  [main] [NO-REQ] org.hibernate.orm.core - HHH000001: Hibernate ORM core version 7.4.5.Final
+2026-10-19 11:06:31.841 INFO  [main] [NO-REQ] o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-10-19 11:06:31.953 INFO  [main] [NO-REQ] o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [jdbc:postgresql://localhost:5435/ecommerce]
+	Database driver: PostgreSQL JDBC Driver
+	Database dialect: PostgreSQLDialect
+	Database version: 16.15
+	Default catalog/schema: ecommerce/public
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-10-19 11:06:33.075 INFO  [main] [NO-REQ] org.hibernate.orm.core - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-10-19 11:06:33.180 INFO  [main] [NO-REQ] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-10-19 11:06:33.274 INFO  [main] [NO-REQ] o.s.d.j.r.q.QueryEnhancerFactories - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-10-19 11:06:35.319 WARN  [main] [NO-REQ] o.s.b.s.a.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 4691ca92-179d-45fa-a09d-7a7cef5186b9
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-10-19 11:06:36.221 INFO  [main] [NO-REQ] o.s.b.a.e.web.EndpointLinksResolver - Exposing 14 endpoints beneath base path '/actuator'
+2026-10-19 11:06:36.311 INFO  [main] [NO-REQ] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-10-19 11:06:36.325 INFO  [main] [NO-REQ] o.s.boot.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2026-10-19 11:06:36.329 INFO  [main] [NO-REQ] o.s.a.r.c.CachingConnectionFactory - Attempting to connect to: [localhost:5672]
+2026-10-19 11:06:36.378 INFO  [main] [NO-REQ] o.s.a.r.c.CachingConnectionFactory - Created new connection: rabbitConnectionFactory#9162869:0/SimpleConnection@ab80f9f [delegate=amqp://ecommerce@127.0.0.1:5672/, localPort=58024]
+2026-10-19 11:06:36.446 INFO  [main] [NO-REQ] c.c.backend.BackendApplication - Started BackendApplication in 9.2 seconds (process running for 9.996)
+2026-10-19 11:06:36.980 INFO  [http-nio-8080-exec-1] [NO-REQ] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-10-19 11:06:36.983 INFO  [http-nio-8080-exec-1] [NO-REQ] o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2026-10-19 11:18:19.822 INFO  [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] [NO-REQ] o.s.a.r.l.SimpleMessageListenerContainer - Waiting for workers to finish.
+2026-10-19 11:18:20.702 INFO  [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] [NO-REQ] o.s.a.r.l.SimpleMessageListenerContainer - Successfully waited for workers to finish.
+2026-10-19 11:18:20.709 INFO  [SpringApplicationShutdownHook] [NO-REQ] o.s.boot.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2026-10-19 11:18:20.725 INFO  [tomcat-shutdown] [NO-REQ] o.s.boot.tomcat.GracefulShutdown - Graceful shutdown complete
+2026-10-19 11:18:20.794 INFO  [SpringApplicationShutdownHook] [NO-REQ] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-10-19 11:18:20.803 INFO  [SpringApplicationShutdownHook] [NO-REQ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2026-10-19 11:18:20.807 INFO  [SpringApplicationShutdownHook] [NO-REQ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2026-10-19 11:18:31.754 INFO  [background-preinit] [NO-REQ] o.h.validator.internal.util.Version - HV000001: Hibernate Validator 9.1.3.Final
+2026-10-19 11:18:31.789 INFO  [main] [NO-REQ] c.c.backend.BackendApplication - Starting BackendApplication using Java 25.0.4.1 with PID 6808 (/home/sandy/projects/commerce-core/backend/target/classes started by sandy in /home/sandy/projects/commerce-core/backend)
+2026-10-19 11:18:31.790 INFO  [main] [NO-REQ] c.c.backend.BackendApplication - No active profile set, falling back to 1 default profile: "default"
+2026-10-19 11:18:32.866 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-10-19 11:18:32.867 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-10-19 11:18:32.990 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 114 ms. Found 9 JPA repository interfaces.
+2026-10-19 11:18:33.036 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-10-19 11:18:33.037 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-10-19 11:18:33.053 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.commercecore.backend.auth.repo.RefreshTokenRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-10-19 11:18:33.053 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.commercecore.backend.auth.repo.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-10-19 11:18:33.053 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.commercecore.backend.cart.repo.CartRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-10-19 11:18:33.054 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.commercecore.backend.catalog.repo.ProductRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-10-19 11:18:33.054 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.commercecore.backend.order.repo.OrderEventRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-10-19 11:18:33.054 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.commercecore.backend.order.repo.OrderRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-10-19 11:18:33.055 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.commercecore.backend.payment.repo.PaymentRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-10-19 11:18:33.055 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.commercecore.backend.payment.repo.PendingRefundRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-10-19 11:18:33.056 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.commercecore.backend.shared.outbox.OutboxRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-10-19 11:18:33.056 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 10 ms. Found 0 Redis repository interfaces.
+2026-10-19 11:18:33.700 INFO  [main] [NO-REQ] o.s.boot.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-10-19 11:18:33.712 INFO  [main] [NO-REQ] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-10-19 11:18:33.762 INFO  [main] [NO-REQ] o.s.b.w.c.s.WebApplicationContextInitializer - Root WebApplicationContext: initialization completed in 1927 ms
+2026-10-19 11:18:34.226 INFO  [main] [NO-REQ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-10-19 11:18:34.377 INFO  [main] [NO-REQ] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@34652065
+2026-10-19 11:18:34.380 INFO  [main] [NO-REQ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-10-19 11:18:34.406 INFO  [main] [NO-REQ] org.flywaydb.core.FlywayExecutor - Database: jdbc:postgresql://localhost:5435/ecommerce (PostgreSQL 16.15)
+2026-10-19 11:18:34.486 INFO  [main] [NO-REQ] o.f.core.internal.command.DbValidate - Successfully validated 4 migrations (execution time 00:00.031s)
+2026-10-19 11:18:34.514 INFO  [main] [NO-REQ] o.f.core.internal.command.DbMigrate - Current version of schema "public": 4
+2026-10-19 11:18:34.519 INFO  [main] [NO-REQ] o.f.core.internal.command.DbMigrate - Schema "public" is up to date. No migration necessary.
+2026-10-19 11:18:34.639 INFO  [main] [NO-REQ] org.hibernate.orm.jpa - HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-10-19 11:18:34.703 INFO  [main] [NO-REQ] org.hibernate.orm.core - HHH000001: Hibernate ORM core version 7.4.5.Final
+2026-10-19 11:18:35.083 INFO  [main] [NO-REQ] o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-10-19 11:18:35.153 INFO  [main] [NO-REQ] o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [jdbc:postgresql://localhost:5435/ecommerce]
+	Database driver: PostgreSQL JDBC Driver
+	Database dialect: PostgreSQLDialect
+	Database version: 16.15
+	Default catalog/schema: ecommerce/public
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-10-19 11:18:36.053 INFO  [main] [NO-REQ] org.hibernate.orm.core - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-10-19 11:18:36.109 INFO  [main] [NO-REQ] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-10-19 11:18:36.188 INFO  [main] [NO-REQ] o.s.d.j.r.q.QueryEnhancerFactories - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-10-19 11:18:37.976 WARN  [main] [NO-REQ] o.s.b.s.a.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: e6e5ed36-47e0-4473-aa0e-092dcd4b900a
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-10-19 11:18:38.881 INFO  [main] [NO-REQ] o.s.b.a.e.web.EndpointLinksResolver - Exposing 14 endpoints beneath base path '/actuator'
+2026-10-19 11:18:38.983 INFO  [main] [NO-REQ] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-10-19 11:18:38.996 INFO  [main] [NO-REQ] o.s.boot.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2026-10-19 11:18:38.999 INFO  [main] [NO-REQ] o.s.a.r.c.CachingConnectionFactory - Attempting to connect to: [localhost:5672]
+2026-10-19 11:18:39.038 INFO  [main] [NO-REQ] o.s.a.r.c.CachingConnectionFactory - Created new connection: rabbitConnectionFactory#164b28c4:0/SimpleConnection@cf051f1 [delegate=amqp://ecommerce@127.0.0.1:5672/, localPort=52816]
+2026-10-19 11:18:39.114 INFO  [main] [NO-REQ] c.c.backend.BackendApplication - Started BackendApplication in 8.0 seconds (process running for 8.465)
+2026-10-19 11:18:42.665 INFO  [http-nio-8080-exec-1] [NO-REQ] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-10-19 11:18:42.667 INFO  [http-nio-8080-exec-1] [NO-REQ] o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2026-10-19 11:18:51.326 INFO  [http-nio-8080-exec-1] [84642556-6d2b-49dd-88b6-1ccfa0d5025d] o.s.api.AbstractOpenApiResource - Init duration for springdoc-openapi is: 367 ms
+2026-10-19 11:24:17.882 INFO  [http-nio-8080-exec-10] [0b84f682-f200-49a0-b541-6809d8a34798] c.c.b.f.s.FlashSaleStockService - Pre-warmed product aaaaaaaa-1111-1111-1111-111111111111 with 100 units in Redis
+2026-10-19 11:24:56.886 INFO  [http-nio-8080-exec-8] [fd52d914-b669-4c76-9397-79419d75fccd] c.c.b.f.service.FlashSaleService - Flash sale reservation accepted: userId=bad84ca9-1891-4c8e-b75a-703a4eeb1418, productId=aaaaaaaa-1111-1111-1111-111111111111, remaining=96
+2026-10-19 11:24:56.967 INFO  [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] [NO-REQ] c.c.b.f.c.FlashSaleOrderConsumer - Order 9e04c99b-297d-49d2-8eae-e939a0a9f205 created for flash sale. Inventory reserved.
+2026-10-19 11:24:56.971 INFO  [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] [NO-REQ] c.c.b.f.c.FlashSaleOrderConsumer - Flash sale order processed: userId=bad84ca9-1891-4c8e-b75a-703a4eeb1418, productId=aaaaaaaa-1111-1111-1111-111111111111
+2026-10-19 11:40:04.355 INFO  [scheduling-2] [NO-REQ] c.c.b.o.s.OrderExpirationReaper - TTL Reaper: found 1 expired orders to process
+2026-10-19 11:40:04.389 INFO  [scheduling-2] [NO-REQ] c.c.b.o.s.OrderExpirationService - Order 9e04c99b-297d-49d2-8eae-e939a0a9f205 expired. Inventory released. Outbox written.
+2026-10-19 11:40:04.423 INFO  [scheduling-2] [NO-REQ] c.c.b.o.s.OrderExpirationReaper - TTL Reaper batch complete: 1 orders expired
+2026-10-19 11:40:05.640 INFO  [scheduling-2] [NO-REQ] c.c.b.shared.outbox.OutboxPoller - Polled 1 outbox events for publishing
+2026-10-19 11:40:56.590 INFO  [http-nio-8080-exec-6] [3149e04a-5b45-4946-a1d8-aa95413b3bd6] c.c.b.f.service.FlashSaleService - Flash sale reservation accepted: userId=bad84ca9-1891-4c8e-b75a-703a4eeb1418, productId=aaaaaaaa-1111-1111-1111-111111111111, remaining=92
+2026-10-19 11:40:56.608 INFO  [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] [NO-REQ] c.c.b.f.c.FlashSaleOrderConsumer - Order 67a81b3d-5a6e-4133-a59e-07ddf65c306c created for flash sale. Inventory reserved.
+2026-10-19 11:40:56.609 INFO  [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] [NO-REQ] c.c.b.f.c.FlashSaleOrderConsumer - Flash sale order processed: userId=bad84ca9-1891-4c8e-b75a-703a4eeb1418, productId=aaaaaaaa-1111-1111-1111-111111111111
+2026-10-19 11:41:02.900 INFO  [http-nio-8080-exec-10] [72518de8-0871-4d08-9047-58f280a5504e] c.c.b.f.service.FlashSaleService - Flash sale reservation accepted: userId=bad84ca9-1891-4c8e-b75a-703a4eeb1418, productId=aaaaaaaa-1111-1111-1111-111111111111, remaining=88
+2026-10-19 11:41:02.914 INFO  [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] [NO-REQ] c.c.b.f.c.FlashSaleOrderConsumer - Order 80f47e9e-9afb-43a8-93d8-1f2c896f65eb created for flash sale. Inventory reserved.
+2026-10-19 11:41:02.914 INFO  [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] [NO-REQ] c.c.b.f.c.FlashSaleOrderConsumer - Flash sale order processed: userId=bad84ca9-1891-4c8e-b75a-703a4eeb1418, productId=aaaaaaaa-1111-1111-1111-111111111111
+2026-10-19 11:48:07.593 WARN  [scheduling-1] [NO-REQ] org.hibernate.orm.jdbc.warn - HHH000247: ErrorCode: 0, SQLState: 01000
+2026-10-19 11:48:07.594 WARN  [scheduling-1] [NO-REQ] org.hibernate.orm.jdbc.warn - database "ecommerce" has no actual collation version, but a version was recorded
+2026-10-19 11:56:02.160 INFO  [scheduling-1] [NO-REQ] c.c.b.o.s.OrderExpirationReaper - TTL Reaper: found 1 expired orders to process
+2026-10-19 11:56:02.171 INFO  [scheduling-1] [NO-REQ] c.c.b.o.s.OrderExpirationService - Order 67a81b3d-5a6e-4133-a59e-07ddf65c306c expired. Inventory released. Outbox written.
+2026-10-19 11:56:02.192 INFO  [scheduling-1] [NO-REQ] c.c.b.o.s.OrderExpirationReaper - TTL Reaper batch complete: 1 orders expired
+2026-10-19 11:56:03.255 INFO  [scheduling-1] [NO-REQ] c.c.b.shared.outbox.OutboxPoller - Polled 1 outbox events for publishing
+2026-10-19 11:56:32.127 INFO  [scheduling-2] [NO-REQ] c.c.b.o.s.OrderExpirationReaper - TTL Reaper: found 1 expired orders to process
+2026-10-19 11:56:32.131 INFO  [scheduling-2] [NO-REQ] c.c.b.o.s.OrderExpirationService - Order 80f47e9e-9afb-43a8-93d8-1f2c896f65eb expired. Inventory released. Outbox written.
+2026-10-19 11:56:32.137 INFO  [scheduling-2] [NO-REQ] c.c.b.o.s.OrderExpirationReaper - TTL Reaper batch complete: 1 orders expired
+2026-10-19 11:56:33.242 INFO  [scheduling-2] [NO-REQ] c.c.b.shared.outbox.OutboxPoller - Polled 1 outbox events for publishing
+2026-10-19 12:03:39.772 ERROR [http-nio-8080-exec-5] [d1dde99a-7355-4b60-afc9-a1868641d671] c.c.b.s.error.GlobalExceptionHandler - Unhandled exception occurred at /api/v1/checkout: 
+java.lang.IllegalStateException: Cart is already checked-out
+	at com.commercecore.backend.cart.domain.Cart.markAsCheckedOut(Cart.java:79)
+	at com.commercecore.backend.checkout.service.CheckoutService.processCheckout(CheckoutService.java:168)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:359)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:190)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:158)
+	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:133)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:371)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:130)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:719)
+	at com.commercecore.backend.checkout.service.CheckoutService$$SpringCGLIB$$0.processCheckout(<generated>)
+	at com.commercecore.backend.checkout.api.CheckoutController.processCheckout(CheckoutController.java:52)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:252)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:184)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:934)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:853)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:86)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:963)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:866)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1000)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:903)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:649)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:874)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:710)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:132)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:59)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:110)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111)
+	at com.commercecore.backend.shared.config.RequestIdFilter.doFilterInternal(RequestIdFilter.java:35)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:108)
+	at org.springframework.security.web.FilterChainProxy.lambda$doFilterInternal$2(FilterChainProxy.java:235)
+	at org.springframework.security.web.ObservationFilterChainDecorator$FilterObservation$SimpleFilterObservation.lambda$wrap$1(ObservationFilterChainDecorator.java:491)
+	at org.springframework.security.web.ObservationFilterChainDecorator$AroundFilterObservation$SimpleAroundFilterObservation.lambda$wrap$1(ObservationFilterChainDecorator.java:353)
+	at org.springframework.security.web.ObservationFilterChainDecorator.lambda$wrapSecured$0(ObservationFilterChainDecorator.java:84)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:131)
+	at org.springframework.security.web.access.intercept.AuthorizationFilter.doFilter(AuthorizationFilter.java:101)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:126)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:120)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:132)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:86)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:100)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:181)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140)
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140)
+	at com.commercecore.backend.shared.config.JwtAuthenticationFilter.doFilterInternal(JwtAuthenticationFilter.java:61)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:110)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:96)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140)
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243)
+	at org.springframework.security.web.ObservationFilterChainDecorator$AroundFilterObservation$SimpleAroundFilterObservation.lambda$wrap$0(ObservationFilterChainDecorator.java:336)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:237)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:195)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.filter.ServletRequestPathFilter.doFilter(ServletRequestPathFilter.java:52)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74)
+	at org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebSecurityConfiguration.java:317)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:355)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:272)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111)
+	at org.springframework.web.filter.ServerHttpObservationFilter.doFilterInternal(ServerHttpObservationFilter.java:110)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:199)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:77)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:535)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:86)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:71)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:347)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:406)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:71)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:1307)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:2036)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:74)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:949)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:483)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:74)
+	at java.base/java.lang.Thread.run(Thread.java:1474)
+2026-10-19 12:10:55.176 WARN  [scheduling-2] [NO-REQ] org.hibernate.orm.jdbc.warn - HHH000247: ErrorCode: 0, SQLState: 01000
+2026-10-19 12:10:55.176 WARN  [scheduling-2] [NO-REQ] org.hibernate.orm.jdbc.warn - database "ecommerce" has no actual collation version, but a version was recorded
+2026-10-19 12:16:15.260 WARN  [scheduling-1] [NO-REQ] org.hibernate.orm.jdbc.warn - HHH000247: ErrorCode: 0, SQLState: 01000
+2026-10-19 12:16:15.260 WARN  [scheduling-1] [NO-REQ] org.hibernate.orm.jdbc.warn - database "ecommerce" has no actual collation version, but a version was recorded
+2026-10-19 12:17:09.250 WARN  [scheduling-2] [NO-REQ] org.hibernate.orm.jdbc.warn - HHH000247: ErrorCode: 0, SQLState: 01000
+2026-10-19 12:17:09.250 WARN  [scheduling-2] [NO-REQ] org.hibernate.orm.jdbc.warn - database "ecommerce" has no actual collation version, but a version was recorded
+2026-10-19 12:23:29.483 WARN  [scheduling-1] [NO-REQ] org.hibernate.orm.jdbc.warn - HHH000247: ErrorCode: 0, SQLState: 01000
+2026-10-19 12:23:29.484 WARN  [scheduling-1] [NO-REQ] org.hibernate.orm.jdbc.warn - database "ecommerce" has no actual collation version, but a version was recorded
+2026-10-19 12:35:49.873 WARN  [scheduling-1] [NO-REQ] org.hibernate.orm.jdbc.warn - HHH000247: ErrorCode: 0, SQLState: 01000
+2026-10-19 12:35:49.874 WARN  [scheduling-1] [NO-REQ] org.hibernate.orm.jdbc.warn - database "ecommerce" has no actual collation version, but a version was recorded
+2026-10-19 12:37:24.250 WARN  [scheduling-1] [NO-REQ] org.hibernate.orm.jdbc.warn - HHH000247: ErrorCode: 0, SQLState: 01000
+2026-10-19 12:37:24.251 WARN  [scheduling-1] [NO-REQ] org.hibernate.orm.jdbc.warn - database "ecommerce" has no actual collation version, but a version was recorded
+2026-10-19 12:39:48.395 WARN  [scheduling-2] [NO-REQ] org.hibernate.orm.jdbc.warn - HHH000247: ErrorCode: 0, SQLState: 01000
+2026-10-19 12:39:48.396 WARN  [scheduling-2] [NO-REQ] org.hibernate.orm.jdbc.warn - database "ecommerce" has no actual collation version, but a version was recorded
+2026-10-19 12:41:29.730 WARN  [scheduling-1] [NO-REQ] org.hibernate.orm.jdbc.warn - HHH000247: ErrorCode: 0, SQLState: 01000
+2026-10-19 12:41:29.731 WARN  [scheduling-1] [NO-REQ] org.hibernate.orm.jdbc.warn - database "ecommerce" has no actual collation version, but a version was recorded
+2026-10-19 13:22:00.073 WARN  [scheduling-1] [NO-REQ] org.hibernate.orm.jdbc.warn - HHH000247: ErrorCode: 0, SQLState: 01000
+2026-10-19 13:22:00.074 WARN  [scheduling-1] [NO-REQ] org.hibernate.orm.jdbc.warn - database "ecommerce" has no actual collation version, but a version was recorded
+2026-10-19 13:24:40.140 WARN  [scheduling-1] [NO-REQ] org.hibernate.orm.jdbc.warn - HHH000247: ErrorCode: 0, SQLState: 01000
+2026-10-19 13:24:40.142 WARN  [scheduling-1] [NO-REQ] org.hibernate.orm.jdbc.warn - database "ecommerce" has no actual collation version, but a version was recorded
+2026-10-19 13:36:55.974 WARN  [scheduling-1] [NO-REQ] org.hibernate.orm.jdbc.warn - HHH000247: ErrorCode: 0, SQLState: 01000
+2026-10-19 13:36:55.978 WARN  [scheduling-1] [NO-REQ] org.hibernate.orm.jdbc.warn - database "ecommerce" has no actual collation version, but a version was recorded
+2026-10-19 13:37:54.126 WARN  [scheduling-1] [NO-REQ] org.hibernate.orm.jdbc.warn - HHH000247: ErrorCode: 0, SQLState: 01000
+2026-10-19 13:37:54.127 WARN  [scheduling-1] [NO-REQ] org.hibernate.orm.jdbc.warn - database "ecommerce" has no actual collation version, but a version was recorded
+2026-10-19 13:39:38.413 WARN  [scheduling-1] [NO-REQ] org.hibernate.orm.jdbc.warn - HHH000247: ErrorCode: 0, SQLState: 01000
+2026-10-19 13:39:38.414 WARN  [scheduling-1] [NO-REQ] org.hibernate.orm.jdbc.warn - database "ecommerce" has no actual collation version, but a version was recorded
+2026-10-19 13:39:58.475 WARN  [scheduling-1] [NO-REQ] org.hibernate.orm.jdbc.warn - HHH000247: ErrorCode: 0, SQLState: 01000
+2026-10-19 13:39:58.475 WARN  [scheduling-1] [NO-REQ] org.hibernate.orm.jdbc.warn - database "ecommerce" has no actual collation version, but a version was recorded
+2026-10-19 13:40:40.626 WARN  [scheduling-1] [NO-REQ] org.hibernate.orm.jdbc.warn - HHH000247: ErrorCode: 0, SQLState: 01000
+2026-10-19 13:40:40.627 WARN  [scheduling-1] [NO-REQ] org.hibernate.orm.jdbc.warn - database "ecommerce" has no actual collation version, but a version was recorded
+2026-10-19 13:40:45.809 INFO  [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] [NO-REQ] o.s.a.r.l.SimpleMessageListenerContainer - Waiting for workers to finish.
+2026-10-19 13:40:46.432 INFO  [lettuce-eventExecutorLoop-1-1] [NO-REQ] i.l.core.protocol.ConnectionWatchdog - Reconnecting, last destination was localhost/127.0.0.1:6379
+2026-10-19 13:40:46.507 INFO  [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] [NO-REQ] o.s.a.r.l.SimpleMessageListenerContainer - Successfully waited for workers to finish.
+2026-10-19 13:40:46.556 INFO  [SpringApplicationShutdownHook] [NO-REQ] o.s.boot.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2026-10-19 13:40:46.635 INFO  [tomcat-shutdown] [NO-REQ] o.s.boot.tomcat.GracefulShutdown - Graceful shutdown complete
+2026-10-19 13:40:46.681 WARN  [SpringApplicationShutdownHook] [NO-REQ] i.l.core.protocol.ConnectionWatchdog - Cannot reconnect to [localhost/<unresolved>:6379]: java.util.concurrent.CancellationException
+2026-10-19 13:40:47.118 INFO  [SpringApplicationShutdownHook] [NO-REQ] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-10-19 13:40:47.144 INFO  [SpringApplicationShutdownHook] [NO-REQ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2026-10-19 13:40:47.161 INFO  [SpringApplicationShutdownHook] [NO-REQ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
