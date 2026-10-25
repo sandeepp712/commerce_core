@@ -66,3 +66,16 @@ export default function (){
         'no server errors': (r) => r.status < 500,
     }, { type: 'no_5xx' });
 }
+
+
+export function handleSummary(data) {
+    return {
+        'stdout': textSummary(data, { indent: ' ', enableColors: true }),
+        'k6-results.json': JSON.stringify(data),
+    };
+}
+
+function textSummary(data, options) {
+    // k6 built-in summary
+    return JSON.stringify(data.metrics, null, 2);
+}
