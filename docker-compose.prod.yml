@@ -5,19 +5,15 @@ services:
     ports:
       - "8080:8080"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/ecommerce
-      SPRING_DATASOURCE_USERNAME: ecommerce
-      SPRING_DATASOURCE_PASSWORD: ecommerce_prod_2025
-      SPRING_FLYWAY_ENABLED: "true"
+      # Variables declared here, VALUES come from .env at runtime
+      SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
+      SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
+      STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET}
       SPRING_PROFILES_ACTIVE: prod
-      JWT_SECRET: ${JWT_SECRET:-your-super-secret-jwt-key-that-is-at-least-256-bits-long-for-hmac-sha256}
-      STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET:-whsec_test_dummy}
-    depends_on:
-      postgres:
-        condition: service_healthy
+      SPRING_FLYWAY_ENABLED: "true"
     restart: unless-stopped
-    networks:
-      - commerce-net
     deploy:
       resources:
         limits:
