@@ -1,6 +1,6 @@
 services:
   app:
-    build: .
+    build: ./backend
     container_name: commerce-core-app
     ports:
       - "8080:8080"
