@@ -1,0 +1,10 @@
+target/
+!.target/*.jar
+.git/
+.idea/
+*.iml
+docker-compose*.yml
+k6/
+prometheus/
+logs/
+.env

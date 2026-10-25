@@ -35,6 +35,11 @@ springdoc:
 
 logging:
   level:
-    org.hibernate.SQL: DEBUG
-    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
-    com.commercecore.backend: DEBUG
+    root: INFO
+    com.commercecore.backend: INFO          # Your app code
+    org.hibernate.SQL: WARN
+    org.hibernate.type.descriptor.sql.BasicBinder: OFF   # SQL queries (WARN = only problems)
+    org.hibernate.type.descriptor.sql: OFF   # Bind parameters (very noisy)
+    org.springframework.security: WARN
+    org.springframework.amqp: INFO
+    org.springframework.scheduling: INFO
