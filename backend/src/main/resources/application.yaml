@@ -33,36 +33,6 @@ spring:
       pool:
         size: 2
 
-  #Redis Configuration
-  data:
-    redis:
-      host: localhost
-      port: 6379
-      password: ${REDIS_PASSWORD}
-      timeout: 5000
-      lettuce:
-        pool:
-          max-active: 16
-          max-idle: 8
-          min-idle: 2
-
-  # RabbitMQ
-  rabbitmq:
-    host: localhost
-    port: 5672
-    username: ${RABBITMQ_USERNAME}
-    password: ${RABBITMQ_PASSWORD}
-    listener:
-      simple:
-        acknowledge-mode: manual    # we manually ACK after successfull DB write
-        prefetch: 10                # Consume processes 10 message at a time
-        retry:
-          enabled: true
-          max-retries: 3
-          initial-interval: 1000
-          multiplier: 2.0
-          max-interval: 10000
-
 jwt:
   secret: ${JWT_SECRET}
 
@@ -125,8 +95,8 @@ management:
         http.server.requests: 0.5,0.95,0.99
   health:
     rabbit:
-      enabled: true
+      enabled: false
     redis:
-      enabled: true
+      enabled: false
     db:
       enabled: true

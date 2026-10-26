@@ -4,17 +4,6 @@ spring:
     username: ecommerce
     password: ecommerce
 
-  data:
-    redis:
-      host: localhost
-      port: 6379
-
-  rabbitmq:
-    host: localhost
-    port: 5672
-    username: ecommerce
-    password: ecommerce
-
   jpa:
     show-sql: true
     properties:

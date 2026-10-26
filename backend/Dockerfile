@@ -1,41 +1,43 @@
-# ─── Stage 1: Build ───────────────────────────────────────────────────
-FROM eclipse-temurin:21-jdk-alpine AS build
+# ─── Stage 1: Build ───────────────────────────────────────────────
+# Use the official Maven image — it has BOTH JDK and Maven
+FROM maven:3.9-eclipse-temurin-21-alpine AS build
 WORKDIR /app
 
-# Copy pom.xml first for dependency caching
+# Copy ONLY pom.xml first. This is critical for layer caching.
+# Docker caches this layer. If pom.xml doesn't change, dependencies
+# are NOT re-downloaded on subsequent builds.
 COPY pom.xml .
 RUN mvn dependency:go-offline -B
 
-# Copy source and build
+# Now copy the source code. This layer is only invalidated when
+# source files change, not when dependencies change.
 COPY src ./src
-RUN mvn clean package -DskipTests -B
 
-# ─── Stage 2: Runtime ─────────────────────────────────────────────────
+# Build the JAR, skipping tests (tests run in CI, not in Docker build)
+RUN mvn clean package -DskipTests
+
+# ─── Stage 2: Runtime ─────────────────────────────────────────────
+# Use the slim JRE image — no Maven, no JDK, just the runtime.
+# This keeps the final image small (~200MB instead of ~800MB).
 FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app
 
-# Security: Run as non-root user
-RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+# Security: create a non-root user. Never run production apps as root.
+RUN addgroup -S spring && adduser -S spring -G spring
+RUN chown -R spring:spring /app
 
+USER spring:spring
 
-# Copy only the JAR from build stage
+# Copy ONLY the built JAR from the build stage.
+# The multi-stage build discards Maven, source code, and build tools.
 COPY --from=build /app/target/*.jar app.jar
 
-# Own the app directory
-RUN chown -R appuser:appgroup /app
-USER appuser
+# JVM tuning for a t2.micro (1GB RAM).
+# -Xms256m: start with 256MB heap
+# -Xmx512m: max 512MB heap (leave room for OS + Postgres)
+# G1GC: low-pause garbage collector
+ENV JAVA_OPTS="-Xms256m -Xmx512m -XX:+UseG1GC -XX:MaxGCPauseMillis=200"
 
-# Expose port
 EXPOSE 8080
-
-# Health check (AWS uses this too)
-HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
-    CMD wget --no-verbose --tries=1 --spider http://localhost:8080/actuator/health || exit 1
-
-# JVM tuning for containers
-ENV JAVA_OPTS="-XX:+UseContainerSupport \
-               -XX:MaxRAMPercentage=75.0 \
-               -XX:+UseG1GC \
-               -Djava.security.egd=file:/dev/./urandom"
 
 ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar app.jar"]

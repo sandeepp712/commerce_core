@@ -18,10 +18,3 @@ services:
       resources:
         limits:
           memory: 600M
-
-volumes:
-  {}
-
-networks:
-  commerce-net:
-    driver: bridge
