@@ -46,7 +46,7 @@ public class CheckoutController {
     })
     public ResponseEntity<CheckoutResponse> processCheckout(
             @AuthenticationPrincipal UUID userId,
-            @RequestHeader(value = "IdempotencyKey",required = true) String idempotencyKey,
+            @RequestHeader(value = "Idempotency-Key",required = true) String idempotencyKey,
             @Valid @RequestBody CheckoutRequest request) {
 
         CheckoutResponse response = checkoutService.processCheckout(userId,idempotencyKey ,request);

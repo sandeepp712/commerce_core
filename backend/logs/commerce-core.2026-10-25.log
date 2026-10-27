@@ -1,0 +1,65 @@
+2026-10-25 09:13:40.977 INFO  [background-preinit] [NO-REQ] o.h.validator.internal.util.Version - HV000001: Hibernate Validator 9.1.3.Final
+2026-10-25 09:13:41.013 INFO  [main] [NO-REQ] c.c.backend.BackendApplication - Starting BackendApplication using Java 25.0.4.1 with PID 3965 (/home/sandy/projects/commerce-core/backend/target/classes started by sandy in /home/sandy/projects/commerce-core/backend)
+2026-10-25 09:13:41.014 INFO  [main] [NO-REQ] c.c.backend.BackendApplication - No active profile set, falling back to 1 default profile: "default"
+2026-10-25 09:13:42.206 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-10-25 09:13:42.209 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-10-25 09:13:42.414 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 193 ms. Found 9 JPA repository interfaces.
+2026-10-25 09:13:42.490 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-10-25 09:13:42.491 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-10-25 09:13:42.520 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.commercecore.backend.auth.repo.RefreshTokenRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-10-25 09:13:42.522 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.commercecore.backend.auth.repo.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-10-25 09:13:42.523 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.commercecore.backend.cart.repo.CartRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-10-25 09:13:42.524 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.commercecore.backend.catalog.repo.ProductRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-10-25 09:13:42.525 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.commercecore.backend.order.repo.OrderEventRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-10-25 09:13:42.525 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.commercecore.backend.order.repo.OrderRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-10-25 09:13:42.526 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.commercecore.backend.payment.repo.PaymentRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-10-25 09:13:42.527 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.commercecore.backend.payment.repo.PendingRefundRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-10-25 09:13:42.527 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.commercecore.backend.shared.outbox.OutboxRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-10-25 09:13:42.528 INFO  [main] [NO-REQ] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 19 ms. Found 0 Redis repository interfaces.
+2026-10-25 09:13:43.392 INFO  [main] [NO-REQ] o.s.boot.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-10-25 09:13:43.412 INFO  [main] [NO-REQ] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-10-25 09:13:43.501 INFO  [main] [NO-REQ] o.s.b.w.c.s.WebApplicationContextInitializer - Root WebApplicationContext: initialization completed in 2440 ms
+2026-10-25 09:13:44.025 INFO  [main] [NO-REQ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-10-25 09:13:44.340 INFO  [main] [NO-REQ] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@19e8fe55
+2026-10-25 09:13:44.342 INFO  [main] [NO-REQ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-10-25 09:13:44.403 INFO  [main] [NO-REQ] org.flywaydb.core.FlywayExecutor - Database: jdbc:postgresql://localhost:5432/ecommerce (PostgreSQL 16.15)
+2026-10-25 09:13:44.546 INFO  [main] [NO-REQ] o.f.core.internal.command.DbValidate - Successfully validated 5 migrations (execution time 00:00.047s)
+2026-10-25 09:13:44.571 INFO  [main] [NO-REQ] o.f.core.internal.command.DbMigrate - Current version of schema "public": 5
+2026-10-25 09:13:44.576 INFO  [main] [NO-REQ] o.f.core.internal.command.DbMigrate - Schema "public" is up to date. No migration necessary.
+2026-10-25 09:13:44.673 INFO  [main] [NO-REQ] org.hibernate.orm.jpa - HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-10-25 09:13:44.778 INFO  [main] [NO-REQ] org.hibernate.orm.core - HHH000001: Hibernate ORM core version 7.4.5.Final
+2026-10-25 09:13:45.287 INFO  [main] [NO-REQ] o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-10-25 09:13:45.386 INFO  [main] [NO-REQ] o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [jdbc:postgresql://localhost:5432/ecommerce]
+	Database driver: PostgreSQL JDBC Driver
+	Database dialect: PostgreSQLDialect
+	Database version: 16.15
+	Default catalog/schema: ecommerce/public
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-10-25 09:13:46.437 INFO  [main] [NO-REQ] org.hibernate.orm.core - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-10-25 09:13:46.443 INFO  [main] [NO-REQ] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-10-25 09:13:46.525 INFO  [main] [NO-REQ] o.s.d.j.r.q.QueryEnhancerFactories - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-10-25 09:13:47.873 WARN  [main] [NO-REQ] o.s.b.s.a.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 41718452-2ac5-4843-967d-2c28026e3d82
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-10-25 09:13:49.265 INFO  [main] [NO-REQ] o.s.b.a.e.web.EndpointLinksResolver - Exposing 4 endpoints beneath base path '/actuator'
+2026-10-25 09:13:49.341 INFO  [main] [NO-REQ] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-10-25 09:13:49.364 INFO  [main] [NO-REQ] o.s.boot.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2026-10-25 09:13:49.379 INFO  [main] [NO-REQ] c.c.backend.BackendApplication - Started BackendApplication in 8.997 seconds (process running for 9.625)
+2026-10-25 09:13:49.462 WARN  [main] [NO-REQ] o.s.c.events.SpringDocAppInitializer - SpringDoc /v3/api-docs endpoint is enabled by default. To disable it in production, set the property 'springdoc.api-docs.enabled=false'
+2026-10-25 09:13:49.463 WARN  [main] [NO-REQ] o.s.c.events.SpringDocAppInitializer - SpringDoc /swagger-ui.html endpoint is enabled by default. To disable it in production, set the property 'springdoc.swagger-ui.enabled=false'
+2026-10-25 09:13:52.275 INFO  [http-nio-8080-exec-1] [NO-REQ] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-10-25 09:13:52.279 INFO  [http-nio-8080-exec-1] [NO-REQ] o.s.web.servlet.DispatcherServlet - Completed initialization in 3 ms
+2026-10-25 09:14:09.407 INFO  [SpringApplicationShutdownHook] [NO-REQ] o.s.boot.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2026-10-25 09:14:09.423 INFO  [tomcat-shutdown] [NO-REQ] o.s.boot.tomcat.GracefulShutdown - Graceful shutdown complete
+2026-10-25 09:14:09.481 INFO  [SpringApplicationShutdownHook] [NO-REQ] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-10-25 09:14:09.485 INFO  [SpringApplicationShutdownHook] [NO-REQ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2026-10-25 09:14:09.488 INFO  [SpringApplicationShutdownHook] [NO-REQ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.

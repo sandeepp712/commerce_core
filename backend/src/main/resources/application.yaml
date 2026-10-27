@@ -4,9 +4,9 @@ spring:
 
   # Database
   datasource:
-    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/ecommerce}
-    username: ${DATABASE_USERNAME:ecommerce}
-    password: ${DATABASE_PASSWORD:ecommerce}
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/ecommerce}
+    username: ${SPRING_DATASOURCE_USERNAME:ecommerce}
+    password: ${SPRING_DATASOURCE_PASSWORD:ecommerce}
     driver-class-name: org.postgresql.Driver
     hikari:
       maximum-pool-size: 20
@@ -34,7 +34,7 @@ spring:
         size: 2
 
 jwt:
-  secret: ${JWT_SECRET}
+  secret: "ZlDTnR6BXjtUtxtpjya+X5FpAgkI0w811AaMeqgH13I="
 
 
 stripe:

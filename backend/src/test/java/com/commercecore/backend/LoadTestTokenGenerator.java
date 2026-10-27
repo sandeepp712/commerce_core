@@ -34,7 +34,7 @@ class LoadTestTokenGenerator {
             csv.append(userId).append(",").append(token).append("\n");
         }
 
-        Files.writeString(Path.of("loadtest-tokens.csv"), csv.toString());
+        Files.writeString(Path.of("../k6/loadtest-tokens.csv"), csv.toString());
         System.out.println("Generated " + userIds.size() + " tokens in loadtest-tokens.csv");
     }
 }
