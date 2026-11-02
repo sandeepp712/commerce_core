@@ -1,7 +1,6 @@
 package com.commercecore.backend.order.service;
 
 import com.commercecore.backend.inventory.repo.InventoryRepository;
-import com.commercecore.backend.inventory.service.InventoryService;
 import com.commercecore.backend.order.domain.Order;
 import com.commercecore.backend.order.domain.OrderEvent;
 import com.commercecore.backend.order.domain.OrderState;
@@ -25,17 +24,15 @@ public class OrderExpirationService {
     private final InventoryRepository inventoryRepository;
     private final OrderEventRepository orderEventRepository;
     private final OutboxRepository outboxRepository;
-    private final InventoryService inventoryService;
 
     public OrderExpirationService(OrderRepository orderRepository,
                                   InventoryRepository inventoryRepository,
                                   OrderEventRepository orderEventRepository,
-                                  OutboxRepository outboxRepository, InventoryService inventoryService) {
+                                  OutboxRepository outboxRepository) {
         this.orderRepository = orderRepository;
         this.inventoryRepository = inventoryRepository;
         this.orderEventRepository = orderEventRepository;
         this.outboxRepository = outboxRepository;
-        this.inventoryService = inventoryService;
     }
 
     /**
@@ -81,11 +78,6 @@ public class OrderExpirationService {
         // 4. Release inventory reservations
         // Uses your CTE: HELD → RELEASED, reserved -= qty
         inventoryRepository.releaseAllReservationsForOrder(orderId);
-
-        //Redis reallocating the stock
-        // Release stock in Redis (Cache Invalidation)
-        // this ensure the Redis known the stock is available again.
-
 
         // 5. Write order event (audit trail — NOT silent)
         orderEventRepository.save(new OrderEvent(

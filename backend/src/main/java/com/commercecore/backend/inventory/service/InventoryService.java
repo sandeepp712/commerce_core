@@ -30,6 +30,10 @@ public class InventoryService {
 
         Long newStock = redisTemplate.opsForValue().decrement(key,qty);
 
+        if (newStock != null && newStock >= 0) {
+            redisTemplate.expire(key, 2, TimeUnit.MINUTES);
+        }
+
         if (newStock != null && newStock < 0) {
             redisTemplate.opsForValue().increment(key, qty);
             return false;
