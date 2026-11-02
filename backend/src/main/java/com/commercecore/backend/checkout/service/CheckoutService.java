@@ -8,6 +8,7 @@ import com.commercecore.backend.catalog.repo.ProductRepository;
 import com.commercecore.backend.checkout.api.dto.CheckoutRequest;
 import com.commercecore.backend.checkout.api.dto.CheckoutResponse;
 import com.commercecore.backend.inventory.repo.InventoryRepository;
+import com.commercecore.backend.inventory.service.InventoryService;
 import com.commercecore.backend.order.domain.Order;
 import com.commercecore.backend.order.domain.OrderItem;
 import com.commercecore.backend.order.domain.OrderState;
@@ -35,21 +36,22 @@ import java.util.stream.Collectors;
 public class CheckoutService {
     private static final Logger LOG = LoggerFactory.getLogger(CheckoutService.class);
     private static final Duration RESERVATION_TTL = Duration.ofMinutes(15);
-    private final CheckoutMetrics checkoutMetrics;
 
+    private final InventoryService inventoryService;
+    private final CheckoutMetrics checkoutMetrics;
     public final InventoryRepository inventoryRepository;
     public final CartRepository cartRepository;
     public final OrderRepository orderRepository;
     public final ProductRepository productRepository;
 
 
-    public CheckoutService(InventoryRepository inventoryRepository, CartRepository cartRepository, OrderRepository orderRepository, ProductRepository productRepository, CheckoutMetrics checkoutMetrics) {
+    public CheckoutService(InventoryService inventoryService,InventoryRepository inventoryRepository, CartRepository cartRepository, OrderRepository orderRepository, ProductRepository productRepository, CheckoutMetrics checkoutMetrics) {
         this.inventoryRepository = inventoryRepository;
         this.cartRepository = cartRepository;
         this.orderRepository = orderRepository;
         this.productRepository = productRepository;
         this.checkoutMetrics = checkoutMetrics;
-
+        this.inventoryService = inventoryService;
     }
 
     /**
@@ -120,6 +122,8 @@ public class CheckoutService {
         }
 
 
+
+
         BigDecimal shippingCost = BigDecimal.ZERO;
         BigDecimal tax = subtotal.multiply(new BigDecimal("0.05"));
         BigDecimal total = subtotal.add(shippingCost).add(tax);
@@ -147,8 +151,27 @@ public class CheckoutService {
         }
 
 
+        for(OrderItem orderItem : orderItems) {
+            boolean reserved = inventoryService.tryReserveStock(orderItem.getProductId(),orderItem.getQty());
+            if(!reserved) {
+                checkoutMetrics.recordInsufficientStock();
+                throw new InsufficientStockException("Insufficient stock for order");
+            }
+        }
+
+
         try {
             orderRepository.saveAndFlush(order);
+
+            for(OrderItem orderItem : orderItems) {
+                int rowReserved = inventoryRepository.reserveInventory(orderItem.getProductId(),orderItem.getQty());
+                if(rowReserved == 0) {
+                    throw new InsufficientStockException("Insufficient stock for order");
+                }
+                inventoryRepository.insertReservation(order.getOrderId(),orderItem.getProductId(),orderItem.getQty(),Instant.now().plus(RESERVATION_TTL));
+            }
+            checkoutMetrics.recordSuccess(System.currentTimeMillis()-startTime);
+            return toResponse(order);
         }catch (DataIntegrityViolationException e) {
             Order existingOrder = orderRepository.findByIdempotencyKey(idempotencyKey)
                     .orElseThrow(()-> new IllegalStateException("Idempotency constraint violated but key not found"));
@@ -156,27 +179,14 @@ public class CheckoutService {
             if(!sameRequestHash(existingOrder,req,userId)){
                 throw new IdempotencyConflictException("IdempotencyKey already exists");
             }
+
+            compensateRedis(order.getOrderItems());
             checkoutMetrics.recordDuplicateWebhook();
             return toResponse(existingOrder);
+        }catch (Exception e) {
+            compensateRedis(order.getOrderItems());
+            throw e;
         }
-
-
-        // Inventory Reservation
-        for(OrderItem item: order.getOrderItems()){
-            int rowReserved = inventoryRepository.reserveInventory(item.getProductId(),item.getQty());
-            if(rowReserved == 0){
-                // Throwing this RuntimeException triggers @Transactional to ROLL BACK everything
-                // above (Order, OrderItems). The stock remains untouched
-                throw new InsufficientStockException(item.getProductId());
-            }
-
-            // Record hold with TTL
-            inventoryRepository.insertReservation(order.getOrderId(),item.getProductId(), item.getQty(),expiration);
-        }
-
-
-        checkoutMetrics.recordSuccess(System.currentTimeMillis() - startTime);
-        return toResponse(order);
     }
 
 
@@ -192,5 +202,11 @@ public class CheckoutService {
                 order.getTotal(),
                 order.getCurrency()
         );
+    }
+
+    private void compensateRedis(List<OrderItem> items) {
+        for (OrderItem item : items) {
+            inventoryService.releaseReservedStock(item.getProductId(), item.getQty());
+        }
     }
 }

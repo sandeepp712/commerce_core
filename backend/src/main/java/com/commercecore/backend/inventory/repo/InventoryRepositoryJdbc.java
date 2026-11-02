@@ -1,6 +1,8 @@
 package com.commercecore.backend.inventory.repo;
 
+import com.commercecore.backend.inventory.domain.Inventory;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -9,6 +11,7 @@ import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
+import java.util.List;
 import java.util.UUID;
 
 
@@ -176,4 +179,5 @@ public class InventoryRepositoryJdbc implements InventoryRepository {
 
         return result!=null?result:0;
     }
+
 }

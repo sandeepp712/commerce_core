@@ -25,4 +25,5 @@ public interface InventoryRepository{
     // New inventory add
     void createInitialInventory(UUID productId, int onHand);
     Integer getAvailableStock(UUID productId);
+
 }

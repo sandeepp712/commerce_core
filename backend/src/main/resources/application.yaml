@@ -32,6 +32,16 @@ spring:
     scheduling:
       pool:
         size: 2
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      timeout: 2000ms
+      lettuce:
+        pool:
+          max-active: 16
+          max-idle: 8
+          min-idle: 2
 
 jwt:
   secret: "ZlDTnR6BXjtUtxtpjya+X5FpAgkI0w811AaMeqgH13I="
@@ -41,12 +51,6 @@ stripe:
   webhook:
       signing-secret: ${STRIPE_WEBHOOK_SECRET}
 
-flash-sale:
-  redis-key-prefix: ${FLASH_SALE_REDIS_PREFIX:stock:product:}
-  lock-key-prefix: ${FLASH_SALE_LOCK_PREFIX:lock:stock:}
-  queue-name: ${FLASH_SALE_QUEUE:flash-sale-orders}
-  exchange-name: ${FLASH_SALE_EXCHANGE:flash-sale-exchange}
-  routing-key: ${FLASH_SALE_ROUTING_KEY:order.confirmed}
 
 # ─── Server ─────────────────────────────────────────────────────────────
 server:
@@ -79,7 +83,6 @@ management:
   endpoint:
     health:
       show-details: when_authorized
-      roles: ACTUATOR_ADMIN
     metrics:
       enabled: true
     prometheus:
@@ -97,6 +100,6 @@ management:
     rabbit:
       enabled: false
     redis:
-      enabled: false
+      enabled: true
     db:
       enabled: true

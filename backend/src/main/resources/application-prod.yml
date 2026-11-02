@@ -1,9 +1,20 @@
 spring:
   # All credentials come from environment variables
   datasource:
-    url: ${DATABASE_URL}
-    username: ${DATABASE_USERNAME}
-    password: ${DATABASE_PASSWORD}
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      timeout: 2000ms
+      lettuce:
+        pool:
+          max-active: 50
+          max-idle: 10
+          min-idle: 5
 
 
 # DISABLE Swagger in production
@@ -39,7 +50,7 @@ management:
     rabbit:
       enabled: false         # CRITICAL: Prevents "DOWN" status since RabbitMQ isn't deployed
     redis:
-      enabled: false         # CRITICAL: Prevents "DOWN" status since Redis isn't deployed
+      enabled: true         # CRITICAL: Prevents "DOWN" status since Redis isn't deployed
     metrics:
       tags:
         application: commerce-core
