@@ -1,6 +1,7 @@
 import http from 'k6/http';
 import { check, sleep } from 'k6';
 import { SharedArray } from 'k6/data';
+import { Counter, Rate, Trend } from 'k6/metrics';
 import papaparse from 'https://jslib.k6.io/papaparse/5.1.1/index.js';
 
 // ─── THE MAGIC OF SHAREARRAY ─────────────────────────────────────────────
@@ -12,18 +13,35 @@ const users = new SharedArray('Load Test Users', function () {
     return papaparse.parse(open('./loadtest-tokens.csv'), { header: true }).data;
 });
 
+
+const checkoutDuration = new Trend('checkout_response_duration', true);
+const successfulCheckouts = Counter('successful_checkouts_total');
+const outOfStockConflicts = Counter('out_of_stock_conflicts_total');
+const unexpectedErrors = Counter('unexpected_server_errors_total');
+const successRate = new Rate('checkout_success_rate');
+
 export const options = {
     scenarios: {
         flash_sale: {
-            executor: 'per-vu-iterations',
-            vus: 500,              // 500 concurrent virtual users
-            iterations: 1,         // Each VU executes the default function exactly once
-            maxDuration: '120s',   // Safety timeout
+            executor: 'ramping-vus',
+            startVUs: 0,
+            stages: [
+                { duration: '30s', target: 100 },   // Ramp to 100
+                { duration: '1m', target: 100 },    // Hold 100
+                { duration: '30s', target: 300 },   // Ramp to 300
+                { duration: '1m', target: 300 },    // Hold 300
+                { duration: '30s', target: 500 },   // Ramp to 500
+                { duration: '1m', target: 500 },    // Hold 500
+                { duration: '30s', target: 1000 },  // Ramp to 1000 (Expect breaking point)
+                { duration: '1m', target: 1000 },   // Hold 1000
+            ],
         },
     },
     thresholds: {
-        http_req_failed: ['rate<0.01'],     // < 1% network/server errors
-        http_req_duration: ['p(95)<3000'],  // 95% of requests under 3s (relaxed for AWS network latency)
+        http_req_duration: ['p(99)<3000','p(95)<3000'],
+        'checkout_response_duration': ['p(99)<2500'],
+        'unexpected_server_errors_total': ['count==0'],
+        'checkout_success_rate': ['rate > 0.05'],
     },
 };
 
@@ -48,16 +66,26 @@ export default function () {
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${user.token}`, // Pre-generated token!
-            'IdempotencyKey': `flash-sale-${user.userId}`,
+            'Idempotency-Key': `flash-sale-${user.userId}`,
         },
     };
 
     // ⚠️ REPLACE THIS WITH YOUR ACTUAL AWS EC2 PUBLIC IP
-    const AWS_EC2_IP = '16.112.60.173';
-    const res = http.post(`http://${AWS_EC2_IP}:8080/api/v1/checkout`, payload, params);
+    const AWS_EC2_IP = '40.192.105.109';
+    const res = http.post(`http://localhost:8080/api/v1/checkout`, payload, params);
 
-    if (res.status !== 201 && res.status !== 409) {
-        console.log(`VU ${__VU} FAILED | Status: ${res.status} | Body: ${res.body}`);
+    checkoutDuration.add(res.timings.duration);
+
+    if (res.status === 201 || res.status === 202) {
+        successfulCheckouts.add(1);
+        successRate.add(true);
+    }else if(res.status === 409){
+        outOfStockConflicts.add(1);
+        successRate.add(false);
+    }else{
+        unexpectedErrors.add(1);
+        successRate.add(false);
+        console.log(`❌ VU ${__VU} UNEXPECTED ERROR | Status: ${res.status} | Body: ${res.body}`)
     }
 
     // In a flash sale with 100 items and 500 users:
@@ -65,7 +93,10 @@ export default function () {
     // ~400 users will get 409 Conflict (Insufficient Stock)
     // NO ONE should get 500 Internal Server Error
     check(res, {
-        'is success or out of stock': (r) => r.status === 201 || r.status === 202 || r.status === 409,
-        'no server errors': (r) => r.status !== 500,
+        'is valid status code (success or conflict)': (r) => [201,202,409].includes(r.status),
+        'no backend crash (500)': (r) => r.status !== 500,
     });
+
+    // Brief jitter to mimic real-user pacing
+    sleep(0.5);
 }
