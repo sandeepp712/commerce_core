@@ -4,7 +4,7 @@ spring:
 
   # Database
   datasource:
-    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/ecommerce}
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/postgres}
     username: ${SPRING_DATASOURCE_USERNAME:ecommerce}
     password: ${SPRING_DATASOURCE_PASSWORD:ecommerce}
     driver-class-name: org.postgresql.Driver
@@ -44,7 +44,7 @@ spring:
           min-idle: 2
 
 jwt:
-  secret: "ZlDTnR6BXjtUtxtpjya+X5FpAgkI0w811AaMeqgH13I="
+  secret: "vTA5WVxKNp1jhdpRDgnsCqVZxDXRt2Twb5FD2NuxztE="
 
 
 stripe:

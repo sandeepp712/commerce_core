@@ -9,6 +9,10 @@ services:
       SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
       SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
       SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
+
+      SPRING_DATA_REDIS_HOST: redis
+      SPRING_DATA_REDIS_PORT: 6379
+
       JWT_SECRET: ${JWT_SECRET}
       STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET}
       SPRING_PROFILES_ACTIVE: prod
@@ -18,20 +22,29 @@ services:
       resources:
         limits:
           memory: 600M
+    networks:
+      - commerce-net
 
   redis:
     image: redis:7-alpine
     container_name: ecommerce-redis
     ports:
-      - "6379:6379"
+      - "127.0.0.1:6379:6379"
     command: redis-server --appendonly yes
     volumes:
       - redis-data:/data
+    restart: unless-stopped
     healthcheck:
       test: [ "CMD","redis-cli","ping" ]
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - commerce-net
 
 volumes:
   redis_data:
+
+networks:
+  commerce-net:
+    driver: bridge

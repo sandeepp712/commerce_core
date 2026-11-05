@@ -1,44 +1,34 @@
 import http from 'k6/http';
-import { check, sleep } from 'k6';
+import { check } from 'k6';
 import { SharedArray } from 'k6/data';
 import { Counter, Rate, Trend } from 'k6/metrics';
 import papaparse from 'https://jslib.k6.io/papaparse/5.1.1/index.js';
 
-// ─── THE MAGIC OF SHAREARRAY ─────────────────────────────────────────────
-// If we used a normal JS array, k6 would copy the 500 rows into the memory
-// of EVERY Virtual User (500 VUs * 500 rows = 250,000 rows in RAM).
-// SharedArray loads the CSV ONCE in memory and shares it across all VUs.
-// This prevents Out-Of-Memory crashes on your local laptop.
+// ─── CUSTOM METRICS ──────────────────────────────────────────────────────
+const checkoutDuration = new Trend('checkout_response_duration', true);
+const successfulCheckouts = new Counter('successful_checkouts_total');
+const outOfStockConflicts = new Counter('out_of_stock_conflicts_total');
+const unexpectedErrors = new Counter('unexpected_server_errors_total');
+const successRate = new Rate('checkout_success_rate');
+
+// ─── LOAD USERS ONCE INTO MEMORY ─────────────────────────────────────────
 const users = new SharedArray('Load Test Users', function () {
     return papaparse.parse(open('./loadtest-tokens.csv'), { header: true }).data;
 });
 
-
-const checkoutDuration = new Trend('checkout_response_duration', true);
-const successfulCheckouts = Counter('successful_checkouts_total');
-const outOfStockConflicts = Counter('out_of_stock_conflicts_total');
-const unexpectedErrors = Counter('unexpected_server_errors_total');
-const successRate = new Rate('checkout_success_rate');
-
 export const options = {
     scenarios: {
         flash_sale: {
-            executor: 'ramping-vus',
-            startVUs: 0,
-            stages: [
-                { duration: '30s', target: 100 },   // Ramp to 100
-                { duration: '1m', target: 100 },    // Hold 100
-                { duration: '30s', target: 300 },   // Ramp to 300
-                { duration: '1m', target: 300 },    // Hold 300
-                { duration: '30s', target: 500 },   // Ramp to 500
-                { duration: '1m', target: 500 },    // Hold 500
-                { duration: '30s', target: 1000 },  // Ramp to 1000 (Expect breaking point)
-                { duration: '1m', target: 1000 },   // Hold 1000
-            ],
+            // 'per-vu-iterations' ensures each VU runs EXACTLY 1 iteration.
+            // With 500 VUs and 1 iteration each, __VU cleanly maps 1:1 to your CSV rows.
+            executor: 'per-vu-iterations',
+            vus: 500,
+            iterations: 1,
+            maxDuration: '2m',
         },
     },
     thresholds: {
-        http_req_duration: ['p(99)<3000','p(95)<3000'],
+        http_req_duration: ['p(99)<3000', 'p(95)<3000'],
         'checkout_response_duration': ['p(99)<2500'],
         'unexpected_server_errors_total': ['count==0'],
         'checkout_success_rate': ['rate > 0.05'],
@@ -46,14 +36,19 @@ export const options = {
 };
 
 export default function () {
-    // __VU is the Virtual User ID (1 to 500).
-    // We use __VU - 1 to map to the 0-indexed CSV array.
-    // This guarantees VU #1 ALWAYS uses User #1's token and cart.
-    const user = users[__VU - 1];
+    // __VU ranges from 1 to 500. We subtract 1 for 0-indexed CSV rows.
+    // VU #1 gets user[0], VU #2 gets user[1], ..., VU #500 gets user[499].
+    const userIndex = __VU - 1;
+    const user = users[userIndex];
 
     if (!user || !user.token) {
-        console.error(`Missing data for VU ${__VU}`);
+        console.error(`Missing data for VU ${__VU} (Index ${userIndex})`);
         return;
+    }
+
+    // Log the first 3 users to verify unique mapping
+    if (userIndex < 3) {
+        console.log(`VU ${__VU} mapped to User ID: ${user.userId}`);
     }
 
     const payload = JSON.stringify({
@@ -65,13 +60,13 @@ export default function () {
     const params = {
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${user.token}`, // Pre-generated token!
+            'Authorization': `Bearer ${user.token}`,
             'Idempotency-Key': `flash-sale-${user.userId}`,
         },
     };
 
-    // ⚠️ REPLACE THIS WITH YOUR ACTUAL AWS EC2 PUBLIC IP
-    const AWS_EC2_IP = '40.192.105.109';
+    // ⚠️ YOUR AWS EC2 PUBLIC IP
+    const AWS_EC2_IP = '16.112.59.10';
     const res = http.post(`http://localhost:8080/api/v1/checkout`, payload, params);
 
     checkoutDuration.add(res.timings.duration);
@@ -79,24 +74,17 @@ export default function () {
     if (res.status === 201 || res.status === 202) {
         successfulCheckouts.add(1);
         successRate.add(true);
-    }else if(res.status === 409){
+    } else if (res.status === 409) {
         outOfStockConflicts.add(1);
         successRate.add(false);
-    }else{
+    } else {
         unexpectedErrors.add(1);
         successRate.add(false);
-        console.log(`❌ VU ${__VU} UNEXPECTED ERROR | Status: ${res.status} | Body: ${res.body}`)
+        console.log(`❌ VU ${__VU} ERROR | Status: ${res.status} | Body: ${res.body}`);
     }
 
-    // In a flash sale with 100 items and 500 users:
-    // ~100 users will get 201 Created
-    // ~400 users will get 409 Conflict (Insufficient Stock)
-    // NO ONE should get 500 Internal Server Error
     check(res, {
-        'is valid status code (success or conflict)': (r) => [201,202,409].includes(r.status),
+        'is valid status code (success or conflict)': (r) => [201, 202, 409].includes(r.status),
         'no backend crash (500)': (r) => r.status !== 500,
     });
-
-    // Brief jitter to mimic real-user pacing
-    sleep(0.5);
 }

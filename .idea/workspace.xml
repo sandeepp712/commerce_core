@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="031f8056-9069-4e2b-9f9f-b45600213e5b" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/commerce-core.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/diff-generator.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jpb-settings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jsonSchemas.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/remote-targets.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/logs/commerce-core.2026-10-14.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/logs/commerce-core.2026-10-15.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/logs/commerce-core.2026-10-17.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/logs/commerce-core.2026-10-19.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/logs/commerce-core.2026-10-20.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/logs/commerce-core.2026-10-21.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/logs/commerce-core.2026-10-25.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/logs/commerce-core.2026-10-26.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/logs/commerce-core.2026-10-27.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/logs/commerce-core.2026-10-29.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/logs/commerce-core.2026-11-01.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/logs/commerce-core.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/commercecore/backend/checkout/service/CheckoutService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/commercecore/backend/checkout/service/CheckoutService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/commercecore/backend/inventory/service/InventoryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/commercecore/backend/inventory/service/InventoryService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/test/java/com/commercecore/backend/BackendApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/test/java/com/commercecore/backend/BackendApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.prod.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.prod.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/k6/flash-sale.ts" beforeDir="false" afterPath="$PROJECT_DIR$/k6/flash-sale.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/k6/loadtest-tokens.csv" beforeDir="false" afterPath="$PROJECT_DIR$/k6/loadtest-tokens.csv" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DatabaseLocalColorSettings">
+    <colors>
+      <entry key="1f0c37f8-7c85-462c-b93e-8ba923d260fc" value="" />
+      <entry key="bbbbea1f-f5e2-4852-a3af-5c29a87710cc" value="" />
+      <entry key="cc3ad926-7009-417e-8ecb-1c08ab9a153c" value="" />
+    </colors>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="com.intellij.jpb.FlywayMigrationScript" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="MavenRunner">
+    <option name="jreName" value="25 (WSL)" />
+  </component>
+  <component name="NextEditCompletionFeaturesState">
+    <decayedCancelled>
+      <entry key="MS100" value="0.0" />
+      <entry key="MS500" value="0.0" />
+      <entry key="S2" value="2.8538956298189655E-181" />
+      <entry key="S5" value="9.144085385120508E-73" />
+      <entry key="S10" value="1.3514742201823415E-36" />
+      <entry key="S30" value="1.7547996615517273E-12" />
+      <entry key="S60" value="1.873359180540786E-6" />
+      <entry key="M2" value="0.0019356355745119502" />
+      <entry key="M5" value="0.12455092946563935" />
+      <entry key="M10" value="0.4991205929321442" />
+      <entry key="M15" value="0.7942820325797675" />
+      <entry key="M30" value="1.420433451983331" />
+      <entry key="H1" value="3.957674542185606" />
+      <entry key="H2" value="15.26788117146891" />
+      <entry key="H4" value="49.92036189399303" />
+      <entry key="D1" value="278.14652907581694" />
+      <entry key="W1" value="412.6959172874687" />
+    </decayedCancelled>
+    <decayedSelected>
+      <entry key="MS100" value="1.0" />
+      <entry key="MS500" value="1.0" />
+      <entry key="S2" value="1.0" />
+      <entry key="S5" value="1.0" />
+      <entry key="S10" value="1.0" />
+      <entry key="S30" value="1.0" />
+      <entry key="S60" value="1.0" />
+      <entry key="M2" value="1.0" />
+      <entry key="M5" value="1.0000000000001943" />
+      <entry key="M10" value="1.0000016428842415" />
+      <entry key="M15" value="1.0003372759797948" />
+      <entry key="M30" value="1.0759508245173564" />
+      <entry key="H1" value="2.4703977204318583" />
+      <entry key="H2" value="9.367885987590764" />
+      <entry key="H4" value="28.676022357979065" />
+      <entry key="D1" value="166.05277401261722" />
+      <entry key="W1" value="251.25787525103104" />
+    </decayedSelected>
+    <decayedShown>
+      <entry key="MS100" value="6.632903213660023E-5" />
+      <entry key="MS500" value="0.14599592432663971" />
+      <entry key="S2" value="0.6181376304604758" />
+      <entry key="S5" value="0.8249622450062417" />
+      <entry key="S10" value="0.9082743225514204" />
+      <entry key="S30" value="0.9684391671162076" />
+      <entry key="S60" value="0.9840949413439567" />
+      <entry key="M2" value="0.9939501137286475" />
+      <entry key="M5" value="1.1213446468007173" />
+      <entry key="M10" value="1.4975110885022374" />
+      <entry key="M15" value="1.7935399838491908" />
+      <entry key="M30" value="2.495716976508861" />
+      <entry key="H1" value="6.426718568129876" />
+      <entry key="H2" value="24.63268409413965" />
+      <entry key="H4" value="78.59133224784662" />
+      <entry key="D1" value="444.1940257957923" />
+      <entry key="W1" value="663.9526405721898" />
+    </decayedShown>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1,
+  &quot;fromUser&quot;: false
+}</component>
+  <component name="ProjectId" id="3JYFPY17j1MTRLcX9QOXjjtc2eR" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.BackendApplicationTests.executor&quot;: &quot;Run&quot;,
+    &quot;Application.MintAwsTokens.executor&quot;: &quot;Run&quot;,
+    &quot;Application.com.commercecore.backend.BackendApplicationTests.executor&quot;: &quot;Profiler#1&quot;,
+    &quot;Flyway.Flyway Migrate 1.executor&quot;: &quot;Run&quot;,
+    &quot;Flyway.Flyway Migrate.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CheckoutTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CheckoutTest.whenCheckoutSucceeds_inventoryIsReserved.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CheckoutTest.whenDownstreamFailAfterReservation_inventoryRollsBackCompletely.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.InventoryRepositoryTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.LoadTestTokenGenerator.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.LoadTestTokenGenerator.generateTokens.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.OrderStateMachineTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.OrderStateMachineTest.exhaustiveCheck_all49Pairs.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.WebhookRaceConditionTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.WebhookRaceConditionTest.whenWebhookArrivesAfterExpiry_orderStaysExpiredAndRefundIsInitiated.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.backend [compile].executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;Spring Boot.BackendApplication.executor&quot;: &quot;Run&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;//wsl.localhost/Ubuntu/home/sandy/projects/commerce-core&quot;,
+    &quot;node.js.detected.package.jshint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.jshint&quot;: &quot;&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;build.tools&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;redis&quot;,
+      &quot;postgresql&quot;
+    ]
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="\\wsl.localhost\Ubuntu\home\sandy\projects\commerce-core\backend\src\test\java\com\commercecore\backend" />
+      <recent name="\\wsl.localhost\Ubuntu\home\sandy\projects\commerce-core\backend" />
+      <recent name="\\wsl.localhost\Ubuntu\home\sandy\projects\commerce-core\k6" />
+      <recent name="\\wsl.localhost\Ubuntu\home\sandy\projects\commerce-core\prometheus\prometheus.yml" />
+      <recent name="\\wsl.localhost\Ubuntu\home\sandy\projects\commerce-core" />
+    </key>
+  </component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="mvn compile" />
+    </option>
+  </component>
+  <component name="RunManager" selected="Application.com.commercecore.backend.BackendApplicationTests">
+    <configuration name="BackendApplicationTests" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="ALTERNATIVE_JRE_PATH" value="$PROJECT_DIR$/../../../../usr/lib/jvm/java-25-openjdk-amd64" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="MAIN_CLASS_NAME" value="com.commercecore" />
+      <option name="PROGRAM_PARAMETERS" value="$PROJECT_DIR$/../../.m2/repository$MODULE_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.commercecore.backend.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MintAwsTokens" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.commercecore.backend.MintAwsTokens" />
+      <module name="backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.commercecore.backend.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="com.commercecore.backend.BackendApplicationTests" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.commercecore.backend.BackendApplicationTests" />
+      <module name="backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.commercecore.backend.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Flyway Migrate 1" type="FlywayConfigurationType" factoryName="Liquibase Migrate">
+      <option name="DATA_SOURCE" value="54d7f40d-07cc-43aa-9125-0fa3d4bd2d58" />
+      <option name="DIRECTORY">
+        <list>
+          <flyway-directory>
+            <option name="moduleName" value="backend" />
+            <option name="path" value="classpath:db/migration" />
+          </flyway-directory>
+        </list>
+      </option>
+      <method v="2" />
+    </configuration>
+    <configuration name="Flyway Migrate" type="FlywayConfigurationType" factoryName="Liquibase Migrate">
+      <option name="DATA_SOURCE" value="5bf45af4-8d82-41f2-a753-8010946c4c29" />
+      <option name="DIRECTORY">
+        <list>
+          <flyway-directory>
+            <option name="moduleName" value="backend" />
+            <option name="path" value="classpath:db/migration" />
+          </flyway-directory>
+        </list>
+      </option>
+      <module name="backend" />
+      <method v="2" />
+    </configuration>
+    <configuration name="LoadTestTokenGenerator" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.commercecore.backend.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.commercecore.backend" />
+      <option name="MAIN_CLASS_NAME" value="com.commercecore.backend.LoadTestTokenGenerator" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="LoadTestTokenGenerator.generateTokens" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.commercecore.backend.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.commercecore.backend" />
+      <option name="MAIN_CLASS_NAME" value="com.commercecore.backend.LoadTestTokenGenerator" />
+      <option name="METHOD_NAME" value="generateTokens" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="BackendApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="ALTERNATIVE_JRE_PATH" value="$PROJECT_DIR$/../../../../usr/lib/jvm/java-25-openjdk-amd64" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="DEBUG_MODE" value="true" />
+      <option name="ENABLE_JMX_AUTH" value="true" />
+      <module name="backend" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.commercecore.backend.BackendApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="docker-deploy" factoryName="docker-compose.yml" temporary="true">
+      <deployment type="docker-compose.yml">
+        <settings />
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.com.commercecore.backend.BackendApplicationTests" />
+        <item itemvalue="JUnit.LoadTestTokenGenerator.generateTokens" />
+        <item itemvalue="JUnit.LoadTestTokenGenerator" />
+        <item itemvalue="Application.MintAwsTokens" />
+        <item itemvalue="Application.BackendApplicationTests" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-30f59d01ecdd-2df11533d9fe-intellij.indexing.shared.core-IU-262.11879.100" />
+        <option value="bundled-js-predefined-d6986cc7102b-4abd2a77f808-JavaScript-IU-262.11879.100" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="031f8056-9069-4e2b-9f9f-b45600213e5b" name="Changes" comment="" />
+      <created>1789830071369</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1789830071369</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="org.hibernate.StaleObjectStateException" package="org.hibernate" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.IllegalArgumentException" package="java.lang" />
+          <option name="timeStamp" value="3" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>

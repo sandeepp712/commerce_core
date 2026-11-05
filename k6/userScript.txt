@@ -1,0 +1,38 @@
+-- 1. Flash Sale Product (100 units)
+INSERT INTO products (id, sku, name, description, price, currency, active, created_at, updated_at)
+VALUES ('aaaaaaaa-1111-1111-1111-111111111111', 'FLASH-PS5', 'PS5 Flash Sale', 'Limited stock', 49999.00, 'INR', true, NOW(), NOW())
+ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO inventory (product_id, on_hand, reserved, version, updated_at)
+VALUES ('aaaaaaaa-1111-1111-1111-111111111111', 100, 0, 0, NOW())
+ON CONFLICT (product_id) DO UPDATE SET on_hand = 100, reserved = 0;
+
+-- 2. 500 Users with Active Carts (each cart has 1 PS5)
+DO $$
+DECLARE
+    i INTEGER;
+    u_id UUID;
+    c_id UUID;
+BEGIN
+    FOR i IN 1..500 LOOP
+        u_id := gen_random_uuid();
+        c_id := gen_random_uuid();
+
+        INSERT INTO users (id, email, username, password_hash, role, failed_login_attempts, created_at, updated_at)
+        VALUES (u_id, 'loadtest' || i || '@test.com', 'loaduser' || i,
+                '$2a$12$0pIa4iv2MdXNrab7KWj6q.mTjGqREk8FzzESN0onaXyp6ZD6JrZCi',
+                'CUSTOMER', 0, NOW(), NOW())
+        ON CONFLICT (id) DO NOTHING;
+
+        INSERT INTO cart (id, user_id, status, created_at, updated_at)
+        VALUES (c_id, u_id, 'ACTIVE', NOW(), NOW())
+        ON CONFLICT (id) DO NOTHING;
+
+        INSERT INTO cart_item (id, cart_id, product_id, qty, unit_price, created_at, updated_at)
+        VALUES (gen_random_uuid(), c_id, 'aaaaaaaa-1111-1111-1111-111111111111', 1, 49999.00, NOW(), NOW())
+        ON CONFLICT (id) DO NOTHING;
+    END LOOP;
+END $$;
+
+
+DELETE FROM "users";

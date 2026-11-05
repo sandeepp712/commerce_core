@@ -77,13 +77,15 @@ public class CheckoutService {
             return toResponse(o);
         }
 
-        // Race path: 2 concurrent calls with same idempotency key
         Cart cart = cartRepository.findActiveByUserId(userId)
                 .orElseThrow(EmptyCartException::new);
 
         if(cart.getCartItems().isEmpty()){
             throw new EmptyCartException("Cart is empty for user " + userId);
         }
+
+
+        // Race path: 2 concurrent calls with same idempotency key
 
         Optional<Order> pendingOrder = orderRepository.findByCartIdAndStateIn(
                 cart.getCartId(),
@@ -122,69 +124,81 @@ public class CheckoutService {
         }
 
 
-
-
-        BigDecimal shippingCost = BigDecimal.ZERO;
-        BigDecimal tax = subtotal.multiply(new BigDecimal("0.05"));
-        BigDecimal total = subtotal.add(shippingCost).add(tax);
-
-        Instant expiration = Instant.now().plus(RESERVATION_TTL);
-        String shippingAddressJson = String.format("{\"addressId\":\"%s\"}", req.shippingAddressId());
-
-        Order order = Order.builder()
-                .userId(userId)
-                .cartId(cart.getCartId())
-                .state(OrderState.AWAITING_PAYMENT_CONFIRMATION)
-                .subtotal(subtotal)
-                .shipping(shippingCost)
-                .tax(tax)
-                .total(total)
-                .currency("INR")
-                .shippingAddress(shippingAddressJson)
-                .idempotencyKey(idempotencyKey)
-                .expiresAt(expiration)
-                .build();
-
-
-        for (OrderItem orderItem : orderItems) {
-            order.addItem(orderItem);
-        }
-
-
-        for(OrderItem orderItem : orderItems) {
-            boolean reserved = inventoryService.tryReserveStock(orderItem.getProductId(),orderItem.getQty());
-            if(!reserved) {
-                checkoutMetrics.recordInsufficientStock();
-                throw new InsufficientStockException("Insufficient stock for order");
-            }
-        }
-
-
-        try {
-            orderRepository.saveAndFlush(order);
-
+        List<OrderItem> reservedInRedis = new ArrayList<>();
+        try{
             for(OrderItem orderItem : orderItems) {
-                int rowReserved = inventoryRepository.reserveInventory(orderItem.getProductId(),orderItem.getQty());
-                if(rowReserved == 0) {
-                    throw new InsufficientStockException("Insufficient stock for order");
+                boolean reserved = inventoryService.tryReserveStock(orderItem.getProductId(),orderItem.getQty());
+                if(!reserved) {
+                    throw new InsufficientStockException("Insufficient stock for cart");
                 }
-                inventoryRepository.insertReservation(order.getOrderId(),orderItem.getProductId(),orderItem.getQty(),Instant.now().plus(RESERVATION_TTL));
+                reservedInRedis.add(orderItem);
             }
-            checkoutMetrics.recordSuccess(System.currentTimeMillis()-startTime);
-            return toResponse(order);
-        }catch (DataIntegrityViolationException e) {
-            Order existingOrder = orderRepository.findByIdempotencyKey(idempotencyKey)
-                    .orElseThrow(()-> new IllegalStateException("Idempotency constraint violated but key not found"));
+        }catch (InsufficientStockException e){
+            for(OrderItem item : reservedInRedis) {
+                inventoryService.releaseReservedStock(item.getProductId(),item.getQty());
+            }
+            checkoutMetrics.recordInsufficientStock();
+            throw e;
+        }catch (Exception e){
+            for(OrderItem item : reservedInRedis) {
+                inventoryService.releaseReservedStock(item.getProductId(),item.getQty());
+            }
+            throw e;
+        }
 
-            if(!sameRequestHash(existingOrder,req,userId)){
-                throw new IdempotencyConflictException("IdempotencyKey already exists");
+
+            BigDecimal shippingCost = BigDecimal.ZERO;
+            BigDecimal tax = subtotal.multiply(new BigDecimal("0.05"));
+            BigDecimal total = subtotal.add(shippingCost).add(tax);
+
+            Instant expiration = Instant.now().plus(RESERVATION_TTL);
+            String shippingAddressJson = String.format("{\"addressId\":\"%s\"}", req.shippingAddressId());
+
+            Order order = Order.builder()
+                    .userId(userId)
+                    .cartId(cart.getCartId())
+                    .state(OrderState.AWAITING_PAYMENT_CONFIRMATION)
+                    .subtotal(subtotal)
+                    .shipping(shippingCost)
+                    .tax(tax)
+                    .total(total)
+                    .currency("INR")
+                    .shippingAddress(shippingAddressJson)
+                    .idempotencyKey(idempotencyKey)
+                    .expiresAt(expiration)
+                    .build();
+
+
+            for (OrderItem orderItem : orderItems) {
+                order.addItem(orderItem);
             }
 
-            compensateRedis(order.getOrderItems());
+            try {
+                orderRepository.saveAndFlush(order);
+
+                for (OrderItem item : orderItems) {
+                    int rowReserved = inventoryRepository.reserveInventory(item.getProductId(), item.getQty());
+                    if (rowReserved == 0) {
+                        throw new RuntimeException("DB Insufficient stock"); // Triggers rollback
+                    }
+                    inventoryRepository.insertReservation(order.getOrderId(), item.getProductId(), item.getQty(), Instant.now().plus(RESERVATION_TTL));
+                }
+
+                checkoutMetrics.recordSuccess(System.currentTimeMillis()-startTime);
+                return toResponse(order);
+            }catch (DataIntegrityViolationException e) {
+                Order existingOrder = orderRepository.findByIdempotencyKey(idempotencyKey)
+                        .orElseThrow(()-> new IllegalStateException("Idempotency constraint violated but key not found"));
+
+                if(!sameRequestHash(existingOrder,req,userId)){
+                    throw new IdempotencyConflictException("IdempotencyKey already exists");
+                }
+
+            compensateRedis(orderItems);
             checkoutMetrics.recordDuplicateWebhook();
             return toResponse(existingOrder);
-        }catch (Exception e) {
-            compensateRedis(order.getOrderItems());
+        }catch (RuntimeException e) {
+            compensateRedis(orderItems);
             throw e;
         }
     }
