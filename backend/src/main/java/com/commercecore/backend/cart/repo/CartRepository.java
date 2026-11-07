@@ -3,6 +3,7 @@ package com.commercecore.backend.cart.repo;
 import com.commercecore.backend.auth.domain.User;
 import com.commercecore.backend.cart.domain.Cart;
 import com.commercecore.backend.cart.domain.CartStatus;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -22,9 +23,12 @@ public interface CartRepository extends JpaRepository<Cart, UUID> {
     Optional<Cart> findByUserId(UUID userId);
 
     // Find an active cart by ID and status
-    Optional<Cart> findByCartIdAndStatus(UUID cartId, CartStatus status);
+    @EntityGraph(attributePaths = {"cartItems"})
+    Optional<Cart> findByUserIdAndStatus(UUID userId, CartStatus status);
 
-    Optional<Cart> findActiveByUserId(UUID userId);
+    default Optional<Cart> findActiveByUserId(UUID userId){
+        return findByUserIdAndStatus(userId, CartStatus.ACTIVE);
+    }
 
     @Modifying(clearAutomatically = true)
     @Query("UPDATE Cart c SET c.status = :status, c.checkoutAt= :checkoutAt, c.updatedAt = :updatedAt where c.cartId= :cartId")

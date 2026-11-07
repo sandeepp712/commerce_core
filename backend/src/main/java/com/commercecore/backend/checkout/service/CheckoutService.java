@@ -43,15 +43,17 @@ public class CheckoutService {
     public final CartRepository cartRepository;
     public final OrderRepository orderRepository;
     public final ProductRepository productRepository;
+    public final CheckoutWriter checkoutWriter;
 
 
-    public CheckoutService(InventoryService inventoryService,InventoryRepository inventoryRepository, CartRepository cartRepository, OrderRepository orderRepository, ProductRepository productRepository, CheckoutMetrics checkoutMetrics) {
+    public CheckoutService(InventoryService inventoryService,InventoryRepository inventoryRepository, CartRepository cartRepository, OrderRepository orderRepository, ProductRepository productRepository, CheckoutMetrics checkoutMetrics,CheckoutWriter checkoutWriter) {
         this.inventoryRepository = inventoryRepository;
         this.cartRepository = cartRepository;
         this.orderRepository = orderRepository;
         this.productRepository = productRepository;
         this.checkoutMetrics = checkoutMetrics;
         this.inventoryService = inventoryService;
+        this.checkoutWriter = checkoutWriter;
     }
 
     /**
@@ -63,11 +65,11 @@ public class CheckoutService {
      */
 
 
-    @Transactional(rollbackFor = Exception.class)
     public CheckoutResponse processCheckout(UUID userId,String idempotencyKey ,CheckoutRequest req) {
 
         long startTime = System.currentTimeMillis();
-        // check idempotencykey was already user?
+
+        // 1. idempotency Check
         Optional<Order> existing = orderRepository.findByIdempotencyKey(idempotencyKey);
         if (existing.isPresent()) {
             Order o = existing.get();
@@ -85,8 +87,6 @@ public class CheckoutService {
         }
 
 
-        // Race path: 2 concurrent calls with same idempotency key
-
         Optional<Order> pendingOrder = orderRepository.findByCartIdAndStateIn(
                 cart.getCartId(),
                 List.of(OrderState.AWAITING_PAYMENT_CONFIRMATION)
@@ -96,12 +96,13 @@ public class CheckoutService {
             LOG.info("Pending order exists for cart {},returning existing order",cart.getCartId());
             return toResponse(pendingOrder.get());
         }
-        // 1. Extract item from the cart
+
+        // 2. Build order items
         List<UUID> productIds = cart.getCartItems().stream()
                 .map(CartItem::getProductId)
                 .toList();
 
-        // 2. Batch fetch (1 SQL Query, no N+1 problem)
+        // Batch fetch (1 SQL Query, no N+1 problem)
         Map<UUID, Product> productCatalog = productRepository.findAllById(productIds).stream()
                 .collect(Collectors.toMap(Product::getProductId, Function.identity()));
 
@@ -123,7 +124,7 @@ public class CheckoutService {
             subtotal = subtotal.add(orderItem.getLineTotal());
         }
 
-
+        // 3. Redis Pre filter
         List<OrderItem> reservedInRedis = new ArrayList<>();
         try{
             for(OrderItem orderItem : orderItems) {
@@ -133,74 +134,62 @@ public class CheckoutService {
                 }
                 reservedInRedis.add(orderItem);
             }
-        }catch (InsufficientStockException e){
-            for(OrderItem item : reservedInRedis) {
-                inventoryService.releaseReservedStock(item.getProductId(),item.getQty());
-            }
+        }catch (Exception e){
+            compensateRedis(reservedInRedis);
             checkoutMetrics.recordInsufficientStock();
             throw e;
-        }catch (Exception e){
-            for(OrderItem item : reservedInRedis) {
-                inventoryService.releaseReservedStock(item.getProductId(),item.getQty());
-            }
-            throw e;
         }
 
 
-            BigDecimal shippingCost = BigDecimal.ZERO;
-            BigDecimal tax = subtotal.multiply(new BigDecimal("0.05"));
-            BigDecimal total = subtotal.add(shippingCost).add(tax);
+        // 4. DB transaction
+        BigDecimal shippingCost = BigDecimal.ZERO;
+        BigDecimal tax = subtotal.multiply(new BigDecimal("0.05"));
+        BigDecimal total = subtotal.add(shippingCost).add(tax);
 
-            Instant expiration = Instant.now().plus(RESERVATION_TTL);
-            String shippingAddressJson = String.format("{\"addressId\":\"%s\"}", req.shippingAddressId());
+        Instant expiration = Instant.now().plus(RESERVATION_TTL);
+        String shippingAddressJson = String.format("{\"addressId\":\"%s\"}", req.shippingAddressId());
 
-            Order order = Order.builder()
-                    .userId(userId)
-                    .cartId(cart.getCartId())
-                    .state(OrderState.AWAITING_PAYMENT_CONFIRMATION)
-                    .subtotal(subtotal)
-                    .shipping(shippingCost)
-                    .tax(tax)
-                    .total(total)
-                    .currency("INR")
-                    .shippingAddress(shippingAddressJson)
-                    .idempotencyKey(idempotencyKey)
-                    .expiresAt(expiration)
-                    .build();
+        Order order = Order.builder()
+                .userId(userId)
+                .cartId(cart.getCartId())
+                .state(OrderState.AWAITING_PAYMENT_CONFIRMATION)
+                .subtotal(subtotal)
+                .shipping(shippingCost)
+                .tax(tax)
+                .total(total)
+                .currency("INR")
+                .shippingAddress(shippingAddressJson)
+                .idempotencyKey(idempotencyKey)
+                .expiresAt(expiration)
+                .build();
 
 
-            for (OrderItem orderItem : orderItems) {
-                order.addItem(orderItem);
+        for (OrderItem orderItem : orderItems) {
+            order.addItem(orderItem);
+        }
+
+
+        Order savedOrder;
+        try {
+            savedOrder = checkoutWriter.executeWrite(order,orderItems);
+        }catch (DataIntegrityViolationException e) {
+            compensateRedis(orderItems);
+            Order existingOrder = orderRepository.findByIdempotencyKey(idempotencyKey)
+                    .orElseThrow(()-> new IllegalStateException("Idempotency constraint violated but key not found"));
+
+            if(!sameRequestHash(existingOrder,req,userId)){
+                throw new IdempotencyConflictException("IdempotencyKey already exists");
             }
 
-            try {
-                orderRepository.saveAndFlush(order);
-
-                for (OrderItem item : orderItems) {
-                    int rowReserved = inventoryRepository.reserveInventory(item.getProductId(), item.getQty());
-                    if (rowReserved == 0) {
-                        throw new RuntimeException("DB Insufficient stock"); // Triggers rollback
-                    }
-                    inventoryRepository.insertReservation(order.getOrderId(), item.getProductId(), item.getQty(), Instant.now().plus(RESERVATION_TTL));
-                }
-
-                checkoutMetrics.recordSuccess(System.currentTimeMillis()-startTime);
-                return toResponse(order);
-            }catch (DataIntegrityViolationException e) {
-                Order existingOrder = orderRepository.findByIdempotencyKey(idempotencyKey)
-                        .orElseThrow(()-> new IllegalStateException("Idempotency constraint violated but key not found"));
-
-                if(!sameRequestHash(existingOrder,req,userId)){
-                    throw new IdempotencyConflictException("IdempotencyKey already exists");
-                }
-
-            compensateRedis(orderItems);
             checkoutMetrics.recordDuplicateWebhook();
             return toResponse(existingOrder);
-        }catch (RuntimeException e) {
+        }catch (Exception e) {
             compensateRedis(orderItems);
             throw e;
         }
+
+        checkoutMetrics.recordSuccess(System.currentTimeMillis()-startTime);
+        return toResponse(savedOrder);
     }
 
 
