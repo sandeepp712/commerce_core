@@ -5,38 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="031f8056-9069-4e2b-9f9f-b45600213e5b" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/commerce-core.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/diff-generator.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jpb-settings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jsonSchemas.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/remote-targets.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/logs/commerce-core.2026-10-14.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/logs/commerce-core.2026-10-15.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/logs/commerce-core.2026-10-17.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/logs/commerce-core.2026-10-19.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/logs/commerce-core.2026-10-20.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/logs/commerce-core.2026-10-21.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/logs/commerce-core.2026-10-25.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/logs/commerce-core.2026-10-26.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/logs/commerce-core.2026-10-27.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/logs/commerce-core.2026-10-29.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/logs/commerce-core.2026-11-01.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/logs/commerce-core.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/backend/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/logs/commerce-core.log" beforeDir="false" afterPath="$PROJECT_DIR$/backend/logs/commerce-core.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/commercecore/backend/cart/repo/CartRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/commercecore/backend/cart/repo/CartRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/commercecore/backend/checkout/service/CheckoutService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/commercecore/backend/checkout/service/CheckoutService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/commercecore/backend/inventory/service/InventoryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/commercecore/backend/inventory/service/InventoryService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/resources/application.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/test/java/com/commercecore/backend/BackendApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/test/java/com/commercecore/backend/BackendApplicationTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.prod.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.prod.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/k6/flash-sale.ts" beforeDir="false" afterPath="$PROJECT_DIR$/k6/flash-sale.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/k6/loadtest-tokens.csv" beforeDir="false" afterPath="$PROJECT_DIR$/k6/loadtest-tokens.csv" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -74,61 +48,61 @@
   </component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="0.0" />
-      <entry key="MS500" value="0.0" />
-      <entry key="S2" value="2.8538956298189655E-181" />
-      <entry key="S5" value="9.144085385120508E-73" />
-      <entry key="S10" value="1.3514742201823415E-36" />
-      <entry key="S30" value="1.7547996615517273E-12" />
-      <entry key="S60" value="1.873359180540786E-6" />
-      <entry key="M2" value="0.0019356355745119502" />
-      <entry key="M5" value="0.12455092946563935" />
-      <entry key="M10" value="0.4991205929321442" />
-      <entry key="M15" value="0.7942820325797675" />
-      <entry key="M30" value="1.420433451983331" />
-      <entry key="H1" value="3.957674542185606" />
-      <entry key="H2" value="15.26788117146891" />
-      <entry key="H4" value="49.92036189399303" />
-      <entry key="D1" value="278.14652907581694" />
-      <entry key="W1" value="412.6959172874687" />
+      <entry key="MS100" value="1.0" />
+      <entry key="MS500" value="1.0000611731117048" />
+      <entry key="S2" value="1.1247996577590673" />
+      <entry key="S5" value="1.720543148860624" />
+      <entry key="S10" value="2.60422376074351" />
+      <entry key="S30" value="4.269982953198284" />
+      <entry key="S60" value="5.0200209793878185" />
+      <entry key="M2" value="5.476850675908709" />
+      <entry key="M5" value="5.782471955148709" />
+      <entry key="M10" value="5.948043156210419" />
+      <entry key="M15" value="6.302480839523001" />
+      <entry key="M30" value="9.054549833171713" />
+      <entry key="H1" value="16.7505759314754" />
+      <entry key="H2" value="30.851414707160085" />
+      <entry key="H4" value="60.37773689552154" />
+      <entry key="D1" value="297.59262718018516" />
+      <entry key="W1" value="470.0918770760968" />
     </decayedCancelled>
     <decayedSelected>
-      <entry key="MS100" value="1.0" />
-      <entry key="MS500" value="1.0" />
-      <entry key="S2" value="1.0" />
-      <entry key="S5" value="1.0" />
-      <entry key="S10" value="1.0" />
-      <entry key="S30" value="1.0" />
-      <entry key="S60" value="1.0" />
-      <entry key="M2" value="1.0" />
-      <entry key="M5" value="1.0000000000001943" />
-      <entry key="M10" value="1.0000016428842415" />
-      <entry key="M15" value="1.0003372759797948" />
-      <entry key="M30" value="1.0759508245173564" />
-      <entry key="H1" value="2.4703977204318583" />
-      <entry key="H2" value="9.367885987590764" />
-      <entry key="H4" value="28.676022357979065" />
-      <entry key="D1" value="166.05277401261722" />
-      <entry key="W1" value="251.25787525103104" />
+      <entry key="MS100" value="0.0" />
+      <entry key="MS500" value="0.0" />
+      <entry key="S2" value="0.0" />
+      <entry key="S5" value="1.424469660341895E-256" />
+      <entry key="S10" value="1.2642109728741036E-128" />
+      <entry key="S30" value="3.7087000921165605E-43" />
+      <entry key="S60" value="1.171188538266309E-21" />
+      <entry key="M2" value="7.344446773394577E-11" />
+      <entry key="M5" value="2.3444959933842247E-4" />
+      <entry key="M10" value="0.03968255854106524" />
+      <entry key="M15" value="0.2569897959134296" />
+      <entry key="M30" value="2.1685205962809486" />
+      <entry key="H1" value="7.428964549613024" />
+      <entry key="H2" value="15.922239256693242" />
+      <entry key="H4" value="32.00627613227483" />
+      <entry key="D1" value="171.08072781302013" />
+      <entry key="W1" value="277.9688095489877" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="6.632903213660023E-5" />
-      <entry key="MS500" value="0.14599592432663971" />
-      <entry key="S2" value="0.6181376304604758" />
-      <entry key="S5" value="0.8249622450062417" />
-      <entry key="S10" value="0.9082743225514204" />
-      <entry key="S30" value="0.9684391671162076" />
-      <entry key="S60" value="0.9840949413439567" />
-      <entry key="M2" value="0.9939501137286475" />
-      <entry key="M5" value="1.1213446468007173" />
-      <entry key="M10" value="1.4975110885022374" />
-      <entry key="M15" value="1.7935399838491908" />
-      <entry key="M30" value="2.495716976508861" />
-      <entry key="H1" value="6.426718568129876" />
-      <entry key="H2" value="24.63268409413965" />
-      <entry key="H4" value="78.59133224784662" />
-      <entry key="D1" value="444.1940257957923" />
-      <entry key="W1" value="663.9526405721898" />
+      <entry key="MS100" value="4.2792348377296196E-9" />
+      <entry key="MS500" value="0.021221220472502803" />
+      <entry key="S2" value="0.45371888070164007" />
+      <entry key="S5" value="1.1600528251567293" />
+      <entry key="S10" value="2.0819977214559215" />
+      <entry key="S30" value="3.928475213501159" />
+      <entry key="S60" value="4.809122754862443" />
+      <entry key="M2" value="5.358858865051079" />
+      <entry key="M5" value="5.732101685709894" />
+      <entry key="M10" value="5.961415992748998" />
+      <entry key="M15" value="6.540483268100017" />
+      <entry key="M30" value="11.208515446676554" />
+      <entry key="H1" value="24.16573534475265" />
+      <entry key="H2" value="46.7618150323102" />
+      <entry key="H4" value="92.374311215561" />
+      <entry key="D1" value="468.667106525465" />
+      <entry key="W1" value="748.0592917767403" />
     </decayedShown>
   </component>
   <component name="ProjectColorInfo">{
@@ -164,7 +138,7 @@
     &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
     &quot;Spring Boot.BackendApplication.executor&quot;: &quot;Run&quot;,
     &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feat/checkout-redis&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;//wsl.localhost/Ubuntu/home/sandy/projects/commerce-core&quot;,
     &quot;node.js.detected.package.jshint&quot;: &quot;true&quot;,
