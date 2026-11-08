@@ -3,15 +3,12 @@ package com.commercecore.backend.checkout;
 import com.commercecore.backend.auth.domain.User;
 import com.commercecore.backend.auth.domain.UserRole;
 import com.commercecore.backend.auth.repo.UserRepository;
-import com.commercecore.backend.cart.domain.Cart;
-import com.commercecore.backend.cart.domain.CartItem;
-import com.commercecore.backend.cart.domain.CartStatus;
-import com.commercecore.backend.cart.repo.CartRepository;
 import com.commercecore.backend.catalog.domain.Product;
 import com.commercecore.backend.catalog.repo.ProductRepository;
 import com.commercecore.backend.checkout.api.dto.CheckoutRequest;
 import com.commercecore.backend.checkout.api.dto.CheckoutResponse;
 import com.commercecore.backend.checkout.service.CheckoutService;
+import com.commercecore.backend.order.repo.OrderRepository;
 import com.commercecore.backend.shared.exception.InsufficientStockException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,32 +16,30 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.context.bean.override.mockito.MockitoSpyBean;
-import org.springframework.transaction.annotation.Transactional;
+import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+import org.testcontainers.utility.DockerImageName;
 
 import java.math.BigDecimal;
-import java.time.Instant;
-import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doThrow;
 
 @SpringBootTest
 @Testcontainers
-public class CheckoutTest{
+public class CheckoutTest {
+
     @Container
     static final PostgreSQLContainer<?> postgres =
             new PostgreSQLContainer<>("postgres:16-alpine")
@@ -52,13 +47,18 @@ public class CheckoutTest{
                     .withUsername("ecommerce")
                     .withPassword("ecommerce");
 
+    @Container
+    static final GenericContainer<?> redis =
+            new GenericContainer<>(DockerImageName.parse("redis:7-alpine"))
+                    .withExposedPorts(6379);
 
     @DynamicPropertySource
     static void configureProperties(DynamicPropertyRegistry registry) {
         registry.add("spring.datasource.url", postgres::getJdbcUrl);
         registry.add("spring.datasource.username", postgres::getUsername);
         registry.add("spring.datasource.password", postgres::getPassword);
-        // Flyway runs automatically on startup, applying V1-V5 migrations
+        registry.add("spring.data.redis.host", redis::getHost);
+        registry.add("spring.data.redis.port", redis::getFirstMappedPort);
     }
 
     @Autowired
@@ -73,26 +73,32 @@ public class CheckoutTest{
     @Autowired
     private NamedParameterJdbcTemplate jdbcTemplate;
 
+    @Autowired
+    private StringRedisTemplate redisTemplate;
+
+    // Spy on OrderRepository to simulate downstream failures during the DB write phase
     @MockitoSpyBean
-    private CartRepository cartRepositorySpy;
+    private OrderRepository orderRepositorySpy;
 
     UUID userId, productId, cartId;
-    private static final int INITIAL_STOCK=5;
-    private static final int CHECKOUT_QTY=3;
+    private static final int INITIAL_STOCK = 5;
+    private static final int CHECKOUT_QTY = 3;
+    private static final String STOCK_KEY_PREFIX = "stock:";
 
     @BeforeEach
     void setUp() {
-        // ─── 1. Create a User ──────────────────────────────────────────────
+        // 1. Create a User
         User user = new User("test@example.com", "testuser", "$2a$12$fakehash", UserRole.CUSTOMER);
         user = userRepository.save(user);
         userId = user.getId();
 
-        // ─── 2. Create a Product with price ₹500 ───────────────────────────
+        // 2. Create a Product
         Product product = new Product("SKU-001", "Test Laptop", "A test product",
                 new BigDecimal("500.00"), "INR", true);
         product = productRepository.save(product);
         productId = product.getProductId();
 
+        // 3. Seed Database Inventory
         jdbcTemplate.update("""
                 INSERT INTO inventory (product_id, on_hand, reserved)
                 VALUES (:productId, :onHand, 0)
@@ -102,174 +108,159 @@ public class CheckoutTest{
                 new MapSqlParameterSource()
                         .addValue("productId", productId)
                         .addValue("onHand", INITIAL_STOCK));
+
+        // 4. Create and Save Cart in DB (Crucial for Foreign Key constraint)
+        cartId = UUID.randomUUID();
+        jdbcTemplate.update("""
+                INSERT INTO cart (id, user_id, status, created_at, updated_at)
+                VALUES (:id, :userId, 'ACTIVE', NOW(), NOW())
+                """,
+                new MapSqlParameterSource()
+                        .addValue("id", cartId)
+                        .addValue("userId", userId));
+
+        // 5. Create and Save CartItem in DB
+        jdbcTemplate.update("""
+                INSERT INTO cart_item (id, cart_id, product_id, qty, unit_price, created_at, updated_at)
+                VALUES (:id, :cartId, :productId, :qty, :price, NOW(), NOW())
+                """,
+                new MapSqlParameterSource()
+                        .addValue("id", UUID.randomUUID())
+                        .addValue("cartId", cartId)
+                        .addValue("productId", productId)
+                        .addValue("qty", CHECKOUT_QTY)
+                        .addValue("price", new BigDecimal("500.00")));
+
+        // 6. Seed Redis Inventory
+        String redisKey = STOCK_KEY_PREFIX + productId;
+        redisTemplate.opsForValue().set(redisKey, String.valueOf(INITIAL_STOCK));
     }
 
     @AfterEach
     void clean() {
-        reset(cartRepositorySpy);
-        jdbcTemplate.update("DELETE FROM inventory_reservations", new MapSqlParameterSource());
-        jdbcTemplate.update("DELETE FROM order_items",           new MapSqlParameterSource());
-        jdbcTemplate.update("DELETE FROM orders",                new MapSqlParameterSource());
-        jdbcTemplate.update("DELETE FROM cart_item",             new MapSqlParameterSource());
-        jdbcTemplate.update("DELETE FROM cart",                  new MapSqlParameterSource());
-        jdbcTemplate.update("DELETE FROM inventory",             new MapSqlParameterSource());
-        jdbcTemplate.update("DELETE FROM products",              new MapSqlParameterSource());
-        jdbcTemplate.update("DELETE FROM users",                 new MapSqlParameterSource());
+        MapSqlParameterSource emptyParams = new MapSqlParameterSource();
+        jdbcTemplate.update("DELETE FROM inventory_reservations", emptyParams);
+        jdbcTemplate.update("DELETE FROM order_items", emptyParams);
+        jdbcTemplate.update("DELETE FROM orders", emptyParams);
+        jdbcTemplate.update("DELETE FROM cart_item", emptyParams);
+        jdbcTemplate.update("DELETE FROM cart", emptyParams);
+        jdbcTemplate.update("DELETE FROM inventory", emptyParams);
+        jdbcTemplate.update("DELETE FROM products", emptyParams);
+        jdbcTemplate.update("DELETE FROM users", emptyParams);
+
+        String redisKey = STOCK_KEY_PREFIX + productId;
+        redisTemplate.delete(redisKey);
     }
 
-
     @Test
-    @DisplayName("PHANTOM HOLD DEFEATED: Inventory rolls back when downstream fails after reservation")
-    void whenDownstreamFailAfterReservation_inventoryRollsBackCompletely(){
-        CartItem cartItem = new CartItem(productId,CHECKOUT_QTY,new BigDecimal("500.00"));
-        Cart cart = new Cart(UUID.randomUUID(),userId, CartStatus.ACTIVE, Instant.now(), List.of(cartItem));
-
-        // Mock: findActiveByUserId return valid cart
-        when(cartRepositorySpy.findActiveByUserId(userId)).thenReturn(Optional.of(cart));
-
+    @DisplayName("PHANTOM HOLD DEFEATED: Inventory rolls back in DB and Redis when downstream fails")
+    void whenDownstreamFailAfterReservation_inventoryRollsBackCompletely() {
+        // Simulate a downstream failure during the DB write phase
         doThrow(new RuntimeException("Simulated downstream failure after reservation"))
-                .when(cartRepositorySpy).save(any(Cart.class));
+                .when(orderRepositorySpy).saveAndFlush(any());
 
-        CheckoutRequest request = new CheckoutRequest(UUID.randomUUID(),"key-1","coupon");
+        CheckoutRequest request = new CheckoutRequest(UUID.randomUUID(), "idempotency-1", "coupon");
 
-        assertThatThrownBy(()->
-                checkoutService.processCheckout(userId,"idempotency-1",request))
+        assertThatThrownBy(() ->
+                checkoutService.processCheckout(userId, "idempotency-1", request))
                 .isInstanceOf(RuntimeException.class)
                 .hasMessageContaining("Simulated downstream failure");
 
+        String redisKey = STOCK_KEY_PREFIX + productId;
 
-        // Assertion 1: inventory.reserved is as if checkout never happened
+        // Assertion 1: DB inventory.reserved is 0
         Integer reserved = jdbcTemplate.queryForObject("""
                 SELECT reserved FROM inventory WHERE product_id = :productId
-                """,
-                new MapSqlParameterSource("productId", productId),
-                Integer.class);
+                """, new MapSqlParameterSource("productId", productId), Integer.class);
+        assertThat(reserved).isEqualTo(0);
 
-        assertThat(reserved)
-                .as("inventory.reserved must be 0 after rollback. " +
-                        "If this is > 0, we have a Phantom Hold: stock is locked " +
-                        "with no order to justify it. This is lost revenue.")
-                .isEqualTo(0);
-
-
-        // Assertion 2: inventory.on_hand is unchange(still 5)
-        Integer onHand= jdbcTemplate.queryForObject("""
-                SELECT on_hand FROM inventory WHERE product_id= :productId
-                """,
-                new MapSqlParameterSource("productId",productId),Integer.class);
-
-        assertThat(onHand)
-                .as("inventory.on_hand must remain unchanged after the rollback")
-                .isEqualTo(INITIAL_STOCK);
-
-        // Assertion 3:
-        Integer orderCount= jdbcTemplate.queryForObject("""
-                SELECT COUNT(*) FROM orders WHERE idempotency_key= :key 
-                """,
-                new MapSqlParameterSource("key","idempotency-1"),Integer.class);
-
-        assertThat(orderCount)
-                .as("No order should exist after a rolled-back transaction")
-                .isEqualTo(0);
-
-        // ASSERTION 4: No inventory_reservations exist
-        Integer reservationCount = jdbcTemplate.queryForObject("""
-                SELECT COUNT(*) FROM inventory_reservations WHERE product_id = :productId
-                """,
-                new MapSqlParameterSource("productId", productId),
-                Integer.class);
-
-        assertThat(reservationCount)
-                .as("No reservation rows should exist after rollback")
-                .isEqualTo(0);
-
-
-        // Assertion 5: Cart is still Active (not checkout)
-        verify(cartRepositorySpy,times(1)).save(any(Cart.class));
-    }
-
-
-    @Test
-    @DisplayName("Inventory is reserved when checkout succeeds")
-    void whenCheckoutSucceeds_inventoryIsReserved(){
-        // ARRANGE: Same cart, but save() succeeds
-        CartItem cartItem = new CartItem(productId, CHECKOUT_QTY, new BigDecimal("500.00"));
-        Cart cart = new Cart(UUID.randomUUID(), userId, CartStatus.ACTIVE,
-                Instant.now(), List.of(cartItem));
-
-        when(cartRepositorySpy.findActiveByUserId(userId)).thenReturn(Optional.of(cart));
-        doReturn(cart).when(cartRepositorySpy).save(any(Cart.class));
-
-        CheckoutRequest request = new CheckoutRequest(UUID.randomUUID(),"key-1","coupon");
-
-        // ACT
-        CheckoutResponse response = checkoutService.processCheckout(
-                userId, "idempotency-key-test-002", request);
-
-        // ASSERT: Inventory IS reserved (the hold is active)
-        Integer reserved = jdbcTemplate.queryForObject("""
-                SELECT reserved FROM inventory WHERE product_id = :productId
-                """,
-                new MapSqlParameterSource("productId", productId),
-                Integer.class);
-
-        assertThat(reserved)
-                .as("After successful checkout, reserved must equal the checkout quantity")
-                .isEqualTo(CHECKOUT_QTY);
-
-        // ASSERT: on_hand is unchanged (only reserved increases)
+        // Assertion 2: DB inventory.on_hand is unchanged
         Integer onHand = jdbcTemplate.queryForObject("""
                 SELECT on_hand FROM inventory WHERE product_id = :productId
-                """,
-                new MapSqlParameterSource("productId", productId),
-                Integer.class);
-
+                """, new MapSqlParameterSource("productId", productId), Integer.class);
         assertThat(onHand).isEqualTo(INITIAL_STOCK);
 
-        // ASSERT: Available = on_hand - reserved = 5 - 3 = 2
-        assertThat(onHand - reserved)
-                .as("Available stock must be on_hand - reserved")
-                .isEqualTo(INITIAL_STOCK - CHECKOUT_QTY);
+        // Assertion 3: No order exists
+        Integer orderCount = jdbcTemplate.queryForObject("""
+                SELECT COUNT(*) FROM orders WHERE idempotency_key = :key 
+                """, new MapSqlParameterSource("key", "idempotency-1"), Integer.class);
+        assertThat(orderCount).isEqualTo(0);
 
-        // ASSERT: Order was created in AWAITING_PAYMENT_CONFIRMATION
+        // Assertion 4: No inventory_reservations exist
+        Integer reservationCount = jdbcTemplate.queryForObject("""
+                SELECT COUNT(*) FROM inventory_reservations WHERE product_id = :productId
+                """, new MapSqlParameterSource("productId", productId), Integer.class);
+        assertThat(reservationCount).isEqualTo(0);
+
+        // Assertion 5: REDIS stock is rolled back to INITIAL_STOCK
+        String redisStock = redisTemplate.opsForValue().get(redisKey);
+        assertThat(redisStock)
+                .as("Redis stock must be rolled back to initial state after failure")
+                .isEqualTo(String.valueOf(INITIAL_STOCK));
+    }
+
+    @Test
+    @DisplayName("Inventory is reserved in DB and Redis when checkout succeeds")
+    void whenCheckoutSucceeds_inventoryIsReserved() {
+        CheckoutRequest request = new CheckoutRequest(UUID.randomUUID(), "idempotency-key-test-002", "coupon");
+
+        CheckoutResponse response = checkoutService.processCheckout(userId, "idempotency-key-test-002", request);
+
+        String redisKey = STOCK_KEY_PREFIX + productId;
+
+        // ASSERT: DB Inventory IS reserved
+        Integer reserved = jdbcTemplate.queryForObject("""
+                SELECT reserved FROM inventory WHERE product_id = :productId
+                """, new MapSqlParameterSource("productId", productId), Integer.class);
+        assertThat(reserved).isEqualTo(CHECKOUT_QTY);
+
+        Integer onHand = jdbcTemplate.queryForObject("""
+                SELECT on_hand FROM inventory WHERE product_id = :productId
+                """, new MapSqlParameterSource("productId", productId), Integer.class);
+        assertThat(onHand).isEqualTo(INITIAL_STOCK);
+
+        // ASSERT: REDIS stock is decremented
+        String redisStock = redisTemplate.opsForValue().get(redisKey);
+        assertThat(redisStock)
+                .as("Redis stock must be decremented by checkout quantity")
+                .isEqualTo(String.valueOf(INITIAL_STOCK - CHECKOUT_QTY));
+
+        // ASSERT: Order was created
         assertThat(response.state()).isEqualTo("AWAITING_PAYMENT_CONFIRMATION");
     }
 
-
-
     @Test
-    @DisplayName("INSUFFICIENT STOCK: Checkout fails atomically, no partial state")
+    @DisplayName("INSUFFICIENT STOCK: Checkout fails atomically, Redis and DB remain unchanged")
     void whenStockInsufficient_checkoutFailsWithNoPartialState() {
+        // ARRANGE: Update cart to request 10 units, but only 5 are available
+        jdbcTemplate.update("""
+                UPDATE cart_item SET qty = 10 WHERE cart_id = :cartId
+                """, new MapSqlParameterSource("cartId", cartId));
 
-        // ARRANGE: Cart requests 10 units, but only 5 are available
-        CartItem cartItem = new CartItem(productId, 10, new BigDecimal("500.00"));
-        Cart cart = new Cart(UUID.randomUUID(), userId, CartStatus.ACTIVE,
-                Instant.now(), List.of(cartItem));
-
-        when(cartRepositorySpy.findActiveByUserId(userId)).thenReturn(Optional.of(cart));
-
-        CheckoutRequest request = new CheckoutRequest(UUID.randomUUID(),"key-1","coupon");
+        CheckoutRequest request = new CheckoutRequest(UUID.randomUUID(), "idempotency-key-test-003", "coupon");
 
         // ACT & ASSERT
         assertThatThrownBy(() ->
                 checkoutService.processCheckout(userId, "idempotency-key-test-003", request))
                 .isInstanceOf(InsufficientStockException.class);
 
-        // ASSERT: Nothing changed in the database
+        String redisKey = STOCK_KEY_PREFIX + productId;
+
+        // ASSERT: DB Nothing changed
         Integer reserved = jdbcTemplate.queryForObject("""
                 SELECT reserved FROM inventory WHERE product_id = :productId
-                """,
-                new MapSqlParameterSource("productId", productId),
-                Integer.class);
-
+                """, new MapSqlParameterSource("productId", productId), Integer.class);
         assertThat(reserved).isEqualTo(0);
 
         Integer orderCount = jdbcTemplate.queryForObject("""
                 SELECT COUNT(*) FROM orders WHERE idempotency_key = :key
-                """,
-                new MapSqlParameterSource("key", "idempotency-key-test-003"),
-                Integer.class);
-
+                """, new MapSqlParameterSource("key", "idempotency-key-test-003"), Integer.class);
         assertThat(orderCount).isEqualTo(0);
+
+        // ASSERT: REDIS stock is unchanged (compensation worked)
+        String redisStock = redisTemplate.opsForValue().get(redisKey);
+        assertThat(redisStock)
+                .as("Redis stock must remain unchanged when checkout fails due to insufficient stock")
+                .isEqualTo(String.valueOf(INITIAL_STOCK));
     }
 }

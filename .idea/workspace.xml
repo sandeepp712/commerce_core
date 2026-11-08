@@ -5,14 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="031f8056-9069-4e2b-9f9f-b45600213e5b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.github/workflows/ci-cd.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/backend/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/logs/commerce-core.log" beforeDir="false" afterPath="$PROJECT_DIR$/backend/logs/commerce-core.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.prod.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.prod.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/k6/flash-sale.ts" beforeDir="false" afterPath="$PROJECT_DIR$/k6/flash-sale.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/k6/loadtest-tokens.csv" beforeDir="false" afterPath="$PROJECT_DIR$/k6/loadtest-tokens.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prometheus/prometheus.yml" beforeDir="false" afterPath="$PROJECT_DIR$/prometheus/prometheus.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/test/java/com/commercecore/backend/checkout/CheckoutTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/test/java/com/commercecore/backend/checkout/CheckoutTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,61 +43,61 @@
   </component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.0" />
-      <entry key="MS500" value="1.0" />
-      <entry key="S2" value="1.0" />
-      <entry key="S5" value="1.0" />
-      <entry key="S10" value="1.000000003431855" />
-      <entry key="S30" value="1.0094915696280014" />
-      <entry key="S60" value="1.5397131968177495" />
-      <entry key="M2" value="5.499190507915494" />
-      <entry key="M5" value="17.736697851181077" />
-      <entry key="M10" value="27.138906966434078" />
-      <entry key="M15" value="31.35579163761104" />
-      <entry key="M30" value="36.29837981227551" />
-      <entry key="H1" value="39.56834959881965" />
-      <entry key="H2" value="45.695362324639376" />
-      <entry key="H4" value="69.7538614090336" />
-      <entry key="D1" value="295.39259644065936" />
-      <entry key="W1" value="450.80322753116604" />
+      <entry key="MS100" value="1.0000000000768055" />
+      <entry key="MS500" value="1.010135826901574" />
+      <entry key="S2" value="1.6407493449904393" />
+      <entry key="S5" value="3.21295464988625" />
+      <entry key="S10" value="4.739593628062629" />
+      <entry key="S30" value="6.600488552524682" />
+      <entry key="S60" value="7.249057530367753" />
+      <entry key="M2" value="7.610557808639736" />
+      <entry key="M5" value="7.884249570320695" />
+      <entry key="M10" value="9.264455739174235" />
+      <entry key="M15" value="12.176370022373288" />
+      <entry key="M30" value="21.30522071889631" />
+      <entry key="H1" value="31.966789428716844" />
+      <entry key="H2" value="43.56663520085214" />
+      <entry key="H4" value="69.54190330137676" />
+      <entry key="D1" value="297.29205241409454" />
+      <entry key="W1" value="457.4613279034248" />
     </decayedCancelled>
     <decayedSelected>
-      <entry key="MS100" value="3.348457516999235E-7" />
-      <entry key="MS500" value="0.050695447223565164" />
-      <entry key="S2" value="0.4745065805254784" />
-      <entry key="S5" value="0.7421588931138875" />
-      <entry key="S10" value="0.8614864461936808" />
-      <entry key="S30" value="0.9564222852897889" />
-      <entry key="S60" value="1.2204264549396402" />
-      <entry key="M2" value="2.89227903405657" />
-      <entry key="M5" value="7.7595374557104595" />
-      <entry key="M10" value="11.384341831815153" />
-      <entry key="M15" value="12.989934518369342" />
-      <entry key="M30" value="14.857137457704601" />
-      <entry key="H1" value="16.109475763434215" />
-      <entry key="H2" value="19.25812650866282" />
-      <entry key="H4" value="32.463669968697694" />
-      <entry key="D1" value="167.22251520456408" />
-      <entry key="W1" value="264.6917909073805" />
+      <entry key="MS100" value="1.4157520014086226E-6" />
+      <entry key="MS500" value="0.06763904028285717" />
+      <entry key="S2" value="0.5099755549342502" />
+      <entry key="S5" value="0.7638705094987412" />
+      <entry key="S10" value="0.8739968589753291" />
+      <entry key="S30" value="0.9560999392842776" />
+      <entry key="S60" value="0.9778036302266884" />
+      <entry key="M2" value="0.9888404009464092" />
+      <entry key="M5" value="1.0145712078774909" />
+      <entry key="M10" value="1.561840074676497" />
+      <entry key="M15" value="2.750891357039381" />
+      <entry key="M30" value="6.456160047903752" />
+      <entry key="H1" value="10.762712803887231" />
+      <entry key="H2" value="15.99206613908438" />
+      <entry key="H4" value="29.64327236931597" />
+      <entry key="D1" value="164.7692836692979" />
+      <entry key="W1" value="264.9039314473166" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="0.8827029980650815" />
-      <entry key="MS500" value="0.9931305432131496" />
-      <entry key="S2" value="1.3589156200438313" />
-      <entry key="S5" value="1.665822706667599" />
-      <entry key="S10" value="1.8162584247139753" />
-      <entry key="S30" value="1.9487675038448242" />
-      <entry key="S60" value="2.744954794498226" />
-      <entry key="M2" value="8.36156907688228" />
-      <entry key="M5" value="25.457984380991725" />
-      <entry key="M10" value="38.494276803365665" />
-      <entry key="M15" value="44.323495976847795" />
-      <entry key="M30" value="51.14264113508329" />
-      <entry key="H1" value="55.67046224339729" />
-      <entry key="H2" value="64.948392040287" />
-      <entry key="H4" value="102.2123937969056" />
-      <entry key="D1" value="462.6098784647827" />
-      <entry key="W1" value="715.4938154086033" />
+      <entry key="MS100" value="0.9138314528137244" />
+      <entry key="MS500" value="1.007029473240707" />
+      <entry key="S2" value="1.905164176654818" />
+      <entry key="S5" value="3.7132696084387193" />
+      <entry key="S10" value="5.395397661565997" />
+      <entry key="S30" value="7.442673966184145" />
+      <entry key="S60" value="8.161931992705433" />
+      <entry key="M2" value="8.564627551229703" />
+      <entry key="M5" value="8.884219148645103" />
+      <entry key="M10" value="10.817502400809369" />
+      <entry key="M15" value="14.91933376720156" />
+      <entry key="M30" value="27.7541753275844" />
+      <entry key="H1" value="42.723798809584494" />
+      <entry key="H2" value="59.55411227985556" />
+      <entry key="H4" value="99.180331861565" />
+      <entry key="D1" value="462.056159141911" />
+      <entry key="W1" value="722.3640524969305" />
     </decayedShown>
   </component>
   <component name="ProjectColorInfo">{
@@ -169,7 +165,7 @@
       <command value="mvn compile" />
     </option>
   </component>
-  <component name="RunManager" selected="Application.com.commercecore.backend.BackendApplicationTests">
+  <component name="RunManager">
     <configuration name="BackendApplicationTests" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="ALTERNATIVE_JRE_PATH" value="$PROJECT_DIR$/../../../../usr/lib/jvm/java-25-openjdk-amd64" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
