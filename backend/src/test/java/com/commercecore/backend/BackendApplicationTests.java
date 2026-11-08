@@ -4,15 +4,36 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
+import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 import javax.crypto.SecretKey;
 import java.util.Base64;
 
 @SpringBootTest
+@Testcontainers
 class BackendApplicationTests {
 
 	@Test
 	void contextLoads() {
+	}
+
+	@Container
+	static final PostgreSQLContainer<?> postgres =
+			new PostgreSQLContainer<>("postgres:16-alpine")
+					.withDatabaseName("testdb")
+					.withUsername("test")
+					.withPassword("test");
+
+	@DynamicPropertySource
+	static void configureProperties(DynamicPropertyRegistry registry) {
+		registry.add("spring.datasource.url", postgres::getJdbcUrl);
+		registry.add("spring.datasource.username", postgres::getUsername);
+		registry.add("spring.datasource.password", postgres::getPassword);
+		registry.add("spring.flyway.enabled", () -> "false"); // Disable Flyway for this simple test
 	}
 
 	public static void main(String[] args) {

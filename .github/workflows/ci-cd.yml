@@ -36,6 +36,15 @@ jobs:
 
       - name: Run Tests
         run: mvn clean test -f backend/pom.xml
+        env:
+          # Provide a valid Base64-encoded secret for the CI environment
+          JWT_SECRET: "dGVzdC1zZWNyZXQta2V5LWZvci1jaS1waXBlbGluZS1tdXN0LWJlLWF0LWxlYXN0LTMyLWNoYXJz"
+          # Provide dummy DB credentials so Spring can initialize the datasource bean
+          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/testdb
+          SPRING_DATASOURCE_USERNAME: test
+          SPRING_DATASOURCE_PASSWORD: test
+          # Disable Flyway for this specific test if it tries to run and fails
+          SPRING_FLYWAY_ENABLED: "false"
 
       - name: Log in to GitHub Container Registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
