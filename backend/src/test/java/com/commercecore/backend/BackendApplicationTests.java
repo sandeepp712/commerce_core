@@ -33,7 +33,7 @@ class BackendApplicationTests {
 		registry.add("spring.datasource.url", postgres::getJdbcUrl);
 		registry.add("spring.datasource.username", postgres::getUsername);
 		registry.add("spring.datasource.password", postgres::getPassword);
-		registry.add("spring.flyway.enabled", () -> "false"); // Disable Flyway for this simple test
+		registry.add("spring.flyway.enabled", () -> "true"); // Disable Flyway for this simple test
 	}
 
 	public static void main(String[] args) {
