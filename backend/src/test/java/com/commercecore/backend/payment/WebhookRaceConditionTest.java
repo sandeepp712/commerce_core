@@ -37,7 +37,6 @@ import static org.springframework.util.Assert.state;
 
 @SpringBootTest
 @Testcontainers
-@TestPropertySource(properties = "spring.task.scheduling.enabled= false")
 class WebhookRaceConditionTest {
     @Container
     static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:16-alpine")
@@ -51,6 +50,7 @@ class WebhookRaceConditionTest {
         registry.add("spring.datasource.username", postgres::getUsername);
         registry.add("spring.datasource.password", postgres::getPassword);
         registry.add("stripe.webhook.signing-secret", () -> "whsec_test_dummy");
+        registry.add("spring.flyway.enabled", () -> true);
     }
 
     @Autowired private PaymentWebhookService paymentWebhookService;
