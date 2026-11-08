@@ -66,8 +66,8 @@ export default function () {
     };
 
     // ⚠️ YOUR AWS EC2 PUBLIC IP
-    const AWS_EC2_IP = '16.112.59.10';
-    const res = http.post(`http://localhost:8080/api/v1/checkout`, payload, params);
+    const AWS_EC2_IP = '18.61.100.5';
+    const res = http.post(`http://${AWS_EC2_IP}:8080/api/v1/checkout`, payload, params);
 
     checkoutDuration.add(res.timings.duration);
 

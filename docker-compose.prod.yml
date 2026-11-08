@@ -43,7 +43,7 @@ services:
       - commerce-net
 
 volumes:
-  redis_data:
+  redis-data:
 
 networks:
   commerce-net:

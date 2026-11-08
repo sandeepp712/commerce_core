@@ -1,0 +1,93 @@
+name: CI/CD Pipeline (GHCR)
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'backend/**'
+
+jobs:
+  # ==========================================
+  # JOB 1: BUILD, TEST, AND PUSH TO GHCR
+  # ==========================================
+  build-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write # Required to push to GHCR
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Cache Maven packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+
+      - name: Run Tests
+        run: mvn clean test -f backend/pom.xml
+
+      - name: Log in to GitHub Container Registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+
+      - name: Build and Push Docker Image
+        run: |
+          # GHCR requires lowercase image names. 
+          # github.repository is usually lowercase, but this ensures it.
+          IMAGE_ID=ghcr.io/${{ github.repository }}
+          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+          
+          docker build -t $IMAGE_ID:${{ github.sha }} -f backend/Dockerfile backend/
+          docker push $IMAGE_ID:${{ github.sha }}
+
+  # ==========================================
+  # JOB 2: DEPLOY TO AWS EC2
+  # ==========================================
+  deploy:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy to EC2 via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
+          # Pass the GitHub Token to the EC2 instance securely via environment variables
+          envs: GITHUB_TOKEN, GITHUB_ACTOR, IMAGE_ID, IMAGE_TAG
+          script: |
+            # 1. Log in to GHCR on the EC2 instance
+            echo "$GITHUB_TOKEN" | docker login ghcr.io -u "$GITHUB_ACTOR" --password-stdin
+            
+            # 2. Pull the new image
+            docker pull $IMAGE_ID:$IMAGE_TAG
+            
+            # 3. Graceful restart (Stop, Remove, Run)
+            docker stop commerce-core-app || true
+            docker rm commerce-core-app || true
+            
+            docker run -d \
+              --name commerce-core-app \
+              -p 8080:8080 \
+              --restart unless-stopped \
+              --env-file .env \
+              $IMAGE_ID:$IMAGE_TAG
+            
+            # 4. Clean up old images to prevent disk space exhaustion
+            docker image prune -f
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_ACTOR: ${{ github.actor }}
+          IMAGE_ID: ghcr.io/${{ github.repository }}
+          IMAGE_TAG: ${{ github.sha }}

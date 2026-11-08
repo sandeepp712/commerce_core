@@ -32,6 +32,6 @@ build/
 
 ### VS Code ###
 .vscode/
-logs/commerce-core.log
+.logs
 ../k6/userScript.txt
 ../k6/loadtest-tokens.csv

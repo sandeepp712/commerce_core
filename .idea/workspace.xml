@@ -5,13 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="031f8056-9069-4e2b-9f9f-b45600213e5b" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.github/workflows/ci-cd.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/backend/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/logs/commerce-core.log" beforeDir="false" afterPath="$PROJECT_DIR$/backend/logs/commerce-core.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/commercecore/backend/cart/repo/CartRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/commercecore/backend/cart/repo/CartRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/commercecore/backend/checkout/service/CheckoutService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/commercecore/backend/checkout/service/CheckoutService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/commercecore/backend/inventory/service/InventoryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/commercecore/backend/inventory/service/InventoryService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.prod.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.prod.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/k6/flash-sale.ts" beforeDir="false" afterPath="$PROJECT_DIR$/k6/flash-sale.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/k6/loadtest-tokens.csv" beforeDir="false" afterPath="$PROJECT_DIR$/k6/loadtest-tokens.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/prometheus/prometheus.yml" beforeDir="false" afterPath="$PROJECT_DIR$/prometheus/prometheus.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,8 +22,6 @@
   <component name="DatabaseLocalColorSettings">
     <colors>
       <entry key="1f0c37f8-7c85-462c-b93e-8ba923d260fc" value="" />
-      <entry key="bbbbea1f-f5e2-4852-a3af-5c29a87710cc" value="" />
-      <entry key="cc3ad926-7009-417e-8ecb-1c08ab9a153c" value="" />
     </colors>
   </component>
   <component name="FileTemplateManagerImpl">
@@ -49,60 +48,60 @@
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
       <entry key="MS100" value="1.0" />
-      <entry key="MS500" value="1.0000611731117048" />
-      <entry key="S2" value="1.1247996577590673" />
-      <entry key="S5" value="1.720543148860624" />
-      <entry key="S10" value="2.60422376074351" />
-      <entry key="S30" value="4.269982953198284" />
-      <entry key="S60" value="5.0200209793878185" />
-      <entry key="M2" value="5.476850675908709" />
-      <entry key="M5" value="5.782471955148709" />
-      <entry key="M10" value="5.948043156210419" />
-      <entry key="M15" value="6.302480839523001" />
-      <entry key="M30" value="9.054549833171713" />
-      <entry key="H1" value="16.7505759314754" />
-      <entry key="H2" value="30.851414707160085" />
-      <entry key="H4" value="60.37773689552154" />
-      <entry key="D1" value="297.59262718018516" />
-      <entry key="W1" value="470.0918770760968" />
+      <entry key="MS500" value="1.0" />
+      <entry key="S2" value="1.0" />
+      <entry key="S5" value="1.0" />
+      <entry key="S10" value="1.000000003431855" />
+      <entry key="S30" value="1.0094915696280014" />
+      <entry key="S60" value="1.5397131968177495" />
+      <entry key="M2" value="5.499190507915494" />
+      <entry key="M5" value="17.736697851181077" />
+      <entry key="M10" value="27.138906966434078" />
+      <entry key="M15" value="31.35579163761104" />
+      <entry key="M30" value="36.29837981227551" />
+      <entry key="H1" value="39.56834959881965" />
+      <entry key="H2" value="45.695362324639376" />
+      <entry key="H4" value="69.7538614090336" />
+      <entry key="D1" value="295.39259644065936" />
+      <entry key="W1" value="450.80322753116604" />
     </decayedCancelled>
     <decayedSelected>
-      <entry key="MS100" value="0.0" />
-      <entry key="MS500" value="0.0" />
-      <entry key="S2" value="0.0" />
-      <entry key="S5" value="1.424469660341895E-256" />
-      <entry key="S10" value="1.2642109728741036E-128" />
-      <entry key="S30" value="3.7087000921165605E-43" />
-      <entry key="S60" value="1.171188538266309E-21" />
-      <entry key="M2" value="7.344446773394577E-11" />
-      <entry key="M5" value="2.3444959933842247E-4" />
-      <entry key="M10" value="0.03968255854106524" />
-      <entry key="M15" value="0.2569897959134296" />
-      <entry key="M30" value="2.1685205962809486" />
-      <entry key="H1" value="7.428964549613024" />
-      <entry key="H2" value="15.922239256693242" />
-      <entry key="H4" value="32.00627613227483" />
-      <entry key="D1" value="171.08072781302013" />
-      <entry key="W1" value="277.9688095489877" />
+      <entry key="MS100" value="3.348457516999235E-7" />
+      <entry key="MS500" value="0.050695447223565164" />
+      <entry key="S2" value="0.4745065805254784" />
+      <entry key="S5" value="0.7421588931138875" />
+      <entry key="S10" value="0.8614864461936808" />
+      <entry key="S30" value="0.9564222852897889" />
+      <entry key="S60" value="1.2204264549396402" />
+      <entry key="M2" value="2.89227903405657" />
+      <entry key="M5" value="7.7595374557104595" />
+      <entry key="M10" value="11.384341831815153" />
+      <entry key="M15" value="12.989934518369342" />
+      <entry key="M30" value="14.857137457704601" />
+      <entry key="H1" value="16.109475763434215" />
+      <entry key="H2" value="19.25812650866282" />
+      <entry key="H4" value="32.463669968697694" />
+      <entry key="D1" value="167.22251520456408" />
+      <entry key="W1" value="264.6917909073805" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="4.2792348377296196E-9" />
-      <entry key="MS500" value="0.021221220472502803" />
-      <entry key="S2" value="0.45371888070164007" />
-      <entry key="S5" value="1.1600528251567293" />
-      <entry key="S10" value="2.0819977214559215" />
-      <entry key="S30" value="3.928475213501159" />
-      <entry key="S60" value="4.809122754862443" />
-      <entry key="M2" value="5.358858865051079" />
-      <entry key="M5" value="5.732101685709894" />
-      <entry key="M10" value="5.961415992748998" />
-      <entry key="M15" value="6.540483268100017" />
-      <entry key="M30" value="11.208515446676554" />
-      <entry key="H1" value="24.16573534475265" />
-      <entry key="H2" value="46.7618150323102" />
-      <entry key="H4" value="92.374311215561" />
-      <entry key="D1" value="468.667106525465" />
-      <entry key="W1" value="748.0592917767403" />
+      <entry key="MS100" value="0.8827029980650815" />
+      <entry key="MS500" value="0.9931305432131496" />
+      <entry key="S2" value="1.3589156200438313" />
+      <entry key="S5" value="1.665822706667599" />
+      <entry key="S10" value="1.8162584247139753" />
+      <entry key="S30" value="1.9487675038448242" />
+      <entry key="S60" value="2.744954794498226" />
+      <entry key="M2" value="8.36156907688228" />
+      <entry key="M5" value="25.457984380991725" />
+      <entry key="M10" value="38.494276803365665" />
+      <entry key="M15" value="44.323495976847795" />
+      <entry key="M30" value="51.14264113508329" />
+      <entry key="H1" value="55.67046224339729" />
+      <entry key="H2" value="64.948392040287" />
+      <entry key="H4" value="102.2123937969056" />
+      <entry key="D1" value="462.6098784647827" />
+      <entry key="W1" value="715.4938154086033" />
     </decayedShown>
   </component>
   <component name="ProjectColorInfo">{
@@ -138,7 +137,7 @@
     &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
     &quot;Spring Boot.BackendApplication.executor&quot;: &quot;Run&quot;,
     &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;feat/checkout-redis&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;//wsl.localhost/Ubuntu/home/sandy/projects/commerce-core&quot;,
     &quot;node.js.detected.package.jshint&quot;: &quot;true&quot;,
